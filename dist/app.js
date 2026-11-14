@@ -1,22 +1,29 @@
 const $=id=>document.getElementById(id);
 const worker=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
-let ready=false,playing=false,busy=false,latest=null,hover=null,error=null;
+let ready=false,playing=false,busy=false,latest=null,hover=null,error=null,twinLayer='voltage';
 const offscreen=document.createElement('canvas');
-const contexts={anatomy:$('anatomy').getContext('2d'),voltage:$('voltage').getContext('2d')};
+const contexts={anatomy:$('anatomy').getContext('2d'),voltage:$('voltage').getContext('2d'),twin:$('twin').getContext('2d')};
 
 function setPlay(value){playing=value;$('play').innerHTML=value?'<span aria-hidden="true">Ⅱ</span> Pause':'<span aria-hidden="true">▶</span> Run development';}
 function controls(){for(const id of ['play','advance','reset','export','center-input','specimen']){if($(id))$(id).disabled=!ready||busy;}}
 function number(value){return(value>=0?'+':'')+value.toFixed(3);}
+// Mean absolute difference of the four anatomy channels (body, head, eye, tail) over tissue present in either copy.
+function shapeDifference({cells,baseline,width,height}){
+ const n=width*height;let occupied=0,diff=0;
+ for(let p=0;p<n;p++)if(cells[p]>.1||baseline[p]>.1){occupied++;for(let c=0;c<4;c++)diff+=Math.abs(cells[c*n+p]-baseline[c*n+p])/4;}
+ return occupied?diff/occupied:0;
+}
 function paint(){
  if(!latest)return;
  const {width:w,height:h}=latest,n=w*h;
- const cells=$('reference-toggle').checked?latest.baseline:latest.cells;
  offscreen.width=w;offscreen.height=h;
  const off=offscreen.getContext('2d'),image=off.createImageData(w,h);
- for(const layer of ['anatomy','voltage']){
-  const visible=$(layer+'-toggle').checked;
-  $(layer+'-view').querySelector('.layer-off').hidden=visible;
-  const ctx=contexts[layer],canvas=ctx.canvas;
+ // Panels A and B show the treated tissue; panel C shows the untreated twin in the layer its switch selects.
+ for(const panel of ['anatomy','voltage','twin']){
+  const treated=panel!=='twin',layer=treated?panel:twinLayer,cells=treated?latest.cells:latest.baseline;
+  const visible=!treated||$(layer+'-toggle').checked;
+  if(treated)$(layer+'-view').querySelector('.layer-off').hidden=visible;
+  const ctx=contexts[panel],canvas=ctx.canvas;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   if(!visible)continue;
   for(let p=0;p<n;p++){
@@ -38,7 +45,7 @@ function paint(){
    for(let x=1;x<w;x++){ctx.moveTo(x*canvas.width/w,0);ctx.lineTo(x*canvas.width/w,canvas.height);}
    for(let y=1;y<h;y++){ctx.moveTo(0,y*canvas.height/h);ctx.lineTo(canvas.width,y*canvas.height/h);}ctx.stroke();
   }
-  if(!$('reference-toggle').checked){
+  if(treated){
    for(const event of latest.active){ctx.strokeStyle='rgba(232,238,236,.75)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc((event.x+.5)*canvas.width/w,(event.y+.5)*canvas.height/h,event.radius*canvas.width/w,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);}
    if(hover?.layer===layer){ctx.strokeStyle='rgba(129,201,190,.8)';ctx.lineWidth=1;ctx.beginPath();ctx.arc((hover.x+.5)*canvas.width/w,(hover.y+.5)*canvas.height/h,Number($('radius').value)*canvas.width/w,0,Math.PI*2);ctx.stroke();}
   }
@@ -47,9 +54,10 @@ function paint(){
 function updateFrame(data){latest=data;$('step-value').textContent=String(data.step).padStart(3,'0');
  $('mean-voltage').textContent=number(data.metrics.meanVoltage);
  $('voltage-diff').textContent=data.metrics.voltageDifference.toFixed(4);
+ $('shape-diff').textContent=shapeDifference(data).toFixed(4);
  const active=data.active.length;
  $('run-note').textContent=active?`${active} local input${active>1?'s':''} active · ${Math.max(...data.active.map(e=>e.remaining))} steps remaining`:
-  data.step===0?'Precursor ready. Run to develop the pattern.':`${playing?'Running':'Paused'} · ${$('reference-toggle').checked?'untreated reference':'experimental tissue'}`;
+  data.step===0?'Precursor ready. Run to develop the pattern.':playing?'Running':'Paused';
  paint();
 }
 worker.addEventListener('message',({data})=>{
@@ -70,12 +78,16 @@ $('play').addEventListener('click',()=>{if(!ready||busy)return;setPlay(!playing)
 $('advance').addEventListener('click',()=>{if(!ready||busy)return;busy=true;setPlay(false);controls();$('run-note').textContent='Advancing 48 model steps…';worker.postMessage({type:'step',count:48});});
 function reset(){setPlay(false);busy=false;controls();worker.postMessage({type:'reset',specimen:$('specimen').value});}
 $('reset').addEventListener('click',reset);$('specimen').addEventListener('change',reset);
-for(const id of ['anatomy-toggle','voltage-toggle','grid-toggle','reference-toggle'])$(id).addEventListener('change',()=>{paint();if(latest)updateFrame(latest);});
+for(const id of ['anatomy-toggle','voltage-toggle','grid-toggle'])$(id).addEventListener('change',()=>{paint();if(latest)updateFrame(latest);});
+for(const button of document.querySelectorAll('.twin-option'))button.addEventListener('click',()=>{
+ twinLayer=button.dataset.layer;
+ for(const other of document.querySelectorAll('.twin-option'))other.setAttribute('aria-pressed',String(other===button));
+ paint();
+});
 for(const id of ['strength','radius','duration'])$(id).addEventListener('input',()=>{
  const value=Number($(id).value);$(id+'-value').textContent=id==='strength'?(value>=0?'+':'')+value.toFixed(2):`${value} ${id==='radius'?'cells':'steps'}`;paint();
 });
 function intervene(x,y){if(!ready||busy||!latest)return;
- if($('reference-toggle').checked){$('reference-toggle').checked=false;paint();}
  worker.postMessage({type:'intervene',x,y,radius:Number($('radius').value),strength:Number($('strength').value),duration:Number($('duration').value)});
 }
 for(const layer of ['anatomy','voltage']){
