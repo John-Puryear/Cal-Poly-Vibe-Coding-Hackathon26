@@ -1,6 +1,6 @@
 const $=id=>document.getElementById(id);
 const worker=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
-let ready=false,playing=false,busy=false,latest=null,hover=null,error=null,twinLayer='voltage';
+let ready=false,playing=false,busy=false,latest=null,hover=null,error=null,twinLayer='voltage',placedAt=null;
 const offscreen=document.createElement('canvas');
 const contexts={anatomy:$('anatomy').getContext('2d'),voltage:$('voltage').getContext('2d'),twin:$('twin').getContext('2d')};
 
@@ -51,7 +51,14 @@ function paint(){
   }
  }
 }
-function updateFrame(data){latest=data;$('step-value').textContent=String(data.step).padStart(3,'0');
+// Guided demo: grown once the tissue has developed, signalled once an input is placed, compared once it has run a few steps.
+function markSteps(step){
+ const done=[step>0,placedAt!==null,placedAt!==null&&step>=placedAt+12];
+ const current=done.indexOf(false);
+ done.forEach((value,i)=>{const item=$('demo-step-'+(i+1));item.classList.toggle('done',value);
+  if(i===current)item.setAttribute('aria-current','step');else item.removeAttribute('aria-current');});
+}
+function updateFrame(data){latest=data;markSteps(data.step);$('step-value').textContent=String(data.step).padStart(3,'0');
  $('mean-voltage').textContent=number(data.metrics.meanVoltage);
  $('voltage-diff').textContent=data.metrics.voltageDifference.toFixed(4);
  $('shape-diff').textContent=shapeDifference(data).toFixed(4);
@@ -76,7 +83,7 @@ worker.addEventListener('message',({data})=>{
 worker.addEventListener('error',event=>{ready=false;controls();$('model-status').textContent='Model unavailable';$('run-note').textContent=event.message??'Worker failed to start';});
 $('play').addEventListener('click',()=>{if(!ready||busy)return;setPlay(!playing);worker.postMessage({type:playing?'play':'pause'});if(!playing&&latest)updateFrame(latest);});
 $('advance').addEventListener('click',()=>{if(!ready||busy)return;busy=true;setPlay(false);controls();$('run-note').textContent='Advancing 48 model steps…';worker.postMessage({type:'step',count:48});});
-function reset(){setPlay(false);busy=false;controls();worker.postMessage({type:'reset',specimen:$('specimen').value});}
+function reset(){setPlay(false);busy=false;placedAt=null;controls();worker.postMessage({type:'reset',specimen:$('specimen').value});}
 $('reset').addEventListener('click',reset);$('specimen').addEventListener('change',reset);
 for(const id of ['anatomy-toggle','voltage-toggle','grid-toggle'])$(id).addEventListener('change',()=>{paint();if(latest)updateFrame(latest);});
 for(const button of document.querySelectorAll('.twin-option'))button.addEventListener('click',()=>{
@@ -88,6 +95,7 @@ for(const id of ['strength','radius','duration'])$(id).addEventListener('input',
  const value=Number($(id).value);$(id+'-value').textContent=id==='strength'?(value>=0?'+':'')+value.toFixed(2):`${value} ${id==='radius'?'cells':'steps'}`;paint();
 });
 function intervene(x,y){if(!ready||busy||!latest)return;
+ if(placedAt===null)placedAt=latest.step;
  worker.postMessage({type:'intervene',x,y,radius:Number($('radius').value),strength:Number($('strength').value),duration:Number($('duration').value)});
 }
 for(const layer of ['anatomy','voltage']){

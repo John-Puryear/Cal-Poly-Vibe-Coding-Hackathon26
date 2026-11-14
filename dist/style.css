@@ -29,3 +29,17 @@
 .compare-readout{padding:2px 12px 12px;font-size:9px;gap:6px 14px}
 .compare-readout b{font-size:10px}
 .compare-readout small{font-size:8px;width:100%}}
+
+/* Guided demo steps */
+.demo-steps{list-style:none;margin:0;padding:16px 24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;border-bottom:1px solid var(--line);background:#121b23}
+.demo-steps li{display:flex;gap:11px;align-items:start;font-size:11px;line-height:1.6;color:var(--muted);transition:opacity .15s}
+.demo-steps strong{display:block;font-size:12px;font-weight:500;color:var(--text)}
+.demo-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid #33434f;display:inline-flex;align-items:center;justify-content:center;font:10px var(--mono);color:var(--muted)}
+.demo-steps li[aria-current=step] .demo-num{border-color:var(--accent);color:var(--accent)}
+.demo-steps li.done{opacity:.55}
+.demo-steps li.done .demo-num{background:#345e58;border-color:#345e58;color:var(--accent);font-size:0}
+.demo-steps li.done .demo-num:after{content:'✓';font-size:11px}
+@media(max-width:1000px){.demo-steps{padding:15px 18px;gap:14px}}
+@media(max-width:700px){.demo-steps{grid-template-columns:1fr;padding:13px 12px;gap:10px}
+.demo-steps li{font-size:10px}
+.demo-steps strong{font-size:11px}}
