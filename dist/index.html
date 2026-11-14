@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0b1015">
   <meta name="description" content="Explore a trained neural cellular automaton through synchronized anatomy and bioelectricity layers. An interactive synthetic tissue research prototype.">
-  <title>Morphogenesis Lab — Signals into structure</title>
+  <title>Morphogenesis Lab: Signals into structure</title>
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./app.js"></script>
 </head>
@@ -18,7 +18,7 @@
   </header>
   <main>
     <section class="intro" aria-labelledby="title">
-      <div class="eyebrow"><span class="small-line"></span> AN INTERACTIVE RESEARCH NOTE <span class="edition">BDH–NCA / 001</span></div>
+      <div class="eyebrow"><span class="small-line"></span> AN INTERACTIVE RESEARCH NOTE <span class="edition">BDH-NCA / 001</span></div>
       <div class="intro-grid">
         <div><h1 id="title">Before the face,<br>there is a <em>signal.</em></h1>
           <p class="lead">How do local cellular signals become a larger pattern? Explore a trained tissue model through two synchronized layers: the structure you can see, and the electrical state underneath.</p>
@@ -44,7 +44,7 @@
         </div>
         <div class="playback"><div class="playback-buttons"><button class="primary-button" id="play" disabled><span aria-hidden="true">▶</span> Run development</button><button class="quiet-button" id="advance" disabled>Advance 48 steps</button><button class="icon-button" id="reset" disabled aria-label="Reset both views and the untreated reference">↺ <span>Reset</span></button></div><span class="run-note" id="run-note" aria-live="polite">Preparing the precursor state.</span></div>
         <div class="input-panel"><div class="input-title"><span class="mono-label">MANUAL ELECTRICAL INPUT</span><span>Place an input on either tissue view, then run.</span></div><div class="input-controls"><label for="strength">Current strength <output id="strength-value">+0.80</output><input id="strength" type="range" min="-1" max="1" step="0.05" value="0.8"><span class="range-ends"><span>More negative</span><span>More positive</span></span></label><label for="radius">Brush radius <output id="radius-value">3 cells</output><input id="radius" type="range" min="1" max="8" value="3"></label><label for="duration">Input duration <output id="duration-value">24 steps</output><input id="duration" type="range" min="4" max="96" step="4" value="24"></label></div></div>
-        <details class="advanced"><summary>Advanced observations <span>+</span></summary><div class="advanced-body"><label class="layer-toggle"><input id="reference-toggle" type="checkbox"><span class="toggle-indicator"></span>View untreated reference</label><label class="layer-toggle"><input id="grid-toggle" type="checkbox"><span class="toggle-indicator"></span>Show cell grid</label><button class="quiet-button" id="export" disabled>Export experiment ↓</button><div class="observations"><span>Mean voltage <b id="mean-voltage">—</b></span><span>Voltage difference from untreated <b id="voltage-diff">—</b></span></div><p>Voltage is a normalized, dimensionless proxy. Hyperpolarized/depolarized labels indicate the model's negative/positive regions; they are not calibrated membrane-potential measurements.</p></div></details>
+        <details class="advanced"><summary>Advanced observations <span>+</span></summary><div class="advanced-body"><label class="layer-toggle"><input id="reference-toggle" type="checkbox"><span class="toggle-indicator"></span>View untreated reference</label><label class="layer-toggle"><input id="grid-toggle" type="checkbox"><span class="toggle-indicator"></span>Show cell grid</label><button class="quiet-button" id="export" disabled>Export experiment ↓</button><div class="observations"><span>Mean voltage <b id="mean-voltage">n/a</b></span><span>Voltage difference from untreated <b id="voltage-diff">n/a</b></span></div><p>Voltage is a normalized, dimensionless proxy. Hyperpolarized/depolarized labels indicate the model's negative/positive regions; they are not calibrated membrane-potential measurements.</p></div></details>
       </div>
       <div class="figure-caption"><span>FIGURE 1</span><p>Development on a supplied tissue scaffold. Both views come from the same learned state; the electrical input writes only to current and conductance controls. Final anatomy is not supplied to the inference engine. This checkpoint learned normal fields; altered anatomical outcomes are exploratory.</p></div>
       <div class="interpretation"><span class="mono-label">LOOK CLOSELY</span><p>The electrical map and the visible tissue are two descriptions of one system. The rule stays fixed as the state evolves. A local input changes the model's electrical conditions; the learned dynamics determine what follows.</p></div>
