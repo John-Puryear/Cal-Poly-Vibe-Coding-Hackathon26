@@ -66,14 +66,14 @@ function updateFrame(data){latest=data;markSteps(data.step);$('step-value').text
  const active=data.active.length;
  $('run-note').textContent=active?`${active} local input${active>1?'s':''} active · ${Math.max(...data.active.map(e=>e.remaining))} steps remaining`:
   data.step===0?'Starting outline ready. Press Grow tissue.':playing?'Running':'Paused';
- $('fact-grid').textContent=$('grid-corner').textContent=`${data.width} × ${data.height}`;
+ $('stat-cells').textContent=(data.width*data.height).toLocaleString('en-US');$('grid-corner').textContent=`${data.width} × ${data.height}`;
  paint();
 }
 worker.addEventListener('message',({data})=>{
  if(data.type==='ready'){
   ready=true;controls();$('model-status').innerHTML='<span class="status-dot"></span> Live model, running in your browser';
   // Model size facts come from the loaded model, so they stay correct after retraining.
-  $('fact-parameters').textContent=data.parameters.toLocaleString('en-US');$('fact-channels').textContent=data.channels;
+  $('stat-parameters').textContent=data.parameters.toLocaleString('en-US');
  }else if(data.type==='frame')updateFrame(data);
  else if(data.type==='paused'){busy=false;setPlay(false);controls();if(latest)updateFrame(latest);}
  else if(data.type==='error'){
@@ -113,5 +113,9 @@ $('export').addEventListener('click',()=>worker.postMessage({type:'export'}));
 const centerButton=document.createElement('button');centerButton.id='center-input';centerButton.className='quiet-button';centerButton.textContent='Place at center';centerButton.disabled=true;centerButton.addEventListener('click',()=>{if(latest)intervene(Math.round(latest.width/2),Math.round(latest.height/2));});
 document.querySelector('.input-title').append(centerButton);
 window.addEventListener('pagehide',()=>worker.terminate());
+// Hero stat: show the verification result only when the report loads and passed.
+fetch('./model/browser-validation.json').then(r=>r.ok?r.json():null).then(report=>{
+ if(report?.passed&&report.ticks){$('stat-verified').textContent=`${report.ticks} of ${report.ticks}`;$('stat-verified-wrap').hidden=false;}
+}).catch(()=>{});
 controls();
 worker.postMessage({type:'init'});
