@@ -54,3 +54,7 @@
 @media(max-width:700px){.quote-grid{grid-template-columns:1fr;gap:12px;margin:24px 0 18px}
 .quote-card{padding:16px}
 .quote-card blockquote{font-size:15px}}
+
+/* Business section */
+.article-content>.section-note+.section-note{margin-top:-11px}
+.inline-link{color:var(--accent);border-bottom:1px solid #34514d}
