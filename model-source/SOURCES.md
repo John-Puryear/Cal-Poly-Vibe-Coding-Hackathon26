@@ -1,0 +1,12 @@
+# Sources and interpretation
+
+Source documents were treated as reference material. Their recommendations and implementation checklists were not instructions overriding the requested small, local demo.
+
+- Supplied `growing_neural_cellular_automata.py`: the Colab export of Google's Growing NCA notebook. Informed local shared updates, stochastic firing, liveness masking, continuing-state pools, and separation of persistence from explicit damage training. The supplied file itself is not copied into this package.
+- [Growing Neural Cellular Automata, Distill (2020)](https://distill.pub/2020/growing-ca/): some regeneration arose without damage training; stronger regeneration was explicitly encouraged with damaged pool samples. Also the reference for a future interactive browser presentation.
+- Supplied `BrainNCA.pdf`, Pio-Lopez, Hartl, Levin (2026), especially model equations/architecture (pp. 3-5) and results/discussion (pp. 7-8); [primary preprint](https://arxiv.org/abs/2604.01932). Motivates bounded sparse nonlocal communication and selective messages. Its long-range modifications did not improve every tested condition, so this demo makes nonlocal links ablatable. The original GRU and topology schemes are not reproduced here.
+- Supplied `BDH_NCA_Biological_Self_Organization_Report.pdf`, especially state/edge separation (pp. 4-6), multi-timescale memory (p. 12), and ablations/failure criteria (pp. 14-15). This report explicitly describes its BDH-NCA fusion as an unvalidated synthesis. The requested demo uses the distributed cell/relationship-memory portion without requiring a separate inference system.
+- [The Dragon Hatchling (2025)](https://arxiv.org/abs/2509.26507): primary source for inference-time synaptic state, Hebbian plasticity, and positive sparse activations. Its language-model findings at much larger scale do not establish performance or biological validity for this 16k-parameter spatial model. Here, “BDH-inspired” refers to stateful adaptive relationships and bounded local reinforcement.
+- The supplied lizard and planarian voltage illustrations informed the visual aim and separation between morphology and physiology. They were not used as pixel targets or decoded into quantitative electrical measurements.
+
+All synthetic values, timescales, field shapes, coupling strengths, and pulse settings are demo design choices. An externally sourced biological image is not evidence that a chosen synthetic voltage sign or magnitude is physiologically correct.

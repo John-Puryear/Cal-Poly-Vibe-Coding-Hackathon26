@@ -1,0 +1,6 @@
+{
+  "source": "bdh_nca_demo/runs/demo/portable",
+  "weights_sha256": "a9114eeb1255613f9a9f091d29333082f032295bcae6477cb8604be241d5ebfc",
+  "initial_states": "Supplied synthetic test precursors; no final targets are loaded by the runtime.",
+  "model_status": "Synthetic normal-field training. Alternative anatomical phenotypes remain unestablished."
+}

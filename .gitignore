@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.*
+!.env.example
+tests/*fixture.json
+*.tar.gz
+.DS_Store
+._*
+
+__pycache__/
+*.py[cod]
+.venv/
+model-source/runs/*
+!model-source/runs/demo/
+model-source/runs/demo/evaluation/
+model-source/runs/demo/extended_evaluation/

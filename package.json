@@ -1,0 +1,12 @@
+{
+  "name": "morphogenesis-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/conformance.mjs",
+    "start": "node scripts/serve.mjs",
+    "test:worker": "node tests/worker-integration.mjs",
+    "test:long": "node tests/long-conformance.mjs"
+  }
+}

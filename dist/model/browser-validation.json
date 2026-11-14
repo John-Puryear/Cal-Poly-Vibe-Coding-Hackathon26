@@ -1,0 +1,12 @@
+{
+  "ticks": 8,
+  "max_absolute_error": 1.7881393432617188e-7,
+  "tolerance": 0.00001,
+  "passed": true,
+  "milliseconds": 164.411,
+  "grid": [
+    24,
+    24
+  ],
+  "all_recurrent_state_checked": true
+}

@@ -1,0 +1,48 @@
+{
+  "parameters": 16116,
+  "tests_passed": 10,
+  "device": "cpu",
+  "training": {
+    "normal_iterations": 2500,
+    "persistence_iterations": 500,
+    "explicit_damage_training": false,
+    "normal_seconds": 522.2478408330353,
+    "persistence_seconds": 194.94100329105277
+  },
+  "portable": {
+    "binary_roundtrip_max_error": 0.0,
+    "numpy_recurrent_max_error": 2.384185791015625e-07,
+    "ticks": 8,
+    "bytes": 64544,
+    "browser_runtime_tested": false,
+    "required_browser_tolerance": 1e-05
+  },
+  "protocols": {
+    "evaluation": {
+      "protocol": {
+        "develop": 96,
+        "pulse": 24,
+        "washout": 128,
+        "strength": 0.8,
+        "seeds": 3
+      },
+      "competent_controls": 3,
+      "two_head_candidates": 0,
+      "ectopic_eye_candidates": 0,
+      "mean_control_field_loss": 0.0006222216955696543
+    },
+    "extended_evaluation": {
+      "protocol": {
+        "develop": 96,
+        "pulse": 96,
+        "washout": 512,
+        "strength": 0.8,
+        "seeds": 3
+      },
+      "competent_controls": 3,
+      "two_head_candidates": 0,
+      "ectopic_eye_candidates": 0,
+      "mean_control_field_loss": 0.0025463043712079525
+    }
+  }
+}

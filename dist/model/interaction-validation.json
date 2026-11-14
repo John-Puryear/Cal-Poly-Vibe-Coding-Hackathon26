@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": [
+    "Model loading",
+    "Paired untreated controls",
+    "No direct anatomy writes from input placement",
+    "Electrical input and expiry",
+    "State export with weight identity",
+    "Deterministic reset",
+    "Specimen selection"
+  ],
+  "pulse_voltage_difference": 0.0518152386391966
+}

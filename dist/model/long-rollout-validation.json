@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "reference": "Supplied independent NumPy runtime",
+  "cases": [
+    {
+      "specimen": "face-0",
+      "ticks": 144,
+      "development": 96,
+      "pulse": 24,
+      "washout": 24,
+      "max_absolute_error": 2.980232238769531e-7,
+      "tolerance": 0.00001,
+      "passed": true
+    },
+    {
+      "specimen": "planaria-0",
+      "ticks": 144,
+      "development": 96,
+      "pulse": 24,
+      "washout": 24,
+      "max_absolute_error": 2.980232238769531e-7,
+      "tolerance": 0.00001,
+      "passed": true
+    }
+  ]
+}

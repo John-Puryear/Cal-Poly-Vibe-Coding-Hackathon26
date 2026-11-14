@@ -1,0 +1,67 @@
+{
+  "units": "dimensionless synthetic proxies",
+  "splits": {
+    "train": {
+      "samples": 64,
+      "file": "train.npz",
+      "seed_namespace": "train",
+      "audit": {
+        "split": "train",
+        "samples": 64,
+        "kinds": {
+          "planaria": 32,
+          "face": 32
+        },
+        "two_head_targets": 0,
+        "ectopic_eye_targets": 0,
+        "normal_eye_components": 2,
+        "note": "Procedural construction audit; training rollouts may make errors."
+      }
+    },
+    "validation": {
+      "samples": 8,
+      "file": "validation.npz",
+      "seed_namespace": "validation",
+      "audit": {
+        "split": "validation",
+        "samples": 8,
+        "kinds": {
+          "planaria": 4,
+          "face": 4
+        },
+        "two_head_targets": 0,
+        "ectopic_eye_targets": 0,
+        "normal_eye_components": 2,
+        "note": "Procedural construction audit; training rollouts may make errors."
+      }
+    },
+    "test": {
+      "samples": 8,
+      "file": "test.npz",
+      "seed_namespace": "test",
+      "audit": {
+        "split": "test",
+        "samples": 8,
+        "kinds": {
+          "planaria": 4,
+          "face": 4
+        },
+        "two_head_targets": 0,
+        "ectopic_eye_targets": 0,
+        "normal_eye_components": 2,
+        "note": "Procedural construction audit; training rollouts may make errors."
+      }
+    }
+  },
+  "physical_channels": [
+    "body",
+    "head",
+    "eyes",
+    "tail"
+  ],
+  "genomic_equivalent_channels": [
+    "regulatory_state",
+    "axial_polarity"
+  ],
+  "abnormal_targets": "None: exactly one head territory and two normal eyes per example"
+}

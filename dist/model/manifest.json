@@ -1,0 +1,255 @@
+{
+  "format": "bdh-nca-v2",
+  "config": {
+    "channels": 24,
+    "hidden": 96,
+    "message": 8,
+    "rank": 4,
+    "fire_rate": 0.5,
+    "long_radius": 6,
+    "long_gain": 0.1,
+    "plasticity": true,
+    "consolidation": true,
+    "interaction": true,
+    "long_range": true
+  },
+  "channels": [
+    "tissue",
+    "anterior_fate",
+    "eye_fate",
+    "tail_fate",
+    "voltage",
+    "activator",
+    "inhibitor",
+    "stress",
+    "fast_0",
+    "fast_1",
+    "fast_2",
+    "fast_3",
+    "regulatory",
+    "polarity",
+    "structure",
+    "adaptation",
+    "slow_0",
+    "slow_1",
+    "slow_2",
+    "slow_3",
+    "activity_trace",
+    "consolidated_preference",
+    "planaria_context",
+    "face_context"
+  ],
+  "parameter_count": 16116,
+  "offsets": [
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      -6
+    ],
+    [
+      0,
+      6
+    ]
+  ],
+  "dtype": "float32",
+  "endianness": "little",
+  "tensor_layout": "NCHW",
+  "weights": {
+    "rates": {
+      "shape": [
+        1,
+        20,
+        1,
+        1
+      ],
+      "byte_offset": 0,
+      "byte_length": 80
+    },
+    "query.weight": {
+      "shape": [
+        8,
+        24,
+        1,
+        1
+      ],
+      "byte_offset": 80,
+      "byte_length": 768
+    },
+    "query.bias": {
+      "shape": [
+        8
+      ],
+      "byte_offset": 848,
+      "byte_length": 32
+    },
+    "key.weight": {
+      "shape": [
+        8,
+        24,
+        1,
+        1
+      ],
+      "byte_offset": 880,
+      "byte_length": 768
+    },
+    "key.bias": {
+      "shape": [
+        8
+      ],
+      "byte_offset": 1648,
+      "byte_length": 32
+    },
+    "value.weight": {
+      "shape": [
+        8,
+        24,
+        1,
+        1
+      ],
+      "byte_offset": 1680,
+      "byte_length": 768
+    },
+    "value.bias": {
+      "shape": [
+        8
+      ],
+      "byte_offset": 2448,
+      "byte_length": 32
+    },
+    "fast_factor.weight": {
+      "shape": [
+        4,
+        4,
+        1,
+        1
+      ],
+      "byte_offset": 2480,
+      "byte_length": 64
+    },
+    "fast_factor.bias": {
+      "shape": [
+        4
+      ],
+      "byte_offset": 2544,
+      "byte_length": 16
+    },
+    "slow_factor.weight": {
+      "shape": [
+        4,
+        4,
+        1,
+        1
+      ],
+      "byte_offset": 2560,
+      "byte_length": 64
+    },
+    "slow_factor.bias": {
+      "shape": [
+        4
+      ],
+      "byte_offset": 2624,
+      "byte_length": 16
+    },
+    "update.0.weight": {
+      "shape": [
+        96,
+        140,
+        1,
+        1
+      ],
+      "byte_offset": 2640,
+      "byte_length": 53760
+    },
+    "update.0.bias": {
+      "shape": [
+        96
+      ],
+      "byte_offset": 56400,
+      "byte_length": 384
+    },
+    "update.2.weight": {
+      "shape": [
+        20,
+        96,
+        1,
+        1
+      ],
+      "byte_offset": 56784,
+      "byte_length": 7680
+    },
+    "update.2.bias": {
+      "shape": [
+        20
+      ],
+      "byte_offset": 64464,
+      "byte_length": 80
+    }
+  },
+  "state_order": [
+    "cells",
+    "edge_fast",
+    "edge_slow",
+    "delayed"
+  ],
+  "source_training": {
+    "iterations": 500,
+    "seed": 7,
+    "size": 32,
+    "damage_training": false,
+    "pool": 64,
+    "initial_checkpoint_sha256": "72e4e931393ea7804bf5aac25851303fac9ac3f41604f70fcce64b1652bfed5a",
+    "args": {
+      "command": "train",
+      "iterations": 500,
+      "size": 32,
+      "batch": 4,
+      "pool": 64,
+      "steps": 48,
+      "pool_chunks": 16,
+      "hidden": 96,
+      "seed": 7,
+      "threads": 4,
+      "log_every": 100,
+      "eval_steps": 96,
+      "lr": 0.0003,
+      "device": "cpu",
+      "out": "runs/demo",
+      "data": "synthetic_data/train.npz",
+      "init_checkpoint": "runs/normal_curriculum/checkpoint.pt",
+      "damage": false,
+      "no_plasticity": false,
+      "no_consolidation": false,
+      "no_interaction": false,
+      "no_long_range": false
+    }
+  },
+  "fixture_ticks": 8,
+  "ops": [
+    "pointwise affine",
+    "ReLU",
+    "tanh",
+    "sigmoid",
+    "zero-padded shift",
+    "3x3 max pool",
+    "elementwise arithmetic",
+    "clamp",
+    "sum",
+    "concatenate"
+  ],
+  "randomness": "Supply the recorded binary fire masks; no RNG inside the portable tick."
+}

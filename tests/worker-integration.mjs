@@ -1,0 +1,28 @@
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const messages=[];
+globalThis.self={};globalThis.postMessage=m=>messages.push(m);
+globalThis.fetch=async url=>{
+ const data=await fs.readFile(new URL('../dist/'+String(url).replace(/^\.\//,''),import.meta.url));
+ return{ok:true,json:async()=>JSON.parse(data.toString()),arrayBuffer:async()=>data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength)};
+};
+await import('../dist/worker.js');
+const send=async data=>{messages.length=0;await self.onmessage({data});const err=messages.find(m=>m.type==='error');if(err)throw Error(err.message);return [...messages];};
+const frame=ms=>ms.find(m=>m.type==='frame');
+let ms=await send({type:'init'});assert(ms.some(m=>m.type==='ready'));assert.equal(frame(ms).step,0);
+ms=await send({type:'step',count:48});assert.equal(frame(ms).step,48);assert.equal(frame(ms).metrics.voltageDifference,0);
+const before=frame(ms).cells.slice();
+ms=await send({type:'intervene',x:16,y:16,radius:3,strength:.8,duration:24});assert.equal(frame(ms).active.length,1);
+assert.deepEqual(frame(ms).cells,before,'Placing an input must not directly write anatomy or state');
+ms=await send({type:'step',count:24});assert.equal(frame(ms).step,72);assert.equal(frame(ms).active.length,0);
+const difference=frame(ms).metrics.voltageDifference;assert(difference>0,'Electrical input should change the simulated voltage');
+ms=await send({type:'export'});const record=ms.find(m=>m.type==='export').record;
+assert.equal(record.step,72);assert.equal(record.interventions.length,1);assert.equal(record.weights_sha256.length,64);
+ms=await send({type:'reset',specimen:'face-0'});assert.equal(frame(ms).step,0);assert.equal(frame(ms).active.length,0);
+ms=await send({type:'step',count:48});assert.deepEqual(frame(ms).cells,before,'Reset with the same seed must reproduce development');
+ms=await send({type:'reset',specimen:'planaria-0'});assert.equal(frame(ms).specimen,'planaria-0');assert.equal(frame(ms).width,32);
+ms=await send({type:'step',count:8});assert.equal(frame(ms).step,8);assert(frame(ms).cells.every(Number.isFinite));
+await send({type:'pause'});
+const report={passed:true,checks:['Model loading','Paired untreated controls','No direct anatomy writes from input placement','Electrical input and expiry','State export with weight identity','Deterministic reset','Specimen selection'],pulse_voltage_difference:difference};
+await fs.writeFile(new URL('../dist/model/interaction-validation.json',import.meta.url),JSON.stringify(report,null,2));
+console.log(JSON.stringify(report));

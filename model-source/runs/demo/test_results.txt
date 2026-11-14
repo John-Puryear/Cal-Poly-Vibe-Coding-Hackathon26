@@ -1,0 +1,15 @@
+test_ablations_remove_memory (test_dynamics.DynamicsTests.test_ablations_remove_memory) ... ok
+test_damage_clears_incident_but_preserves_remote_history (test_dynamics.DynamicsTests.test_damage_clears_incident_but_preserves_remote_history) ... ok
+test_edge_history_and_consolidation_change_voltage (test_dynamics.DynamicsTests.test_edge_history_and_consolidation_change_voltage) ... ok
+test_gradients_reach_cell_and_edge_routes (test_dynamics.DynamicsTests.test_gradients_reach_cell_and_edge_routes) ... ok
+test_long_horizon_bounds_and_reset (test_dynamics.DynamicsTests.test_long_horizon_bounds_and_reset) ... ok
+test_no_wrap_or_instant_nonlocal_signal (test_dynamics.DynamicsTests.test_no_wrap_or_instant_nonlocal_signal) ... ok
+test_normal_data_and_intervention_separation (test_dynamics.DynamicsTests.test_normal_data_and_intervention_separation) ... ok
+test_parameter_budget (test_dynamics.DynamicsTests.test_parameter_budget) ... ok
+test_zero_fate_can_recover_after_negative_proposal (test_dynamics.DynamicsTests.test_zero_fate_can_recover_after_negative_proposal) ... ok
+test_independent_recurrent_parity_with_ablations (test_portable.PortableTests.test_independent_recurrent_parity_with_ablations) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.575s
+
+OK

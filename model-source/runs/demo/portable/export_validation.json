@@ -1,0 +1,8 @@
+{
+  "binary_roundtrip_max_error": 0.0,
+  "numpy_recurrent_max_error": 2.384185791015625e-07,
+  "ticks": 8,
+  "bytes": 64544,
+  "browser_runtime_tested": false,
+  "required_browser_tolerance": 1e-05
+}
