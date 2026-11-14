@@ -80,7 +80,7 @@ worker.addEventListener('message',({data})=>{
   $('run-note').textContent='Unable to run: '+data.message;$('run-note').setAttribute('role','alert');console.error(data.message);
  }else if(data.type==='export'){
   const blob=new Blob([JSON.stringify(data.record,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download=`morphogenesis-${data.record.specimen}-step-${data.record.step}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  a.href=url;a.download=`kaia-${data.record.specimen}-step-${data.record.step}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
 });
 worker.addEventListener('error',event=>{ready=false;controls();$('model-status').textContent='Model unavailable';$('run-note').textContent=event.message??'Worker failed to start';});
