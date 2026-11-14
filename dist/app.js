@@ -4,7 +4,7 @@ let ready=false,playing=false,busy=false,latest=null,hover=null,error=null,twinL
 const offscreen=document.createElement('canvas');
 const contexts={anatomy:$('anatomy').getContext('2d'),voltage:$('voltage').getContext('2d'),twin:$('twin').getContext('2d')};
 
-function setPlay(value){playing=value;$('play').innerHTML=value?'<span aria-hidden="true">Ⅱ</span> Pause':'<span aria-hidden="true">▶</span> Run development';}
+function setPlay(value){playing=value;$('play').innerHTML=value?'<span aria-hidden="true">Ⅱ</span> Pause':'<span aria-hidden="true">▶</span> Grow tissue';}
 function controls(){for(const id of ['play','advance','reset','export','center-input','specimen']){if($(id))$(id).disabled=!ready||busy;}}
 function number(value){return(value>=0?'+':'')+value.toFixed(3);}
 // Mean absolute difference of the four anatomy channels (body, head, eye, tail) over tissue present in either copy.
@@ -64,12 +64,15 @@ function updateFrame(data){latest=data;markSteps(data.step);$('step-value').text
  $('shape-diff').textContent=shapeDifference(data).toFixed(4);
  const active=data.active.length;
  $('run-note').textContent=active?`${active} local input${active>1?'s':''} active · ${Math.max(...data.active.map(e=>e.remaining))} steps remaining`:
-  data.step===0?'Precursor ready. Run to develop the pattern.':playing?'Running':'Paused';
+  data.step===0?'Starting outline ready. Press Grow tissue.':playing?'Running':'Paused';
+ $('fact-grid').textContent=$('grid-corner').textContent=`${data.width} × ${data.height}`;
  paint();
 }
 worker.addEventListener('message',({data})=>{
  if(data.type==='ready'){
-  ready=true;controls();$('model-status').innerHTML='<span class="status-dot"></span> Live model · browser inference';
+  ready=true;controls();$('model-status').innerHTML='<span class="status-dot"></span> Live model, running in your browser';
+  // Model size facts come from the loaded model, so they stay correct after retraining.
+  $('fact-parameters').textContent=data.parameters.toLocaleString('en-US');$('fact-channels').textContent=data.channels;
  }else if(data.type==='frame')updateFrame(data);
  else if(data.type==='paused'){busy=false;setPlay(false);controls();if(latest)updateFrame(latest);}
  else if(data.type==='error'){
@@ -82,7 +85,7 @@ worker.addEventListener('message',({data})=>{
 });
 worker.addEventListener('error',event=>{ready=false;controls();$('model-status').textContent='Model unavailable';$('run-note').textContent=event.message??'Worker failed to start';});
 $('play').addEventListener('click',()=>{if(!ready||busy)return;setPlay(!playing);worker.postMessage({type:playing?'play':'pause'});if(!playing&&latest)updateFrame(latest);});
-$('advance').addEventListener('click',()=>{if(!ready||busy)return;busy=true;setPlay(false);controls();$('run-note').textContent='Advancing 48 model steps…';worker.postMessage({type:'step',count:48});});
+$('advance').addEventListener('click',()=>{if(!ready||busy)return;busy=true;setPlay(false);controls();$('run-note').textContent='Skipping ahead 48 steps…';worker.postMessage({type:'step',count:48});});
 function reset(){setPlay(false);busy=false;placedAt=null;controls();worker.postMessage({type:'reset',specimen:$('specimen').value});}
 $('reset').addEventListener('click',reset);$('specimen').addEventListener('change',reset);
 for(const id of ['anatomy-toggle','voltage-toggle','grid-toggle'])$(id).addEventListener('change',()=>{paint();if(latest)updateFrame(latest);});
