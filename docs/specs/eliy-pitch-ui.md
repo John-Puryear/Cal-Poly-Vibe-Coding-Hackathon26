@@ -1,6 +1,6 @@
 # Spec: make Morphogenesis Lab pitch-ready (branch `eliy-pitch-ui`)
 
-Status: APPROVED by Eliy (2026-11-14). Decisions: test blocker option B; untreated panel opens on the electrical view; page order as proposed with the Evidence "03" label untouched; business honesty line approved; section 3 wording edits to come from Eliy, so copy tasks 4 and 5 run last. Build order: 0, 1, 2, 3, 6, 7, 8, 9, then 4, 5, 10.
+Status: APPROVED by Eliy (2026-11-14). Decisions: test blocker option B; untreated panel opens on the electrical view; page order as proposed with the Evidence "03" label untouched; business honesty line approved; section 3 wording edits to come from Eliy, so copy tasks 4 and 5 run last. Build order: 0, 1, 2, 3, 6, 7, 8, 9, then 4, 5, 9b (rename), 10.
 
 v2 changes: John is training the model toward two-headed planaria, ectopic eyes and regeneration. So the Evidence and Limits section is frozen, the specimen list and default specimen are frozen (old change 8 dropped), and all new copy is written so it stays true whatever the model ends up showing.
 
@@ -140,6 +140,7 @@ Every task ends with: `npm test` and `npm run test:worker` output shown, a searc
 7. **Business section.** Commit: "Add how the business works."
 8. **Data pipeline section.** Commit: "Add the planned data pipeline, labeled as future work."
 9. **Team section, nav and footer.** Commit: "Add the team section and update navigation."
+9b. **Rename to Kaia Biosciences** (added by Eliy, runs after tasks 4 and 5). Only `dist/index.html` and `dist/app.js`; Evidence section untouched (it does not contain the old name). Changes: tab title to "Kaia Biosciences: Signals into structure"; masthead brand to "KAIA" bold plus "BIOSCIENCES" in the existing light style; footer brand the same way (today the footer is one weight, so this adds the light span there); export file name in `app.js` from `morphogenesis-...json` to `kaia-...json`. The meta description does not contain the old name, so it stays as is. Old name outside Eliy's files, for Max: `README.md` (title and private preview URL), `package.json` (`"name": "morphogenesis-lab"`), `scripts/package-source.py` (zip and folder names), `dist/worker.js` (export format id `morphogenesis-session-v1`). The live preview URL contains the old name; renaming it is a hosting change. Commit: "Rename the site to Kaia Biosciences."
 10. **Final pass:** all checks, full narrow-screen review, a reread of every new line against the result-neutral rule, and a list of every `[NEEDS ...]` placeholder left so the team can fill them. No commit unless fixes are needed.
 
 ## Risks
