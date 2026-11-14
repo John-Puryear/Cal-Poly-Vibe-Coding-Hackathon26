@@ -38,7 +38,7 @@
 .demo-steps strong{display:block;font-size:14px;font-weight:500;color:var(--text)}
 .demo-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid var(--line-strong);display:inline-flex;align-items:center;justify-content:center;font:12px var(--mono);color:var(--muted)}
 .demo-steps li[aria-current=step] .demo-num{border-color:var(--accent);color:var(--accent)}
-.demo-steps li.done{opacity:.55}
+.demo-steps li.done strong{color:var(--muted)}
 .demo-steps li.done .demo-num{background:var(--accent);border-color:var(--accent);color:#fff;font-size:0}
 .demo-steps li.done .demo-num:after{content:'✓';font-size:13px}
 @media(max-width:1000px){.demo-steps{padding:15px 18px;gap:14px}}
