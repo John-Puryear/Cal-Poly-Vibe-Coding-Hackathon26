@@ -80,3 +80,7 @@
 nav a{white-space:nowrap}
 @media(max-width:370px){nav{gap:11px}}
 @media(max-width:350px){nav a:nth-child(3){display:none}}
+
+/* The "Place at center" button is appended after the instruction, so target the instruction by position */
+.input-title>span:nth-child(2){font-size:10px;color:var(--dim)}
+@media(max-width:700px){.input-title>span:nth-child(2){font-size:9px}}
