@@ -58,3 +58,13 @@
 /* Business section */
 .article-content>.section-note+.section-note{margin-top:-11px}
 .inline-link{color:var(--accent);border-bottom:1px solid #34514d}
+
+/* Data pipeline section */
+.planned-badge{display:inline-block;margin-bottom:18px;padding:5px 9px;border:1px solid var(--gold);border-radius:3px;font:9px var(--mono);letter-spacing:1.2px;color:var(--gold)}
+.pipeline-figure{align-items:flex-start}
+.pipeline-figure>div{flex:1;min-width:0}
+.pipeline-figure>b{margin-top:24px}
+.pipeline-figure small{line-height:1.5}
+@media(max-width:700px){.pipeline-figure{flex-direction:column;align-items:stretch;gap:14px}
+.pipeline-figure>b{transform:rotate(90deg);align-self:flex-start;margin:0 0 0 4px}
+.pipeline-figure small{font-size:10px}}
