@@ -139,3 +139,10 @@ nav a{white-space:nowrap}
 .compare-readout{padding:8px 12px 12px}
 .adjust>summary{padding:13px 12px}
 .adjust .input-controls{padding:4px 12px 18px}}
+
+/* Short sections: big labs number, readable technical details */
+.labs-stat{margin:32px 0 0;font-size:14px;color:var(--muted)}
+.labs-stat b{display:block;margin-bottom:6px;font:400 44px/1.1 var(--mono);color:var(--text)}
+.advanced-body>p{font-size:15px;line-height:1.6;color:var(--muted);max-width:640px}
+.paper-detail>p strong{color:var(--text);font-weight:600}
+@media(max-width:700px){.labs-stat b{font-size:34px}}
