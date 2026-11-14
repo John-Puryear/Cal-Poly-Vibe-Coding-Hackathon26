@@ -1,8 +1,8 @@
 const $=id=>document.getElementById(id);
 const worker=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
-let ready=false,playing=false,busy=false,latest=null,hover=null,error=null,twinLayer='voltage',placedAt=null;
+let ready=false,playing=false,busy=false,latest=null,hover=false,error=null,viewLayer='voltage',placedAt=null;
 const offscreen=document.createElement('canvas');
-const contexts={anatomy:$('anatomy').getContext('2d'),voltage:$('voltage').getContext('2d'),twin:$('twin').getContext('2d')};
+const contexts={treated:$('treated').getContext('2d'),untreated:$('untreated').getContext('2d')};
 
 function setPlay(value){playing=value;$('play').innerHTML=value?'<span aria-hidden="true">Ⅱ</span> Pause':'<span aria-hidden="true">▶</span> Grow tissue';}
 function controls(){for(const id of ['play','advance','reset','export','center-input','specimen']){if($(id))$(id).disabled=!ready||busy;}}
@@ -18,14 +18,12 @@ function paint(){
  const {width:w,height:h}=latest,n=w*h;
  offscreen.width=w;offscreen.height=h;
  const off=offscreen.getContext('2d'),image=off.createImageData(w,h);
- // Panels A and B show the treated tissue; panel C shows the untreated twin in the layer its switch selects.
- for(const panel of ['anatomy','voltage','twin']){
-  const treated=panel!=='twin',layer=treated?panel:twinLayer,cells=treated?latest.cells:latest.baseline;
-  const visible=!treated||$(layer+'-toggle').checked;
-  if(treated)$(layer+'-view').querySelector('.layer-off').hidden=visible;
+ // Both panels show the same layer: the tissue with your signal, and the untreated copy beside it.
+ const layer=viewLayer;
+ for(const panel of ['treated','untreated']){
+  const treated=panel==='treated',cells=treated?latest.cells:latest.baseline;
   const ctx=contexts[panel],canvas=ctx.canvas;
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  if(!visible)continue;
   for(let p=0;p<n;p++){
    const live=Math.max(0,Math.min(1,cells[p])),i=p*4;
    let r,g,b;
@@ -48,7 +46,7 @@ function paint(){
   }
   if(treated){
    for(const event of latest.active){ctx.strokeStyle='rgba(232,238,236,.75)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc((event.x+.5)*canvas.width/w,(event.y+.5)*canvas.height/h,event.radius*canvas.width/w,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);}
-   if(hover?.layer===layer){ctx.strokeStyle='rgba(110,158,245,.9)';ctx.lineWidth=1;ctx.beginPath();ctx.arc((hover.x+.5)*canvas.width/w,(hover.y+.5)*canvas.height/h,Number($('radius').value)*canvas.width/w,0,Math.PI*2);ctx.stroke();}
+   if(hover){ctx.strokeStyle='rgba(110,158,245,.9)';ctx.lineWidth=1;ctx.beginPath();ctx.arc((hover.x+.5)*canvas.width/w,(hover.y+.5)*canvas.height/h,Number($('radius').value)*canvas.width/w,0,Math.PI*2);ctx.stroke();}
   }
  }
 }
@@ -66,7 +64,7 @@ function updateFrame(data){latest=data;markSteps(data.step);$('step-value').text
  const active=data.active.length;
  $('run-note').textContent=active?`${active} local input${active>1?'s':''} active · ${Math.max(...data.active.map(e=>e.remaining))} steps remaining`:
   data.step===0?'Starting outline ready. Press Grow tissue.':playing?'Running':'Paused';
- $('stat-cells').textContent=(data.width*data.height).toLocaleString('en-US');$('grid-corner').textContent=`${data.width} × ${data.height}`;
+ $('stat-cells').textContent=(data.width*data.height).toLocaleString('en-US');
  paint();
 }
 worker.addEventListener('message',({data})=>{
@@ -89,10 +87,11 @@ $('play').addEventListener('click',()=>{if(!ready||busy)return;setPlay(!playing)
 $('advance').addEventListener('click',()=>{if(!ready||busy)return;busy=true;setPlay(false);controls();$('run-note').textContent='Skipping ahead 48 steps…';worker.postMessage({type:'step',count:48});});
 function reset(){setPlay(false);busy=false;placedAt=null;controls();worker.postMessage({type:'reset',specimen:$('specimen').value});}
 $('reset').addEventListener('click',reset);$('specimen').addEventListener('change',reset);
-for(const id of ['anatomy-toggle','voltage-toggle','grid-toggle'])$(id).addEventListener('change',()=>{paint();if(latest)updateFrame(latest);});
-for(const button of document.querySelectorAll('.twin-option'))button.addEventListener('click',()=>{
- twinLayer=button.dataset.layer;
- for(const other of document.querySelectorAll('.twin-option'))other.setAttribute('aria-pressed',String(other===button));
+$('grid-toggle').addEventListener('change',paint);
+for(const button of document.querySelectorAll('.view-option'))button.addEventListener('click',()=>{
+ viewLayer=button.dataset.layer;
+ for(const other of document.querySelectorAll('.view-option'))other.setAttribute('aria-pressed',String(other===button));
+ $('voltage-legend').hidden=viewLayer!=='voltage';$('anatomy-legend').hidden=viewLayer!=='anatomy';
  paint();
 });
 for(const id of ['strength','radius','duration'])$(id).addEventListener('input',()=>{
@@ -102,16 +101,14 @@ function intervene(x,y){if(!ready||busy||!latest)return;
  if(placedAt===null)placedAt=latest.step;
  worker.postMessage({type:'intervene',x,y,radius:Number($('radius').value),strength:Number($('strength').value),duration:Number($('duration').value)});
 }
-for(const layer of ['anatomy','voltage']){
- const canvas=$(layer);
- function point(event){const box=canvas.getBoundingClientRect();return{x:Math.max(0,Math.min(latest.width-1,(event.clientX-box.left)/box.width*latest.width-.5)),y:Math.max(0,Math.min(latest.height-1,(event.clientY-box.top)/box.height*latest.height-.5))};}
- canvas.addEventListener('pointermove',event=>{if(!latest)return;hover={...point(event),layer};paint();});
- canvas.addEventListener('pointerleave',()=>{hover=null;paint();});
- canvas.addEventListener('pointerdown',event=>{if(!latest||!$(layer+'-toggle').checked)return;event.preventDefault();const p=point(event);intervene(p.x,p.y);});
-}
+// Only the treated panel takes clicks; the untreated copy never receives a signal.
+const treatedCanvas=$('treated');
+function point(event){const box=treatedCanvas.getBoundingClientRect();return{x:Math.max(0,Math.min(latest.width-1,(event.clientX-box.left)/box.width*latest.width-.5)),y:Math.max(0,Math.min(latest.height-1,(event.clientY-box.top)/box.height*latest.height-.5))};}
+treatedCanvas.addEventListener('pointermove',event=>{if(!latest)return;hover=point(event);paint();});
+treatedCanvas.addEventListener('pointerleave',()=>{hover=false;paint();});
+treatedCanvas.addEventListener('pointerdown',event=>{if(!latest)return;event.preventDefault();const p=point(event);intervene(p.x,p.y);});
 $('export').addEventListener('click',()=>worker.postMessage({type:'export'}));
-const centerButton=document.createElement('button');centerButton.id='center-input';centerButton.className='quiet-button';centerButton.textContent='Place at center';centerButton.disabled=true;centerButton.addEventListener('click',()=>{if(latest)intervene(Math.round(latest.width/2),Math.round(latest.height/2));});
-document.querySelector('.input-title').append(centerButton);
+$('center-input').addEventListener('click',()=>{if(latest)intervene(Math.round(latest.width/2),Math.round(latest.height/2));});
 window.addEventListener('pagehide',()=>worker.terminate());
 // Hero stat: show the verification result only when the report loads and passed.
 fetch('./model/browser-validation.json').then(r=>r.ok?r.json():null).then(report=>{
