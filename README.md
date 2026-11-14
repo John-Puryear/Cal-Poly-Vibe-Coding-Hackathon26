@@ -1,4 +1,6 @@
-# Morphogenesis Lab â€” website
+# Morphogenesis Lab
+
+Shared website and Python model source for the Cal Poly Vibe Coding Hackathon 2026. See [CONTRIBUTING.md](CONTRIBUTING.md) for the team workflow.
 
 A dark, article-style site with live inference from the supplied BDH-NCA weights. Anatomy and bioelectricity are synchronized views of the same tissue state. Each layer can be hidden independently.
 
@@ -39,7 +41,7 @@ Any change to the transition rule or exported configuration needs a correspondin
 
 ## Verification
 
-The browser-runtime conformance test checks all four recurrent state tensors across eight exported steps against the supplied PyTorch fixture, with required maximum absolute error â‰¤ 1e-5. Longer specimen rollouts and manual input integration should also be checked when updating the model. Passing parity validates the port, not biological fidelity or abnormal phenotypes.
+The browser-runtime conformance test checks all four recurrent state tensors across eight exported steps against the supplied PyTorch fixture, with required maximum absolute error ≤ 1e-5. Longer specimen rollouts and manual input integration should also be checked when updating the model. Passing parity validates the port, not biological fidelity or abnormal phenotypes.
 
 For this version, the eight-step maximum error is 1.7881393432617188e-7. Face and planarian 144-step reference runs (96 development / 24 pulse / 24 washout) each have a maximum error of 2.980232238769531e-7. Worker integration checks also pass: model loading, paired controls, input placement without direct anatomy writes, input expiry, weight-identified export, deterministic reset, and specimen selection.
 
