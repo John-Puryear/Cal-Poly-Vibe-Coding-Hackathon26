@@ -146,3 +146,9 @@ nav a{white-space:nowrap}
 .advanced-body>p{font-size:15px;line-height:1.6;color:var(--muted);max-width:640px}
 .paper-detail>p strong{color:var(--text);font-weight:600}
 @media(max-width:700px){.labs-stat b{font-size:34px}}
+
+/* No section labels or canvas corner marks; Evidence's label is hidden here, its HTML is unchanged */
+.section-marker,.canvas-wrap:before,.canvas-wrap:after{display:none}
+.article-section{grid-template-columns:1fr}
+.section-heading{align-items:start}
+.step-counter>span{max-width:none;text-transform:uppercase}
