@@ -230,3 +230,4 @@ summary>span{font-weight:400;color:var(--muted)}
   .protocol-lab .protocol-action{white-space:normal;font-size:12px;padding:6px}
 }
 .process-figure{margin-bottom:16px}
+@media(max-width:600px){.protocol-lab .posterior-voltage-card{margin:-4px 0}}
