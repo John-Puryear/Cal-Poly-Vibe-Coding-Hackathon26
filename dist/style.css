@@ -312,7 +312,6 @@ main>.band{padding-block:64px}
 .flow span{font:500 13px var(--sans);color:var(--accent)}
 .flow strong{font:500 26px/1.2 var(--display)}
 .flow small{font-size:15px;line-height:1.5;color:var(--muted)}
-.pipeline>details{max-width:760px;margin-inline:auto}
 @media(max-width:1000px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.flow li:nth-child(3)::before{display:none}}
 @media(max-width:700px){
   .timeline{grid-template-columns:1fr;gap:20px}
@@ -384,3 +383,8 @@ main>section:has(>.sequence-band:last-child){padding-bottom:0;border-bottom:0}
 .timeline::before{left:calc(100% / 6);right:calc(100% / 6)}
 @media(min-width:701px){.timeline::before{right:calc(100% / 6)}}
 @media(max-width:700px){.timeline li{align-items:center;text-align:left;padding:0}.timeline::before{left:16px;right:auto}.sequence-band{margin-top:32px;padding-block:32px}}
+
+/* Limits: Details centered inside the box, and no line under the box */
+.callout:has(>details:last-child){padding-bottom:0}
+.limits+section{border-top:0}
+.team-card p{margin-top:6px}
