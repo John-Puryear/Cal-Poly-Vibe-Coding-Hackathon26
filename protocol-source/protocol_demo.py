@@ -38,8 +38,8 @@ def planaria_case(model, seed, device, out=None):
         state = model(state)
     developed = state.cells[:1].cpu()
     xx = torch.arange(32, device=device)[None, None, None, :]
-    trunk = ((xx >= 10) & (xx <= 23)).expand(1, 1, 32, 32)
-    middle = ((xx >= 12) & (xx <= 23)).expand(1, 1, 32, 32)
+    trunk = ((xx >= 10) & (xx <= 18)).expand(1, 1, 32, 32)
+    middle = ((xx >= 12) & (xx <= 18)).expand(1, 1, 32, 32)
     fragment = model.damage(state, trunk)
     state = repeat_state(fragment, 6)
     intact = model.initial(ex.seed.to(device))
@@ -76,7 +76,7 @@ def planaria_case(model, seed, device, out=None):
                                     "long_only": (washout[3:4], recut[3:4]),
                                     "intact_broad": (washout[4:5], recut[4:5]),
                                     "half_dose": (washout[5:6], recut[5:6])})[0]
-    posterior = (body[0, 0] > .35) & (torch.arange(32)[None] >= 20) & (torch.arange(32)[None] <= 23)
+    posterior = (body[0, 0] > .35) & (torch.arange(32)[None] >= 16) & (torch.arange(32)[None] <= 18)
     memory_summary = None
     if washout_memory is not None:
         memory_summary = {

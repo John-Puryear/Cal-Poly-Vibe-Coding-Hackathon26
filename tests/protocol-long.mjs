@@ -75,8 +75,8 @@ function score(state) {
 const trunk = new Float32Array(n), middle = new Float32Array(n);
 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
   const i = y * w + x;
-  trunk[i] = x >= 10 && x <= 23 ? 1 : 0;
-  middle[i] = x >= 12 && x <= 23 ? 1 : 0;
+  trunk[i] = x >= 10 && x <= 18 ? 1 : 0;
+  middle[i] = x >= 12 && x <= 18 ? 1 : 0;
 }
 const developRng = makeRng(24000);
 let developed = runtime.initial(new Float32Array(seed.seed));

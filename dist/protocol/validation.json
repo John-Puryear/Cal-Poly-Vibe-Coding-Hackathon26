@@ -1,25 +1,80 @@
 {
-  "format": "bdh-protocol-browser-validation-v1",
+  "format": "bdh-protocol-browser-validation-v3",
   "checkpoint_parameters": 254,
+  "checkpoint_sha256": "feda257599826e8b3807b0143ecc65c525075700236cd1ab2f449fd542159a48",
+  "baseline_checkpoint_sha256": "65aaa49ff619ba2dcee6fd927316ea5234e0908185ec838f86fccc8dc65aaa00",
+  "weight_source": "v1 checkpoint with two manually calibrated scalar weights; explicit transition rules revised; no gradient optimizer step claimed",
   "synthetic_model": true,
   "clock_calibrated_to_biology": false,
   "target_used_at_inference": false,
   "conformance": {
-    "states_compared": ["cells", "edgeFast", "edgeSlow", "delayed", "induction"],
-    "operations": ["initial", "step", "damage", "controlled step"],
-    "max_absolute_error": 3.651e-7,
+    "states_compared": [
+      "cells",
+      "edgeFast",
+      "edgeSlow",
+      "delayed",
+      "induction"
+    ],
+    "operations": [
+      "initial",
+      "step",
+      "damage",
+      "controlled step"
+    ],
+    "max_absolute_error": 3.278e-7,
+    "controlled_step_max_absolute_error": 1.192e-7,
     "passed": true
   },
-  "held_out_seed_7000": {
+  "browser_protocol_seed_7000": {
     "develop_ticks": 128,
-    "fragment_columns": [10, 23],
-    "middle_block_columns": [12, 23],
+    "fragment_columns": [
+      10,
+      18
+    ],
+    "middle_block_columns": [
+      12,
+      18
+    ],
     "post_cut_ticks": 608,
     "clean_recut_ticks": 512,
-    "normal_controls": ["sham", "brief broad block", "half-dose broad block", "long-only block"],
+    "normal_controls": [
+      "sham",
+      "brief broad block",
+      "half-dose broad block",
+      "long-range-only block"
+    ],
     "normal_control_outcomes_at_washout_and_recut": "1 head, 2 eyes, 1 tail",
     "sustained_broad_outcome_at_washout_and_recut": "2 heads, 4 eyes, 0 tails",
-    "body_intersection_over_union": 0.9724,
+    "body_intersection_over_union": 0.9592,
+    "passed": true
+  },
+  "cuda_seed_audit": {
+    "development_seeds": "15000-15003",
+    "development_strict_protocol_pass": "4/4",
+    "validation_seeds": "19000-19031",
+    "validation_strict_treated_recut": "32/32",
+    "held_out_seeds": "21000-21031",
+    "held_out_strict_treated_washout_and_recut": "32/32",
+    "held_out_normal_sham": "32/32",
+    "held_out_negative_control_sets": "32/32 for brief, half-dose, long-range-only, and intact broad treatment",
+    "face_prepattern_seeds": "22000-22007",
+    "face_prepattern_pass": "8/8",
+    "peak_cuda_memory_gib": 0.242,
+    "preselection_failure": "An earlier eye-bias candidate had a fused-eye negative control on 1 of 32 seeds; the selected candidate passed that seed and a fresh 32-seed range."
+  },
+  "posterior_timing_test": {
+    "region_columns": [
+      16,
+      25
+    ],
+    "regional_voltage_positive_and_treatment_difference_above_0_10_tick": 2,
+    "head_memory_above_0_05_tick": 6,
+    "regulatory_difference_above_0_05_tick": 7,
+    "visible_head_above_0_15_tick": 46,
+    "posterior_tail_peak_during_treatment": 0.0435,
+    "voltage_at_tick_24_treated": 0.5041,
+    "voltage_at_tick_24_sham": -0.1152,
+    "visible_posterior_head_at_tick_24": 0.00875,
     "passed": true
   },
   "face_prepattern_test": {
@@ -30,5 +85,5 @@
     "structure_crossing_tick": 128,
     "passed": true
   },
-  "interpretation": "These checks establish numerical parity and behavior of one synthetic protocol, not predictive biological validity. Organizer thresholds, axis chart, and coupling rules include explicit modeling assumptions."
+  "interpretation": "Numerical parity and tested synthetic phenotypes do not establish biological prediction or reliability beyond sampled seeds. The coupling-loss voltage response, organizer threshold, and eye-link rules are modeling assumptions. Body, polarity axis, and structural scaffold are inherited at the cut; the timing test measures the new posterior response."
 }

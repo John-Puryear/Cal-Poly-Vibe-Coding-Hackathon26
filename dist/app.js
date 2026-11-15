@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id), worker=new Worker('./protocol-worker.js',{type:'module'});
-let latest=null,target=null,ready=false;
+let latest=null,target=null,ready=false,cutPosteriorVoltage=null,cutLabel='cut';
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const mix=(a,b,t)=>a.map((v,i)=>Math.round(v*(1-t)+b[i]*t));
 function draw(canvas,cells,w,h,mode){
@@ -16,7 +16,9 @@ function draw(canvas,cells,w,h,mode){
         c=mix(c,[18,27,24],clamp(cells[2*n+p])*.98);
       }else if(mode==='voltage'){
         const v=clamp(cells[4*n+p],-1,1);
-        c=mix([107,121,126],v>=0?[242,67,58]:[50,100,244],clamp(Math.abs(v)*3));
+        // One fixed, smooth contrast curve for every frame. Numeric readouts remain raw.
+        const displayStrength=Math.asinh(3*Math.abs(v))/Math.asinh(3);
+        c=mix([107,121,126],v>=0?[242,67,58]:[50,100,244],displayStrength);
       }else{
         const r=clamp(cells[12*n+p],-1,1),a=clamp(cells[13*n+p],-1,1),s=clamp(cells[14*n+p]);
         if(choice==='regulatory')c=mix([45,35,55],r>=0?[233,108,176]:[91,78,188],Math.abs(r));
@@ -40,7 +42,9 @@ function paint(){if(!latest)return;const {cells,width,height}=latest;
 function controls(){if(!latest)return;const run=latest.running;
   $('develop').disabled=!ready||run;$('cut').disabled=!ready||run||!latest.developedReady;
   for(const b of document.querySelectorAll('[data-branch]')){
-    b.disabled=!ready||run||!latest.fragmentReady;b.classList.toggle('selected',latest.activeBranch===b.dataset.branch);
+    b.disabled=!ready||run||!latest.fragmentReady;
+    const selected=latest.activeBranch===b.dataset.branch;
+    b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));
   }
   $('recut').disabled=!ready||run||!latest.recutReady;$('pause').disabled=!run;
   $('step-one').disabled=run||!latest.paused;
@@ -49,7 +53,22 @@ function controls(){if(!latest)return;const run=latest.running;
 function frame(f){latest=f;$('step-value').textContent=String(f.tick).padStart(4,'0');
   $('phase-name').textContent=f.phaseName;$('phase-progress').textContent=`${f.phaseTick} / ${f.phaseTotal}`;
   $('phase-fill').style.width=`${100*clamp(f.phaseTick/Math.max(1,f.phaseTotal))}%`;
-  $('phase-note').textContent=f.note;$('mean-voltage').textContent=f.metrics.meanVoltage.toFixed(3);
+  $('phase-note').textContent=f.note;
+  const anterior=Number(f.metrics.anteriorVoltage),posterior=Number(f.metrics.posteriorVoltage);
+  if(f.phaseName==='PRECURSOR'||f.phaseName==='DEVELOPING')cutPosteriorVoltage=null;
+  if(f.phaseName==='TRUNK FRAGMENT'&&Number.isFinite(posterior)){
+    cutPosteriorVoltage=posterior;cutLabel='cut';
+  }else if(f.phaseName==='CLEAN RECUT'&&f.phaseTick===0&&Number.isFinite(posterior)){
+    cutPosteriorVoltage=posterior;cutLabel='recut';
+  }
+  $('anterior-voltage').textContent=Number.isFinite(anterior)?anterior.toFixed(3):'—';
+  $('posterior-voltage').textContent=Number.isFinite(posterior)?posterior.toFixed(3):'—';
+  const delta=posterior-cutPosteriorVoltage;
+  $('posterior-voltage-change').textContent=Number.isFinite(delta)&&cutPosteriorVoltage!==null?
+    `Δ since ${cutLabel} ${delta>=0?'+':''}${delta.toFixed(3)}`:'Raw signed voltage';
+  const blockActive=f.phaseName==='TREATMENT';
+  $('treatment-indicator').textContent=blockActive?'Coupling block active':'Coupling block inactive';
+  $('treatment-indicator').classList.toggle('active',blockActive);
   $('posterior-memory').textContent=f.metrics.posteriorMemory.toFixed(3);
   $('posterior-head').textContent=f.metrics.posteriorHead.toFixed(3);paint();controls();}
 worker.onmessage=({data:d})=>{
