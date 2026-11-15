@@ -5,16 +5,22 @@ let tick=0,phaseName='PRECURSOR',phaseTick=0,phaseTotal=128,note='The intact pre
 let activeBranch=null,paused=false,speed='live';
 const BRANCHES={sham:{dose:0,duration:0,label:'Untreated control'},brief:{dose:1,duration:24,label:'Brief broad block'},sustained:{dose:1,duration:96,label:'Sustained broad block'},half:{dose:.5,duration:96,label:'Half-dose broad block'}};
 const N=32*32,keep=new Float32Array(N),middle=new Float32Array(N);
-for(let y=0;y<32;y++)for(let x=0;x<32;x++){const p=y*32+x;keep[p]=x>=10&&x<=23?1:0;middle[p]=x>=12&&x<=23?1:0;}
+for(let y=0;y<32;y++)for(let x=0;x<32;x++){const p=y*32+x;keep[p]=x>=10&&x<=18?1:0;middle[p]=x>=12&&x<=18?1:0;}
 
 function stop(){if(timer!==null){clearTimeout(timer);timer=null;}paused=!!program;}
 function mask(rng){const fire=new Float32Array(N);for(let i=0;i<N;i++)fire[i]=rng()<.5?1:0;return fire;}
 function metrics(){let live=0,voltage=0,memory=0,posterior=0,posteriorCount=0;
+  let anteriorVoltage=0,anteriorCount=0,posteriorVoltage=0,posteriorVoltageCount=0,posteriorTail=0;
   for(let y=0;y<32;y++)for(let x=0;x<32;x++){
     const p=y*32+x;if(state.cells[p]>.1){live++;voltage+=state.cells[4*N+p];
-      if(x>=20&&x<=23){memory+=state.induction[p];posterior=Math.max(posterior,state.cells[N+p]);posteriorCount++;}}
+      if(state.cells[p]>.35&&x>=10&&x<=13){anteriorVoltage+=state.cells[4*N+p];anteriorCount++;}
+      if(state.cells[p]>.35&&x>=16&&x<=25){posteriorVoltage+=state.cells[4*N+p];posteriorVoltageCount++;}
+      if(x>=16&&x<=25){memory+=state.induction[p];posterior=Math.max(posterior,state.cells[N+p]);
+        posteriorTail=Math.max(posteriorTail,state.cells[3*N+p]);posteriorCount++;}}
   }
-  return {meanVoltage:live?voltage/live:0,posteriorMemory:posteriorCount?memory/posteriorCount:0,posteriorHead:posterior};
+  return {meanVoltage:live?voltage/live:0,anteriorVoltage:anteriorCount?anteriorVoltage/anteriorCount:0,
+    posteriorVoltage:posteriorVoltageCount?posteriorVoltage/posteriorVoltageCount:0,
+    posteriorMemory:posteriorCount?memory/posteriorCount:0,posteriorHead:posterior,posteriorTail};
 }
 function frame(){postMessage({type:'frame',cells:state.cells.slice(),width:32,height:32,tick,phaseName,phaseTick,phaseTotal,note,
   running:timer!==null,paused,developedReady:!!developed,fragmentReady:!!fragment,recutReady:!!treatedWashed,
@@ -102,7 +108,7 @@ self.onmessage=async({data:d})=>{try{
   else if(d.type==='pause'){if(program){stop();frame();}}
   else if(d.type==='step-one'){if(program){stop();execute();frame();}}
   else if(d.type==='resume'){if(program)run();}
-  else if(d.type==='export')postMessage({type:'export',record:{format:'bdh-protocol-browser-session-v1',checkpoint_sha256:runtime.portable?.checkpoint_sha256??null,
+  else if(d.type==='export')postMessage({type:'export',record:{format:'bdh-protocol-browser-session-v3',dynamics_version:3,checkpoint_sha256:runtime.portable?.checkpoint_sha256??null,
     stage:phaseName,tick,branch:activeBranch,synthetic:true,clock_calibrated:false,target_used_at_inference:false,
     state:{cells:Array.from(state.cells),edgeFast:Array.from(state.edgeFast),edgeSlow:Array.from(state.edgeSlow),delayed:Array.from(state.delayed),induction:Array.from(state.induction)}}});
 }catch(e){postMessage({type:'error',message:e.message});}};

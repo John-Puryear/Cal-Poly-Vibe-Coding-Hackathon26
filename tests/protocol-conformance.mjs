@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ProtocolRuntime } from '../dist/protocol-runtime.js';
@@ -9,7 +10,7 @@ const readJson = name => JSON.parse(fs.readFileSync(path.join(root, name), 'utf8
 const seed = readJson('dist/protocol/planaria-seed.json');
 const weights = readJson('dist/protocol/weights.json');
 const manifest = readJson('tests/protocol-fixture.json');
-const binary = fs.readFileSync(path.join(root, 'tests/protocol-fixture.f32'));
+const binary = gunzipSync(fs.readFileSync(path.join(root, 'tests/protocol-fixture.f32.gz')));
 const view = new DataView(binary.buffer, binary.byteOffset, binary.byteLength);
 const n = seed.width * seed.height;
 const stateLength = manifest.tensor_lengths.reduce((a, b) => a + b, 0);
@@ -49,11 +50,11 @@ compare(state, 0, 'initial');
 state = runtime.step(state, null, fire(manifest.fire1));
 compare(state, 1, 'one');
 const keep = new Float32Array(n);
-for (let y = 0; y < seed.height; y++) for (let x = 10; x <= 23; x++) keep[y * seed.width + x] = 1;
+for (let y = 0; y < seed.height; y++) for (let x = 10; x <= 18; x++) keep[y * seed.width + x] = 1;
 state = runtime.damage(state, keep);
 compare(state, 2, 'cut');
 const control = new Float32Array(4 * n);
-for (let y = 0; y < seed.height; y++) for (let x = 12; x <= 23; x++) {
+for (let y = 0; y < seed.height; y++) for (let x = 12; x <= 18; x++) {
   const i = y * seed.width + x;
   control[i] = 0.4;
   control[n + i] = 0.8;

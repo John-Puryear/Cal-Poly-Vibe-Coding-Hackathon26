@@ -281,13 +281,27 @@ export class ProtocolRuntime {
       dst[17][i] = code[4] * live[i];
     }
 
-    // Treatment integrates in wounded posterior tissue; half dose enters cubically.
+    // Reversible coupling loss exposes a local wound-conditioned electrical
+    // tendency. The spatial spread is an explicit synthetic assumption; the
+    // block itself still acts on conductance, not as an injected voltage pulse.
     const posterior = new Float32Array(n), headMemory = channel(newInduction, 0, n);
     const eyeMemory = channel(newInduction, 1, n), injury = channel(newInduction, 2, n);
-    const eyeWindow = new Float32Array(n);
+    const eyeWindow = new Float32Array(n), blockedInjury = new Float32Array(n);
+    const couplingSignal = new Float32Array(n);
     for (let i = 0; i < n; i++) {
       posterior[i] = sigmoid(12 * (-polarity[i] - 0.12)) * (1 - face[i]);
-      const exposure = this.exposureRate * block[i] ** 3 * ind[2][i] * posterior[i] * (1 - ind[0][i]);
+      blockedInjury[i] = block[i] ** 3 * ind[2][i];
+    }
+    // A local middle-band block disconnects a wound field. Its electrical
+    // influence can reach the newly forming posterior even when the residual
+    // injury and posterior fate gradients do not coincide cell for cell.
+    const broadBlockedInjury = pool(blockedInjury, w, h, 6);
+    for (let i = 0; i < n; i++) {
+      couplingSignal[i] = broadBlockedInjury[i] * Math.sqrt(posterior[i]);
+      // The previous voltage must enter the induction window before blocked
+      // wound tissue can consolidate a persistent posterior organizer.
+      const voltageWindow = sigmoid(24 * (x[4][i] + 0.02));
+      const exposure = this.exposureRate * couplingSignal[i] * voltageWindow * (1 - ind[0][i]);
       const bistable = 0.025 * ind[0][i] * (1 - ind[0][i]) * (ind[0][i] - this.memoryThreshold);
       headMemory[i] = clamp(ind[0][i] + f[i] * (exposure + bistable), 0, 1) * live[i];
       eyeWindow[i] = Math.exp(-(((x[4][i] + 0.35) / 0.18) ** 2));
@@ -299,7 +313,7 @@ export class ProtocolRuntime {
     }
     const nearbyHeadMemory = pool(headMemory, w, h, 4);
     const posteriorProgram = new Float32Array(n);
-    for (let i = 0; i < n; i++) posteriorProgram[i] = sigmoid(28 * (nearbyHeadMemory[i] - this.memoryThreshold - 0.06)) * posterior[i];
+    for (let i = 0; i < n; i++) posteriorProgram[i] = sigmoid(28 * (nearbyHeadMemory[i] - this.memoryThreshold - 0.06)) * Math.sqrt(posterior[i]);
 
     // Bioelectric update reads prior voltage plus explicit coupling and packets.
     const liveVoltage = multiply(x[4], live);
@@ -322,7 +336,7 @@ export class ProtocolRuntime {
       const electricEyePair = faceBilateral * gauss((physical[i] - 0.07) / 0.024);
       const electricMouth = gauss((physical[i] + 0.10) / 0.03) * gauss(xrel / 4);
       const faceVoltage = 0.58 * broadFace - 0.75 * electricEyePair - 0.45 * electricMouth;
-      const planarianVoltage = 0.62 * polarity[i] + 0.78 * posteriorProgram[i] - 0.50 * x[2][i];
+      const planarianVoltage = 0.62 * polarity[i] + 0.78 * posteriorProgram[i] + 0.85 * couplingSignal[i] - 0.50 * x[2][i];
       const target = (1 - face[i]) * planarianVoltage + face[i] * faceVoltage + 0.15 * current[i];
       const diffusion = 0.07 * (1 - block[i]) * (localVNumerator[i] / Math.max(localVDenominator[i], 1e-4) - x[4][i]);
       const packetAlive = state.delayed[9 * n + i] + state.delayed[19 * n + i];
@@ -367,13 +381,15 @@ export class ProtocolRuntime {
       const posteriorHead = clamp(1.1 * posteriorDrive * posteriorHeadField, 0, 1);
       const planHead = clamp(clamp(4.8 * averagedAnterior[i], 0, 1) + posteriorHead, 0, 1) * live[i];
       const tailField = Math.exp(-0.5 * ((axial[i] - 0.75 * major) / 1.6) ** 2 - 0.5 * (lateral[i] / 1.9) ** 2);
-      const tailFate = (1 - posteriorProgram[i]) * sigmoid(16 * (-polarity[i] - 0.08)) * tailGate[i];
+      const tailFate = (1 - posteriorProgram[i]) * sigmoid(16 * (-polarity[i] - 0.08)) * tailGate[i]
+        * (1 - clamp(1.2 * couplingSignal[i], 0, 1))
+        * (1 - clamp(1.4 * posteriorDrive, 0, 1));
       const planTail = clamp(1.25 * tailField * tailFate, 0, 1) * live[i];
       const eyeAxial = gauss((Math.abs(axial[i]) - this.eyeAxialFraction * major) / 1.0);
       const eyeLateral = gauss((Math.abs(lateral[i]) - this.eyeLateralOffset) / 0.65);
       const leftProgram = sigmoid(-2 * axial[i]) * sigmoid(16 * (polarity[i] - 0.08));
-      const rightProgram = sigmoid(2 * axial[i]) * posteriorProgram[i] * loopSupport[i];
-      const eyeOrganizer = clamp((leftProgram + rightProgram) * headGate[i], 0, 1);
+      const rightProgram = sigmoid(2 * axial[i]) * posteriorDrive;
+      const eyeOrganizer = clamp(leftProgram * headGate[i] + rightProgram, 0, 1);
       const planEye = clamp(1.3 * eyeAxial * eyeLateral * eyeOrganizer + 0.7 * eyeMemory[i], 0, 1) * live[i];
       const faceHead = sigmoid(15 * (voltage[i] - 0.09)) * live[i];
       const faceEyeAxial = gauss((physical[i] - 0.07) / 0.023);
@@ -409,7 +425,7 @@ export class ProtocolRuntime {
       dst[3][i] = clamp(x[3][i] + f[i] * 0.075 * ((tailTarget[i] - x[3][i]) + residual[2 * n + i]), 0, 1) * live[i];
       dst[5][i] = clamp(x[5][i] + f[i] * 0.045 * (dst[1][i] - 0.6 * dst[2][i] - x[5][i]), 0, 1) * live[i];
       dst[6][i] = clamp(x[6][i] + f[i] * 0.035 * (0.25 * newBody[i] + 0.65 * dst[2][i] + 0.4 * dst[3][i] - x[6][i]), 0, 1) * live[i];
-      dst[12][i] = clamp(x[12][i] + f[i] * ready[i] * (0.05 * (Math.tanh(2 * voltage[i]) - x[12][i]) + residual[3 * n + i]), -1, 1) * live[i];
+      dst[12][i] = clamp(x[12][i] + f[i] * ready[i] * (0.05 * (Math.tanh(2 * x[4][i]) - x[12][i]) + residual[3 * n + i]), -1, 1) * live[i];
       dst[14][i] = clamp(x[14][i] + f[i] * ready[i] * (0.025 * (0.75 * newBody[i] - x[14][i]) + residual[4 * n + i]), 0, 1) * live[i];
       dst[13][i] = clamp(polarity[i] + f[i] * face[i] * 0.012 * (Math.tanh(3 * physical[i]) - polarity[i]), -1, 1) * live[i];
       dst[20][i] = clamp(x[20][i] + f[i] * 0.04 * (voltage[i] - x[20][i]), -1, 1) * live[i];

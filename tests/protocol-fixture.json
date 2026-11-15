@@ -1,5 +1,5 @@
 {
-  "format": "bdh-protocol-parity-v1",
+  "format": "bdh-protocol-parity-v3",
   "source_seed": 7000,
   "shape": [
     4,
@@ -30,6 +30,10 @@
     "m": 31,
     "limit": 16
   },
+  "cut_columns": [
+    10,
+    18
+  ],
   "control": {
     "current": 0.4,
     "broad": 0.8,
@@ -37,7 +41,7 @@
     "purine": 0.7,
     "middle_columns": [
       12,
-      23
+      18
     ]
   }
 }

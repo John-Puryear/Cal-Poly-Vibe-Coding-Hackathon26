@@ -191,12 +191,19 @@ class ProtocolNCA(nn.Module):
         live = (new_body > .1).to(x.dtype)
         code_next = code.expand(b,5,h,w)*live
 
-        # Middle-band communication loss first changes voltage/organizer state.
-        # Cubic dose response makes a half-strength block a negative control.
+        # Reversible coupling loss exposes a local, wound-conditioned electrical
+        # tendency before the posterior organizer consolidates. The spatial
+        # spread is a synthetic assumption, not an injected voltage pulse.
+        # Cubic dose response keeps a half-strength block a negative control.
         posterior = torch.sigmoid(12 * (-polarity - .12)) * (1 - face)
         memory_rate = .025 * self.exposure_log_gain.exp().clamp(.4, 2)
         threshold = .38 + .10 * torch.tanh(self.memory_threshold_delta)
-        exposure = memory_rate * block.pow(3) * injury * posterior * (1 - head_memory)
+        blocked_injury = block.pow(3) * injury
+        coupling_signal = F.max_pool2d(blocked_injury, 13, 1, 6) * posterior.sqrt()
+        # The previous tick's voltage must enter the induction window before
+        # blocked wound tissue can build a persistent head organizer.
+        voltage_window = torch.sigmoid(24 * (x[:, 4:5] + .02))
+        exposure = memory_rate * coupling_signal * voltage_window * (1 - head_memory)
         bistable = .025 * head_memory * (1 - head_memory) * (head_memory - threshold)
         head_memory = (head_memory + fire * (exposure + bistable)).clamp(0, 1) * live
         # Purine/voltage-window exercise remains separate from axial head memory.
@@ -205,11 +212,12 @@ class ProtocolNCA(nn.Module):
                                             + .012 * eye_memory * (1-eye_memory) * (eye_memory-.30))).clamp(0, 1) * live
         injury = (injury * .995).clamp(0, 1) * live
         nearby_head_memory = F.max_pool2d(head_memory, 9, 1, 4)
-        posterior_program = torch.sigmoid(28 * (nearby_head_memory - threshold - .06)) * posterior
+        posterior_program = torch.sigmoid(28 * (nearby_head_memory - threshold - .06)) * posterior.sqrt()
 
         # Conductance and local voltage diffusion are explicitly physical.
         local_voltage = F.avg_pool2d(voltage * live, 3, 1, 1) / F.avg_pool2d(live, 3, 1, 1).clamp_min(1e-4)
-        planarian_voltage = .62 * polarity + .78 * posterior_program - .50 * eye
+        planarian_voltage = (.62 * polarity + .78 * posterior_program
+                             + .85 * coupling_signal - .50 * eye)
         xs = torch.arange(w, device=x.device, dtype=x.dtype)[None, None, None, :]
         row_mass = new_body.sum(-1, keepdim=True).clamp_min(1e-4)
         center_x = (new_body * xs).sum(-1, keepdim=True) / row_mass
@@ -283,7 +291,9 @@ class ProtocolNCA(nn.Module):
         tail_field = torch.exp(-.5*((axial-.75*major)/1.6).square()
                                -.5*(lateral_axis/1.9).square())
         tail_fate = ((1-posterior_program) * torch.sigmoid(16*(-polarity-.08))
-                     * voltage_tail_gate)
+                     * voltage_tail_gate
+                     * (1 - (1.2 * coupling_signal).clamp(0, 1))
+                     * (1 - (1.4 * posterior_drive).clamp(0, 1)))
         plan_tail = (1.25*tail_field*tail_fate).clamp(0,1)*live
 
         # Shared eye program: each active end recruits two lateral primordia.
@@ -294,8 +304,8 @@ class ProtocolNCA(nn.Module):
         eye_axial = torch.exp(-.5*((axial.abs()-eye_axial_fraction*major)/1.0).square())
         eye_lateral = torch.exp(-.5*((lateral_axis.abs()-eye_lateral_offset)/.65).square())
         left_program = torch.sigmoid(-2*axial) * torch.sigmoid(16*(polarity-.08))
-        right_program = torch.sigmoid(2*axial) * posterior_program * loop_support
-        eye_organizer = ((left_program+right_program)*voltage_head_gate).clamp(0,1)
+        right_program = torch.sigmoid(2*axial) * posterior_drive
+        eye_organizer = (left_program*voltage_head_gate+right_program).clamp(0,1)
         plan_eye = (1.3*eye_axial*eye_lateral*eye_organizer + .7*eye_memory).clamp(0,1)*live
 
         # The same physical-to-voltage-to-fate ordering applies to the face
@@ -320,7 +330,7 @@ class ProtocolNCA(nn.Module):
         tail = (tail + fire * .075 * ((target_tail - tail) + residual[:, 2:3])).clamp(0, 1) * live
         activator = (activator + fire * .045 * (head - .6*eye - activator)).clamp(0, 1) * live
         inhibitor = (inhibitor + fire * .035 * (.25*new_body + .65*eye + .4*tail - inhibitor)).clamp(0, 1) * live
-        regulatory = (regulatory + fire * ready * (.05 * (torch.tanh(2*voltage)-regulatory)
+        regulatory = (regulatory + fire * ready * (.05 * (torch.tanh(2*x[:, 4:5])-regulatory)
                                                    + residual[:, 3:4])).clamp(-1, 1) * live
         structure = (structure + fire * ready * (.025 * (.75*new_body-structure)
                                                  + residual[:, 4:5])).clamp(0, 1) * live
