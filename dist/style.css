@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* Theme A. protocol.css reads --text, --muted, --surface, --surface2, --hover, --line, --line-strong and --accent,
    so those names are kept as aliases. This file loads after protocol.css so its rules win at equal specificity. */
@@ -6,7 +6,7 @@
   --bg:#FAF7F1;--panel:#E7ECF1;--ink:#13191D;--muted:#5A6570;--line:#E3DED3;--accent:#1F5FD1;--accent-hover:#174BA8;--warm:#D9822B;
   --button:#1F5FD1;--button-hover:#174BA8;
   --text:var(--ink);--surface:var(--panel);--surface2:#DCE3EA;--hover:#DCE3EA;--line-strong:#CFC8BA;--dim:var(--muted);
-  --sans:'Inter',system-ui,sans-serif;--display:'Inter Tight','Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+  --sans:'Geist',system-ui,sans-serif;--display:'Geist',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
@@ -43,9 +43,9 @@ main{max-width:1200px;margin:auto;padding:0 48px}
 main>section{border-top:1px solid var(--line)}
 main>section:first-child{border-top:0}
 .column{max-width:680px}
-h1{font:300 clamp(44px,6vw,76px)/1.05 var(--display);letter-spacing:-1.5px;margin:20px 0 24px}
-h2{font:300 clamp(32px,4vw,48px)/1.12 var(--display);letter-spacing:-.8px;margin:0 0 20px}
-.sub-title{font:300 28px/1.2 var(--display);letter-spacing:-.3px;margin:32px 0 12px}
+h1{font:500 clamp(42px,5.6vw,68px)/1.05 var(--display);letter-spacing:-2px;margin:20px 0 24px}
+h2{font:500 clamp(28px,3.2vw,38px)/1.15 var(--display);letter-spacing:-.8px;margin:0 0 20px}
+.sub-title{font:500 22px/1.25 var(--display);letter-spacing:-.3px;margin:32px 0 12px}
 .lead{font-size:20px;line-height:1.55}
 .hero-note{margin-top:12px;font-size:15px;color:var(--muted)}
 .planned-badge{display:inline-block;padding:4px 12px;border:1px solid var(--warm);border-radius:999px;font:500 12px var(--sans);letter-spacing:1px;color:var(--ink)}
@@ -110,7 +110,7 @@ h2{font:300 clamp(32px,4vw,48px)/1.12 var(--display);letter-spacing:-.8px;margin
 .process-figure{display:flex;align-items:flex-start;gap:16px;margin:8px 0 0}
 .process-figure>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .process-figure span{color:var(--accent)}
-.process-figure strong{font:300 26px/1.2 var(--display)}
+.process-figure strong{font:500 22px/1.25 var(--display)}
 .process-figure small{font-size:14px;line-height:1.5;color:var(--muted)}
 .process-figure>b{font-weight:400;color:var(--muted);margin-top:24px}
 .stat-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
@@ -128,9 +128,10 @@ h2{font:300 clamp(32px,4vw,48px)/1.12 var(--display);letter-spacing:-.8px;margin
 .evidence-tag{flex-shrink:0;font-size:12px;letter-spacing:.8px;color:var(--accent)}
 .evidence-tag.subdued{color:var(--muted)}
 .venture-grid,.customer-evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:8px 0 16px}
-.venture-card,.customer-evidence-card,.team-card{min-width:0;padding:20px;background:var(--panel);border-radius:8px}
-.venture-card .mono-label{display:none}
-.venture-card h3,.customer-evidence-card h3{font:300 24px/1.2 var(--display);margin-bottom:8px}
+/* Cards: cream with a thin line, no gray-blue fills on the page */
+.card,.venture-card,.customer-evidence-card,.team-card,.development-card{min-width:0;padding:22px;background:var(--bg);border:1px solid var(--line);border-radius:12px}
+.venture-card .mono-label{display:block;margin-bottom:10px;font:600 12px var(--sans);letter-spacing:1px;color:var(--accent)}
+.card h3,.venture-card h3,.customer-evidence-card h3{font:500 22px/1.25 var(--display);letter-spacing:-.3px;margin-bottom:8px}
 .venture-card p,.customer-evidence-card p{font-size:15px;line-height:1.6;color:var(--muted)}
 .customer-next strong{color:var(--ink)}
 .diagnostic-figure{margin-top:20px}
@@ -142,11 +143,11 @@ figcaption{font-size:14px;line-height:1.6;color:var(--muted)}
 .development-thumb{height:240px;padding:0}
 .development-thumb img{display:block;width:100%;height:100%;object-fit:cover}
 .development-card figcaption{display:flex;flex-direction:column;gap:6px;padding-top:12px}
-.development-card figcaption strong{font:300 22px/1.2 var(--display);color:var(--ink)}
+.development-card figcaption strong{font:500 20px/1.25 var(--display);color:var(--ink)}
 
 /* Team */
 .team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.team-card strong{display:block;font:300 28px/1.2 var(--display)}
+.team-card strong{display:block;font:500 22px/1.25 var(--display)}
 .team-card p{margin-top:8px;color:var(--muted)}
 
 /* Sources */
@@ -159,9 +160,9 @@ figcaption{font-size:14px;line-height:1.6;color:var(--muted)}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
-/* Type: Inter Tight 300 headlines (set above), Inter body, JetBrains Mono only for numbers, controls and readouts */
-.why-list b,.stat-strip dd{font:400 clamp(32px,3.4vw,44px)/1.1 var(--mono);letter-spacing:-1px;color:var(--ink)}
-.process-figure span,.guide-num{font:500 13px var(--mono)}
+/* Type: Geist everywhere outside the demo; JetBrains Mono only for demo controls and readouts */
+.why-list b,.stat-strip dd{font:500 clamp(34px,3.6vw,46px)/1.1 var(--display);letter-spacing:-1.5px;color:var(--ink)}
+.process-figure span,.guide-num{font:500 13px var(--sans)}
 .lab .inference-status{font:13px var(--mono)}
 .lab .step-counter>span{font:13px var(--mono);letter-spacing:1px}
 .lab .step-counter strong{font-family:var(--mono);font-size:26px}
@@ -231,3 +232,16 @@ summary>span{font-weight:400;color:var(--muted)}
 }
 .process-figure{margin-bottom:16px}
 @media(max-width:600px){.protocol-lab .posterior-voltage-card{margin:-4px 0}}
+
+/* New pieces: card tags, source links, drug label, limits list */
+.card-tag{display:inline-block;margin-bottom:12px;padding:2px 10px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--muted)}
+.card p{font-size:16px;line-height:1.6;color:var(--muted)}
+.customer-evidence-card{display:flex;flex-direction:column}
+.customer-evidence-card p{flex:1}
+.card-source{margin-top:16px;font-size:15px;color:var(--accent)}
+.figure-label{margin:40px 0 0;font:600 13px var(--sans);letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.demo-title{font:500 22px/1.25 var(--display);margin:0 0 4px}
+.limit-list{margin:0;padding-left:20px;font-size:19px;line-height:1.6}
+.limit-list li{padding:4px 0}
+.protocol-lab .drug-label{margin:0 0 8px;font:500 13px var(--sans);color:var(--text)}
+.protocol-lab .drug-label::before{content:'';display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--warm);vertical-align:1px}
