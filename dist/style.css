@@ -257,3 +257,6 @@ main{counter-reset:research-section 1}
 
 /* Hero: one-line honesty note under the pitch. */
 .product-lead .article-content>p.hero-note{margin:-12px 0 20px;font:13px/1.5 var(--mono);color:var(--muted)}
+/* Details expanders that hold moved text outside article sections. */
+.lab+.paper-detail{margin-top:14px}
+.why>.paper-detail,.intro-secondary>.paper-detail,.diagnostic-feature>.paper-detail,.development-intro>.paper-detail,.source-library-intro>.paper-detail{max-width:750px;margin-top:18px}
