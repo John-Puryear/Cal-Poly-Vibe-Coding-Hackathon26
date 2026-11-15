@@ -60,7 +60,6 @@
 /* Business section */
 .article-content>.section-note+.section-note{margin-top:-11px}
 .inline-link{color:var(--accent);border-bottom:1px solid var(--accent)}
-
 .venture-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:32px 0 22px}
 .venture-card{min-width:0;padding:18px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
 .venture-card .mono-label{display:block;margin-bottom:13px;font-size:11px}
@@ -192,3 +191,12 @@ main{counter-reset:research-section 1}
 .article-section{counter-increment:research-section}
 .article-section .article-content>h2::before{content:counter(research-section,decimal-leading-zero) ' / RESEARCH NOTE';display:block;margin-bottom:16px;font:11px var(--mono);letter-spacing:1.7px;color:var(--accent)}
 .article-section,.why,.closing{border-color:var(--line)}
+
+/* Product vision leads the page; the live research invitation follows. */
+.product-lead{padding:64px 0 48px;border-top:0;counter-increment:none}
+.product-lead .article-content{max-width:930px}
+.product-lead .article-content>h1{font:300 clamp(44px,6.2vw,80px)/1.05 var(--display);letter-spacing:-2px;margin-bottom:25px}
+.intro-secondary{padding:64px 0 0;margin-top:24px;border-top:1px solid var(--line)}
+.intro-secondary>h2{font:300 clamp(44px,6.2vw,80px)/1.05 var(--display);letter-spacing:-2px}
+@media(max-width:700px){.product-lead{padding:44px 0 36px}.product-lead .article-content>h1,.intro-secondary>h2{font-size:46px;letter-spacing:-1.2px}.intro-secondary{padding-top:44px;margin-top:12px}}
+@media(max-width:370px){.product-lead .article-content>h1,.intro-secondary>h2{font-size:40px}}
