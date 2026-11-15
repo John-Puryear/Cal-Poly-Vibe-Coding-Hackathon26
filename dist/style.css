@@ -26,7 +26,7 @@ img{max-width:100%}
 .skip:focus{top:10px}
 
 /* Header and footer */
-.masthead,footer{max-width:1200px;margin:auto;padding:20px 48px;display:flex;gap:32px;align-items:center;justify-content:space-between}
+.masthead,footer{max-width:1216px;margin:auto;padding:20px 48px;display:flex;gap:32px;align-items:center;justify-content:space-between}
 .masthead{border-bottom:1px solid var(--line)}
 footer{border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
 .brand{font-size:14px;font-weight:600;letter-spacing:1.5px;white-space:nowrap;color:var(--ink)}
@@ -39,17 +39,15 @@ nav a{white-space:nowrap}
 .prototype .status-dot,.status-dot.amber{background:var(--warm)}
 
 /* Sections */
-main{max-width:1200px;margin:auto;padding:0 48px}
+main{max-width:1216px;margin:auto;padding:0 48px}
 main>section{border-top:1px solid var(--line)}
 main>section:first-child{border-top:0}
-.column{max-width:680px}
 h1{font:500 clamp(42px,5.6vw,68px)/1.05 var(--display);letter-spacing:-2px;margin:20px 0 24px}
 h2{font:500 clamp(28px,3.2vw,38px)/1.15 var(--display);letter-spacing:-.8px;margin:0 0 20px}
 .sub-title{font:500 22px/1.25 var(--display);letter-spacing:-.3px;margin:32px 0 12px}
 .lead{font-size:20px;line-height:1.55}
 .hero-note{margin-top:12px;font-size:15px;color:var(--muted)}
 .planned-badge{display:inline-block;padding:4px 12px;border:1px solid var(--warm);border-radius:999px;font:500 12px var(--sans);letter-spacing:1px;color:var(--ink)}
-.planned-tag{display:inline-block;margin-left:4px;padding:1px 9px;border:1px solid var(--warm);border-radius:999px;font-size:13px;color:var(--ink);white-space:nowrap}
 .inline-link{color:var(--accent);border-bottom:1px solid currentColor}
 .inline-link:hover{color:var(--accent-hover)}
 
@@ -99,12 +97,6 @@ h2{font:500 clamp(28px,3.2vw,38px)/1.15 var(--display);letter-spacing:-.8px;marg
 .protocol-lab select option{background:#1C252B;color:#EEF2F4}
 .protocol-lab canvas{display:block;image-rendering:pixelated}
 
-/* Short lists: results and where this goes */
-.short-list{list-style:none;margin:0;padding:0}
-.short-list li{padding:16px 0;border-top:1px solid var(--line)}
-.short-list li:first-child{border-top:0;padding-top:0}
-.short-list strong{font-weight:600}
-.limits .column>p{font-size:20px;line-height:1.55}
 
 /* How it works */
 .process-figure{display:flex;align-items:flex-start;gap:16px;margin:8px 0 0}
@@ -173,14 +165,12 @@ figcaption{font-size:14px;line-height:1.6;color:var(--muted)}
 .protocol-lab .layer-card h3{font-size:14px}
 .protocol-lab .button-step{width:20px;height:20px}
 
-/* Spacing: 96px between sections on desktop, 56px on phones */
-main>section{padding:96px 0}
-main>.hero{padding:72px 0 96px}
-.why h2,.team h2{margin-bottom:32px}
+/* Spacing: 64px between sections on desktop, 40px on phones */
+main>section{padding:64px 0}
+main>.hero{padding:64px 0}
 .section-heading h2{margin-bottom:12px}
-.how .stat-strip{margin:56px 0 8px}
+.how .stat-strip{margin:40px 0 8px}
 .how .process-figure{margin-top:32px}
-.short-list{margin-top:8px}
 
 /* One "Details +" expander style everywhere */
 details{margin-top:24px;border-top:1px solid var(--line)}
@@ -214,13 +204,12 @@ summary>span{font-weight:400;color:var(--muted)}
   nav{width:100%;gap:20px;font-size:14px}
   footer{flex-wrap:wrap;gap:8px;padding:20px 16px}
   main{padding:0 16px}
-  main>section{padding:56px 0}
-  main>.hero{padding:40px 0 56px}
-  .lead,.limits .column>p{font-size:18px}
-  .why-list,.stat-strip,.team-grid,.venture-grid,.customer-evidence-grid,.development-grid,.guide-steps{grid-template-columns:1fr;gap:20px}
+  main>section{padding:40px 0}
+  main>.hero{padding:32px 0 40px}
+  .lead,.limit-list{font-size:18px}
+  .why-list,.stat-strip,.team-grid,.venture-grid,.card-row,.development-grid,.guide-steps{grid-template-columns:1fr;gap:16px}
   .process-figure{flex-direction:column;gap:12px}
   .process-figure>b{margin:0;transform:rotate(90deg)}
-  .why h2,.team h2{margin-bottom:24px}
   .how .stat-strip{margin-top:40px}
   .source-group a{flex-direction:column;gap:2px}
   .evidence-list>div{flex-wrap:wrap}
@@ -245,3 +234,29 @@ summary>span{font-weight:400;color:var(--muted)}
 .limit-list li{padding:4px 0}
 .protocol-lab .drug-label{margin:0 0 8px;font:500 13px var(--sans);color:var(--text)}
 .protocol-lab .drug-label::before{content:'';display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--warm);vertical-align:1px}
+
+/* Layout: 1120px content, headline left (35%) and content right on desktop; one column below 820px */
+.split{display:grid;grid-template-columns:35% minmax(0,1fr);gap:48px;align-items:start}
+.split h2{margin:0}
+.split-body>:first-child{margin-top:0}
+.split-body p{max-width:680px}
+.hero .lead{max-width:760px}
+.experiment-section>.split{margin-bottom:40px}
+.experiment-section .section-heading{margin-bottom:0}
+.card-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0}
+.venture-grid.card-row{grid-template-columns:repeat(4,minmax(0,1fr));margin:0}
+.customers .card-row{margin-top:32px}
+.results h2{margin-bottom:24px}
+.row-link{margin-top:16px}
+.sequence-figure{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.sequence-figure>b{margin-top:22px}
+.pipeline .planned-badge{margin-bottom:16px}
+.pipeline-figure{margin-top:24px}
+.source-library .source-group a{font-size:16px}
+@media(max-width:1000px){.venture-grid.card-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:819px){.split{grid-template-columns:1fr;gap:16px}.experiment-section>.split{margin-bottom:28px}}
+@media(max-width:700px){.card-row,.venture-grid.card-row{grid-template-columns:1fr}.figure-label{margin-top:28px}}
+.split-body p+p{margin-top:12px}
+.protocol-lab .protocol-condition-row{align-items:end}
+.protocol-lab .protocol-condition-row>.protocol-index{padding-bottom:12px}
+@media(max-width:760px){.protocol-lab .protocol-condition-row>.protocol-index{padding-bottom:0}}
