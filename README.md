@@ -50,4 +50,4 @@ The proposed autonomous measurement loop combines embedded bioelectronics with g
 
 ## The Site
 
-The [Site](https://bdh-nca-bioelectric-timing-lab.elvenbee20.chatgpt.site/#experiment) 
+https://bdh-nca-bioelectric-timing-lab.elvenbee20.chatgpt.site/#experiment
