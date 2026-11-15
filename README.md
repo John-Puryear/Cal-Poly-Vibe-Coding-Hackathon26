@@ -42,6 +42,18 @@ These are synthetic results. The v3 browser and Python transitions start from th
 - `tests/protocol-*.mjs`: numerical parity, early timing, long outcomes, face timing, and worker integration.
 - `dist/runtime.js`, `dist/worker.js`, `dist/model/`, `model-source/`: retained earlier 16,116-parameter branch and its tests. The current page uses the new protocol runtime.
 
-## Publishing
+## Update the original public Site
 
-The tracked `.openai/hosting.json` retains the existing Sites project ID and static `dist` deployment. A GitHub push updates source control but does not by itself update the published Sites URL. Publish the tested `dist/` through the same Sites project while preserving its current audience.
+The [current v3 demo](https://bdh-nca-bioelectric-timing-lab.elvenbee20.chatgpt.site/#experiment) is public so the original Site owner can inspect it. The original Site is [Morphogenesis Lab](https://morphogenesis-lab-bdh-nca.pleasantgerbil1.chatgpt.site/), with project ID `appgprj_6af8b1de0968819184b672671b51dd15`. The `.openai/hosting.json` in this repository already points to that original project and declares `dist/` as the static build. GitHub changes do not automatically publish to ChatGPT Sites.
+
+**For the person who owns the original ChatGPT Site:**
+
+1. Sign in to the ChatGPT account that owns the original Site. Open the public v3 demo above to see the intended result.
+2. Start a Codex chat in that account and give it this repository URL: `https://github.com/John-Puryear/Cal-Poly-Vibe-Coding-Hackathon26`. Paste the instruction below. No ZIP transfer is needed because the complete deployable `dist/` and hosting manifest are on `main`.
+3. After Codex deploys, refresh the **original** Site URL and compare it with the public v3 demo. The original URL should show the planarian seed, three live layers, compact treatment controls, and the 50,741 / 254 / 1,024 model comparison.
+
+> Update my **existing** ChatGPT Site `appgprj_6af8b1de0968819184b672671b51dd15` at `https://morphogenesis-lab-bdh-nca.pleasantgerbil1.chatgpt.site/` from the `main` branch of `John-Puryear/Cal-Poly-Vibe-Coding-Hackathon26`. Use the repository's `.openai/hosting.json` and the complete `dist/` directory. Preserve the existing project ID, URL, and public audience. Save and deploy a new version of this Site; do not create a replacement Site. Then verify development, trunk cut, brief block, sustained broad block, half-dose block, clean recut, and the three synchronized layers.
+
+If Codex cannot obtain a source write credential for the original Site, check that it is signed into the Site owner's ChatGPT account. An owner may also grant **Can edit** to an active member of the same ChatGPT workspace through the Site's **Share → Who has access** settings. GitHub repository ownership alone does not grant ChatGPT Sites publishing rights.
+
+The published v3 demo and this GitHub repository are usable while the original Site owner performs that final deployment.
