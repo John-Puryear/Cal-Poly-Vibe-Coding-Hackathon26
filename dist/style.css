@@ -165,9 +165,8 @@ figcaption{font-size:14px;line-height:1.6;color:var(--muted)}
 .protocol-lab .layer-card h3{font-size:14px}
 .protocol-lab .button-step{width:20px;height:20px}
 
-/* Spacing: 64px between sections on desktop, 40px on phones */
-main>section{padding:64px 0}
-main>.hero{padding:64px 0}
+/* Spacing: the last thing in a section sits 40px above the divider; the next section starts 64px below it (40px on phones) */
+main>section,main>.hero{padding:64px 0 40px}
 .section-heading h2{margin-bottom:12px}
 .how .stat-strip{margin:40px 0 8px}
 .how .process-figure{margin-top:32px}
@@ -175,7 +174,7 @@ main>.hero{padding:64px 0}
 /* One "Details +" expander style everywhere */
 details{margin-top:24px;border-top:1px solid var(--line)}
 details details{margin-top:16px}
-summary{display:inline-flex;align-items:center;gap:8px;padding:14px 0;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
+summary{display:inline-flex;align-items:center;gap:8px;padding:24px 0 0;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
 summary::-webkit-details-marker{display:none}
 summary::after{content:'+';font:400 18px/1 var(--sans)}
 details[open]>summary::after{content:'\2212'}
@@ -183,10 +182,13 @@ summary:hover{color:var(--accent-hover)}
 summary>span{font-weight:400;color:var(--muted)}
 .paper-detail p,.demo-guide>p{margin:0 0 16px;max-width:680px}
 .paper-detail>a{display:inline-block;margin-bottom:16px;color:var(--accent)}
-.demo-guide{margin:0 0 20px}
+.demo-guide{margin:24px 0}
 .demo-guide>ol{margin:0 0 16px;padding-left:22px;display:grid;gap:8px;font-size:15px;color:var(--muted)}
 .demo-guide>p{font-size:15px;color:var(--muted)}
-.lab+details{margin-top:20px;border-top:0}
+.lab+details{margin-top:24px}
+details[open]>summary{padding-bottom:16px}
+/* Nothing at the end of a section adds extra space before the divider */
+main>section>:last-child,main>section .split-body>:last-child,main>section .column>:last-child,details>:last-child,.card-row>*>:last-child{margin-bottom:0}
 
 /* Tablet */
 @media(max-width:1000px){
@@ -204,8 +206,7 @@ summary>span{font-weight:400;color:var(--muted)}
   nav{width:100%;gap:20px;font-size:14px}
   footer{flex-wrap:wrap;gap:8px;padding:20px 16px}
   main{padding:0 16px}
-  main>section{padding:40px 0}
-  main>.hero{padding:32px 0 40px}
+  main>section,main>.hero{padding:48px 0 32px}
   .lead,.limit-list{font-size:18px}
   .why-list,.stat-strip,.team-grid,.venture-grid,.card-row,.development-grid,.guide-steps{grid-template-columns:1fr;gap:16px}
   .process-figure{flex-direction:column;gap:12px}
