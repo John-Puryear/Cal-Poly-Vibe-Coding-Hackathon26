@@ -6,21 +6,31 @@
   <meta name="theme-color" content="#FAF7F1">
   <meta name="description" content="Kaia Biosciences: explore synthetic planarian regeneration, bioelectric fields, and persistent two-head induction in a live browser simulation.">
   <title>Kaia Biosciences: live regeneration protocol</title>
-  <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./protocol.css">
+  <link rel="stylesheet" href="./style.css">
   <script type="module" src="./app.js"></script>
 </head>
+<body>
 <body>
   <a class="skip" href="#experiment">Skip to the experiment</a>
   <header class="masthead">
     <a class="brand" href="#"><span class="brand-mark" aria-hidden="true">▦</span> KAIA <span class="brand-light">BIOSCIENCES</span></a>
-    <nav aria-label="Main"><a href="#experiment">Experiment</a><a href="#business">Product</a><a href="#pipeline">Data plan</a><a href="#evidence">Limits</a></nav>
+    <nav aria-label="Main"><a href="#experiment">Demo</a><a href="#results">Results</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
     <span class="prototype"><span class="status-dot"></span> Research prototype</span>
   </header>
   <main>
-    <section class="article-section product-lead" id="business" aria-labelledby="business-title"><div class="article-content"><span class="planned-badge">PRODUCT VISION · NOT A DRUG ASSAY</span><h1 id="business-title">Test ideas earlier.<br>Learn from biology.</h1><p>We're building simulations that let drug teams test ideas on a computer before running them in the lab.</p><p class="hero-note">Synthetic demo. It does not predict drug effects or replace clinical trials.</p><details class="paper-detail"><summary>Details</summary><p>Drug development can take more than a decade and billions of dollars. We aim to test candidate drugs and therapies earlier in progressively validated biological simulations, helping teams prioritize laboratory work. This demo tests one piece of that vision: whether timed changes in cell-to-cell communication can redirect a regenerating body plan. Future models would need experimental voltage, anatomy, and molecular measurements, plus held-out validation, before they could support drug decisions.</p></details><div class="venture-grid"><div class="venture-card"><span class="mono-label">CUSTOMERS</span><h3>Teams building biology</h3><p>Pharma and biotech developers, and AI companies extending their models into living systems.</p></div><div class="venture-card"><span class="mono-label">SIMULATION STUDIES</span><h3>Partner-run tests</h3><p>A planned service for candidate therapies in selected biological scenarios, with a future privacy-preserving option for proprietary inputs and model details.</p></div><div class="venture-card"><span class="mono-label">DATA PRODUCTS</span><h3>Measured context</h3><p>Potentially licensed datasets on morphogenesis and intervention responses, including cell-culture and organoid scenarios.</p></div><div class="venture-card"><span class="mono-label">GROWTH</span><h3>Improve, then scale</h3><p>Refine measurement and validation, retrain on new time series, then expand simulation quality, scope, and throughput.</p></div></div><details class="paper-detail"><summary>How private studies might work</summary><p>We would explore confidential or encrypted computation so partners could limit disclosure of candidate details while protecting model internals. This is a proposed design, not a feature of the current demo. Zero-knowledge proofs alone do not run a hidden-input biological simulation; the privacy architecture would need separate design and security review.</p><a href="https://csrc.nist.gov/projects/pec" target="_blank" rel="noopener">Privacy-enhancing computation methods · NIST ↗</a></details></div></section>
+    <section class="hero" id="business" aria-labelledby="business-title">
+      <div class="column">
+        <span class="planned-badge">PRODUCT VISION · NOT A DRUG ASSAY</span>
+        <h1 id="business-title">Test ideas earlier.<br>Learn from biology.</h1>
+        <p class="lead">We're building simulations that let drug teams test ideas on a computer before running them in the lab.</p>
+        <p class="hero-note">Synthetic demo. It does not predict drug effects or replace clinical trials.</p>
+        <a class="primary-button hero-button" href="#experiment">See it live</a>
+        <details class="paper-detail"><summary>Details</summary><p>Drug development can take more than a decade and billions of dollars. We aim to test candidate drugs and therapies earlier in progressively validated biological simulations, helping teams prioritize laboratory work. This demo tests one piece of that vision: whether timed changes in cell-to-cell communication can redirect a regenerating body plan. Future models would need experimental voltage, anatomy, and molecular measurements, plus held-out validation, before they could support drug decisions.</p></details>
+      </div>
+    </section>
 
-    <section class="why" aria-labelledby="why-title">
+    <section class="why" id="why" aria-labelledby="why-title">
       <h2 class="why-title" id="why-title">Why it matters</h2>
       <ul class="why-list">
         <li><b>$2.6B</b><span class="why-label">to bring one new drug to approval</span><a class="why-source" href="https://www.appliedclinicaltrialsonline.com/view/tufts-csdd-cost-develop-new-drug-26b" target="_blank" rel="noopener">Tufts CSDD, 2014 ↗</a></li>
@@ -30,35 +40,14 @@
       <details class="paper-detail"><summary>Details</summary><p>The full path from lab to patient can take up to 15 years (<a class="why-source" href="https://ncats.nih.gov/research/our-impact/our-impact-drug-discovery-and-development" target="_blank" rel="noopener">NIH NCATS ↗</a>). This synthetic demo does not claim to shorten that timeline.</p></details>
     </section>
 
-    <section class="article-section customer-path" id="customer-path" aria-labelledby="customer-title">
-      <div class="article-content">
-        <h2 id="customer-title">Start with a testable question.</h2>
-        <p>The first prospective users are research teams in biotech and pharma.</p>
-        <details class="paper-detail"><summary>Details</summary><p>The next step is a narrow study: agree on one biological question, compare predictions with measured results, and show where the model succeeds or fails before offering it for research decisions.</p>
-        <div class="customer-evidence-grid">
-          <div class="customer-evidence-card"><h3>AI is already in the lab.</h3><p><a class="inline-link" href="https://www.benchling.com/biotech-ai-report-2026" target="_blank" rel="noopener">Benchling's 2026 survey</a> of about 100 biotech and biopharma organizations already using AI describes demand for scientific tools alongside persistent data and validation gaps. Its sample represents AI adopters, not the entire industry.</p></div>
-          <div class="customer-evidence-card"><h3>Validation defines the use.</h3><p><a class="inline-link" href="https://ncats.nih.gov/research/research-activities/tissue-chip/collaborations" target="_blank" rel="noopener">NCATS tissue-chip collaborations</a> and <a class="inline-link" href="https://www.iqmps.org/_files/ugd/7a2c95_324240df948e4909a3708ee698576c37.pdf" target="_blank" rel="noopener">IQ MPS Affiliate reports</a> show pharma, researchers, and technology developers working on fit-for-purpose models and adoption. They are category precedents, not tests of this simulation.</p></div>
-          <div class="customer-evidence-card"><h3>Qualification takes evidence.</h3><p>The <a class="inline-link" href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-accepts-first-silico-drug-development-tool-under-istand-program-help-predict-drug-induced-liver" target="_blank" rel="noopener">FDA accepted a different AI digital liver model's letter of intent</a> into ISTAND. That is the first of three qualification steps, not approval of that tool or this one.</p></div>
-        </div>
-        <p class="customer-next">Proposed sequence: <strong>research collaboration</strong> → <strong>held-out experimental validation</strong> → <strong>scoped simulation studies and measured-data products</strong>.</p></details>
-      </div>
-    </section>
-
-    <section class="intro intro-secondary" aria-labelledby="title">
-      <h2 id="title">Watch signals become<br>structure.</h2>
-      <p class="lead">Develop a normal planarian, cut a trunk fragment, and test how the duration of a reversible communication block changes regeneration.</p>
-      <a class="primary-button hero-button" href="#experiment">See it live</a>
-      <dl class="stat-strip">
-        <div><dt>research checkpoint weights</dt><dd>50,741</dd></div>
-        <div><dt>browser demo learned values</dt><dd id="stat-parameters">254</dd></div>
-        <div><dt>cells running the same browser rule</dt><dd id="stat-cells">1,024</dd></div>
-      </dl>
-      <details class="paper-detail"><summary>Details</summary><p>The computer research checkpoint and this live browser demo are separate models. The demo combines 254 learned values with explicit synthetic rules, applied across a 32 × 32 grid. It does not load or compress the research checkpoint's 50,741 weights.</p></details>
-    </section>
-
-
     <section class="experiment-section" id="experiment" aria-labelledby="experiment-title">
-      <div class="section-heading"><div><span class="mono-label">INTERACTIVE PROTOCOL</span><h2 id="experiment-title">Grow. Cut. Change communication.</h2></div><p>Every view reads the same evolving tissue state.</p></div>
+      <div class="section-heading"><div><h2 id="experiment-title">Grow. Cut. Change communication.</h2></div><p>Every view reads the same evolving tissue state.</p></div>
+      <ol class="guide-steps">
+        <li><span class="guide-num">1</span><div><strong>Grow.</strong> Click Develop normal, then Cut trunk.</div></li>
+        <li><span class="guide-num">2</span><div><strong>Pick a condition.</strong> Each one restarts from the same trunk fragment.</div></li>
+        <li><span class="guide-num">3</span><div><strong>Watch the timing.</strong> Does posterior voltage shift while the sustained block is active, before a new head appears?</div></li>
+        <li><span class="guide-num">4</span><div><strong>Recut.</strong> After washout and a clean recut, does the treated tissue keep its altered head pattern?</div></li>
+      </ol>
       <details class="demo-guide"><summary>How to run this demo <span>4 quick steps</span></summary><ol>
         <li><strong>Develop normal.</strong> Let the precursor grow to one head and one tail, then click <strong>Cut trunk</strong>.</li>
         <li><strong>Choose a condition.</strong> Untreated, brief, half-dose, and sustained broad blocks each restart from the same saved trunk fragment. A condition runs through treatment and washout automatically.</li>
@@ -66,12 +55,11 @@
         <li><strong>Test persistence.</strong> After sustained broad block finishes, click <strong>Clean recut</strong> to regrow the treated tissue without another block. Use <strong>Reset</strong> to start over.</li>
       </ol><p>The normal target is a reference image only; it is never supplied to the model during inference.</p><p>All durations are simulation ticks, not calibrated biological hours. These are synthetic outcomes, not predictions for real octanol doses.</p></details>
       <div class="lab protocol-lab">
-        <div class="lab-topbar"><span class="mono-label">PLANARIAN · 32 × 32 <span class="version-tag">v3 temporal test</span></span><div class="inference-status" id="model-status" role="status"><span class="status-dot amber"></span> Loading protocol model</div><div class="step-counter"><span>TICK</span><strong id="step-value">0000</strong></div></div>
+        <div class="lab-topbar"><div class="inference-status" id="model-status" role="status"><span class="status-dot amber"></span> Loading protocol model</div><div class="step-counter"><span>TICK</span><strong id="step-value">0000</strong></div></div>
         <div class="protocol-grid">
           <div class="protocol-controls" role="group" aria-label="Planarian experiment controls">
             <div class="protocol-steps">
-              <span class="protocol-index">PLANARIAN PROTOCOL</span>
-              <div class="protocol-primary-actions">
+                            <div class="protocol-primary-actions">
                 <button type="button" class="primary-button protocol-action" id="develop" disabled><span class="button-step">1</span> Develop normal</button>
                 <button type="button" class="quiet-button protocol-action" id="cut" disabled><span class="button-step">2</span> Cut trunk</button>
                 <button type="button" class="quiet-button protocol-action" id="recut" disabled><span class="button-step">4</span> Clean recut</button>
@@ -95,9 +83,9 @@
             <p class="phase-note" id="phase-note" aria-live="polite">The intact precursor is ready to develop.</p>
             <div class="signal-status"><span id="treatment-indicator">Coupling block inactive</span><span>Regional voltage values are unscaled</span></div>
             <div class="layer-grid">
-              <article class="layer-card"><div class="layer-card-heading"><span>01</span><h3>Visible Structure</h3></div><div class="layer-canvas"><canvas id="anatomy-canvas" width="384" height="384" role="img" aria-label="Current body, head, eyes, and tail"></canvas></div><p>Body · head · eyes · tail</p></article>
-              <article class="layer-card"><div class="layer-card-heading"><span>02</span><h3>Electrical State</h3></div><div class="layer-canvas"><canvas id="voltage-canvas" width="384" height="384" role="img" aria-label="Current synthetic voltage state, red positive and blue negative"></canvas></div><p><span class="legend-chip red"></span> positive &nbsp; <span class="legend-chip blue"></span> negative · fixed color contrast</p></article>
-              <article class="layer-card"><div class="layer-card-heading"><span>03</span><h3>Gene / axis / structure</h3></div><div class="layer-canvas"><canvas id="gene-canvas" width="384" height="384" role="img" aria-label="Current regulatory, polarity axis, and structural state"></canvas></div><label class="gene-select">Inspect <select id="gene-channel"><option value="composite">Combined</option><option value="regulatory">Regulatory</option><option value="axis">Axis</option><option value="structure">Structure</option></select></label></article>
+              <article class="layer-card"><div class="layer-card-heading"><h3>Visible Structure</h3></div><div class="layer-canvas"><canvas id="anatomy-canvas" width="384" height="384" role="img" aria-label="Current body, head, eyes, and tail"></canvas></div><p>Body · head · eyes · tail</p></article>
+              <article class="layer-card"><div class="layer-card-heading"><h3>Electrical State</h3></div><div class="layer-canvas"><canvas id="voltage-canvas" width="384" height="384" role="img" aria-label="Current synthetic voltage state, red positive and blue negative"></canvas></div><p><span class="legend-chip red"></span> positive &nbsp; <span class="legend-chip blue"></span> negative · fixed color contrast</p></article>
+              <article class="layer-card"><div class="layer-card-heading"><h3>Gene / axis / structure</h3></div><div class="layer-canvas"><canvas id="gene-canvas" width="384" height="384" role="img" aria-label="Current regulatory, polarity axis, and structural state"></canvas></div><label class="gene-select">Inspect <select id="gene-channel"><option value="composite">Combined</option><option value="regulatory">Regulatory</option><option value="axis">Axis</option><option value="structure">Structure</option></select></label></article>
             </div>
             <div class="layer-legend"><span><i class="legend-chip body"></i>Body</span><span><i class="legend-chip head"></i>Head</span><span><i class="legend-chip eye"></i>Eyes</span><span><i class="legend-chip tail"></i>Tail</span><span class="layer-legend-separator"></span><span><i class="legend-chip reg"></i>Regulatory</span><span><i class="legend-chip axis"></i>Axis</span><span><i class="legend-chip struct"></i>Structure</span></div>
             <div class="measurement-row"><div><span>Anterior voltage</span><strong id="anterior-voltage">—</strong></div><div class="posterior-voltage-card"><span>Posterior voltage</span><strong id="posterior-voltage">—</strong><small id="posterior-voltage-change">Raw signed voltage</small></div><div><span>Posterior head memory</span><strong id="posterior-memory">—</strong></div><div><span>Posterior head field</span><strong id="posterior-head">—</strong></div></div>
@@ -107,36 +95,98 @@
       <details class="paper-detail"><summary>Details</summary><p>This v3 temporal test keeps the <a href="https://github.com/John-Puryear/Cal-Poly-Vibe-Coding-Hackathon26/tree/bdh-protocol-v1-preserved" target="_blank" rel="noopener">baseline v1 architecture and weights</a> archived separately. Two scalar weights were calibrated manually for this candidate; no gradient training is claimed. The block is a synthetic, reversible communication intervention inspired by planarian octanol studies. Ticks are not calibrated biological hours. Electrical colors use one fixed contrast curve; the signed values above are unscaled. The model uses explicit spatial rules plus a compact learned correction and is not a biological prediction.</p></details>
     </section>
 
-    <section class="diagnostic-feature" id="fate-signatures" aria-labelledby="fate-title">
-      <h2 id="fate-title">Separate cues for separate fates.</h2>
+    <section class="results" id="results" aria-labelledby="results-title">
+      <div class="column">
+        <h2 id="results-title">What the demo shows</h2>
+        <ul class="short-list">
+          <li><strong>Normal control.</strong> A trunk fragment can regenerate untreated or after a brief block. <a class="inline-link" href="#limits">See limits</a></li>
+          <li><strong>Sustained broad block.</strong> In the tested protocol, it creates a posterior organizer that survives washout and a clean recut. <a class="inline-link" href="#limits">See limits</a></li>
+          <li><strong>Timing.</strong> The posterior voltage shift began during the block, before the visible posterior head. <a class="inline-link" href="#limits">See limits</a></li>
+        </ul>
+        <details class="paper-detail"><summary>Details</summary><div class="evidence-list"><div><span class="result-mark">↗</span><div><h3>Normal control</h3><p>The intact precursor develops a normal synthetic one-head, one-tail planarian. A trunk fragment can regenerate under untreated and brief-block conditions.</p></div><span class="evidence-tag">SYNTHETIC DEMO</span></div><div><span class="result-mark">↗</span><div><h3>Sustained broad block</h3><p>In the tested Python protocol, sustained middle-band broad coupling block creates a posterior organizer that survives washout and a clean recut. The brief and half-dose protocols are negative controls.</p></div><span class="evidence-tag">TESTED PROTOCOL</span></div></div><p class="evidence-note">In the protocol timing test, the treatment-associated posterior voltage shift began during the coupling block, before the measured regulatory difference and visible posterior head. <a class="inline-link" href="./protocol/validation.json" target="_blank" rel="noopener">View validation details ↗</a></p></details>
+      </div>
+    </section>
+
+    <section class="how" id="how" aria-labelledby="architecture-title">
+      <div class="column">
+        <h2 id="architecture-title">How the model works</h2>
+        <div class="process-figure"><div><span>01</span><strong>Develop</strong><small>One head and one tail</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Cut & block</strong><small>Timed middle-band coupling loss</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Wash out & recut</strong><small>Test persistent organizer memory</small></div>
+      </div>
+      <dl class="stat-strip">
+        <div><dt>research checkpoint weights</dt><dd>50,741</dd></div>
+        <div><dt>browser demo learned values</dt><dd id="stat-parameters">254</dd></div>
+        <div><dt>cells running the same browser rule</dt><dd id="stat-cells">1,024</dd></div>
+      </dl>
+      <div class="column">
+        <details class="paper-detail"><summary>Details</summary><p>The tissue state tracks physical matter, synthetic voltage, biochemical activity, regulatory and axis fields, structure, fast and slow edge memory, delayed communication, and induction memory.</p><p>A cut removes cells and their incident connections while preserving the state of surviving tissue.</p><p>The computer research checkpoint has 50,741 learned weights and is preserved separately. The live browser experiment runs a different 254-parameter recurrent rule across 1,024 cells. Those learned values work alongside explicit synthetic dynamics; they are not a conversion of the research checkpoint's weights.</p><p>The v3 transition starts from the original 254-parameter protocol checkpoint. Its separate candidate checkpoint changes two scalar weights by manual calibration; explicit synthetic rules govern wound growth, an axial chart retained in cells, a wound-conditioned voltage response to coupling loss, organizer thresholds, eye placement, and fast-to-slow connection consolidation. The voltage response begins during treatment, and prior voltage participates in the later induction-memory update. Organizer activity inhibits posterior tail commitment as a new head emerges. The browser runs a JavaScript port of the recurrent transition; no Python service or synthetic teacher is called during inference.</p><p>The three panels show one current state, including regulatory, polarity, and structural channels separately selectable in the third panel. The body and inherited axis exist at the cut; the timing test concerns the new posterior response after treatment. The target reference is displayed for comparison only.</p><p>The computer research checkpoint and this live browser demo are separate models. The demo combines 254 learned values with explicit synthetic rules, applied across a 32 × 32 grid. It does not load or compress the research checkpoint's 50,741 weights.</p>
+          <div class="fate-block" id="fate-signatures">
+      <h3 class="sub-title" id="fate-title">Separate cues for separate fates.</h3>
       <p>This 50,741-weight research-model diagnostic compares a normal target with a learned state at update 128.</p>
       <details class="paper-detail"><summary>Details</summary><p>Distinct anatomy, head, eye, tail, and biochemical views gave the model clearer synthetic targets. It is separate from the live 254-value browser protocol.</p></details>
       <figure class="diagnostic-figure">
         <a class="diagnostic-image" href="./media/fate-diagnostic.png" target="_blank" rel="noopener" aria-label="Open the full fate diagnostic image"><img src="./media/fate-diagnostic.png" width="1160" height="509" loading="lazy" alt="Two rows comparing normal target and learned planarian at update 128 across distinct anatomy, head fate, eye fate, tail fate, and biochemical channels"></a>
         <figcaption>Synthetic diagnostic maps; colors are for display. <a class="inline-link" href="./media/fate-diagnostic.png" target="_blank" rel="noopener">Open full image ↗</a></figcaption>
       </figure>
-    </section>
-
-    <section class="article-section" id="architecture" aria-labelledby="architecture-title"><div class="article-content"><h2 id="architecture-title">A memory of signals.<br>A choice of anatomy.</h2><p>The tissue state tracks physical matter, synthetic voltage, biochemical activity, regulatory and axis fields, structure, fast and slow edge memory, delayed communication, and induction memory.</p><div class="process-figure"><div><span>01</span><strong>Develop</strong><small>One head and one tail</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Cut & block</strong><small>Timed middle-band coupling loss</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Wash out & recut</strong><small>Test persistent organizer memory</small></div></div><details class="paper-detail"><summary>Details</summary><p>A cut removes cells and their incident connections while preserving the state of surviving tissue.</p><p>The computer research checkpoint has 50,741 learned weights and is preserved separately. The live browser experiment runs a different 254-parameter recurrent rule across 1,024 cells. Those learned values work alongside explicit synthetic dynamics; they are not a conversion of the research checkpoint's weights.</p><p>The v3 transition starts from the original 254-parameter protocol checkpoint. Its separate candidate checkpoint changes two scalar weights by manual calibration; explicit synthetic rules govern wound growth, an axial chart retained in cells, a wound-conditioned voltage response to coupling loss, organizer thresholds, eye placement, and fast-to-slow connection consolidation. The voltage response begins during treatment, and prior voltage participates in the later induction-memory update. Organizer activity inhibits posterior tail commitment as a new head emerges. The browser runs a JavaScript port of the recurrent transition; no Python service or synthetic teacher is called during inference.</p><p>The three panels show one current state, including regulatory, polarity, and structural channels separately selectable in the third panel. The body and inherited axis exist at the cut; the timing test concerns the new posterior response after treatment. The target reference is displayed for comparison only.</p></details></div></section>
-
-    <section class="article-section evidence-section" id="evidence" aria-labelledby="evidence-title"><div class="article-content"><h2 id="evidence-title">What the demo shows.<br>What it cannot claim.</h2><div class="evidence-list"><div><span class="result-mark">↗</span><div><h3>Normal control</h3><p>The intact precursor develops a normal synthetic one-head, one-tail planarian. A trunk fragment can regenerate under untreated and brief-block conditions.</p></div><span class="evidence-tag">SYNTHETIC DEMO</span></div><div><span class="result-mark">↗</span><div><h3>Sustained broad block</h3><p>In the tested Python protocol, sustained middle-band broad coupling block creates a posterior organizer that survives washout and a clean recut. The brief and half-dose protocols are negative controls.</p></div><span class="evidence-tag">TESTED PROTOCOL</span></div><div><span class="result-mark muted">○</span><div><h3>Biological interpretation</h3><p>The early local voltage shift and deterministic two-head outcome are synthetic modeling assumptions. Tick durations are uncalibrated. These outputs do not validate a drug response or predict real planarian regeneration.</p></div><span class="evidence-tag subdued">LIMITATION</span></div></div><p class="evidence-note">In the protocol timing test, the treatment-associated posterior voltage shift began during the coupling block, before the measured regulatory difference and visible posterior head. <a class="inline-link" href="./protocol/validation.json" target="_blank" rel="noopener">View validation details ↗</a></p><div class="source-heading">READ THE FOUNDATIONS</div><ol class="references"><li><a href="https://distill.pub/2020/growing-ca/" target="_blank" rel="noopener">Growing Neural Cellular Automata <span>Distill · 2020 ↗</span></a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2823934/" target="_blank" rel="noopener">Gap junction blockade in planarians <span>Primary research ↗</span></a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/30799071/" target="_blank" rel="noopener">Early voltage and gene timing <span>Primary research ↗</span></a></li></ol></div></section>
-
-    <section class="article-section" id="who" aria-labelledby="who-title"><div class="article-content"><h2 id="who-title">Questions to test in the live run.</h2><p>Use the synchronized layers to inspect the order of events and compare matched fragments under different communication conditions.</p><div class="quote-grid"><figure class="quote-card"><blockquote>Does posterior voltage shift while the sustained block is active, before a new head appears?</blockquote><figcaption>SIGNAL TIMING</figcaption></figure><figure class="quote-card"><blockquote>After washout and a clean recut, does the treated tissue keep its altered head pattern?</blockquote><figcaption>ORGANIZER PERSISTENCE</figcaption></figure></div></div></section>
-
-
-    <section class="article-section" id="pipeline" aria-labelledby="pipeline-title"><div class="article-content"><span class="planned-badge">PLANNED AUTONOMOUS DATA PIPELINE</span><h2 id="pipeline-title">Measure voltage.<br>Read gene programs.</h2><p>We plan to pair embedded bioelectronics with genetically encoded voltage indicators (GEVIs) or voltage-sensitive dyes (VSDs), then connect those electrical time series to transcriptomic measurements from matched samples and time points.</p><div class="process-figure pipeline-figure" role="img" aria-label="Planned pipeline: capture bioelectric signals, profile transcriptomes from matched samples, then align the records to train and test simulations"><div><span>01</span><strong>Capture</strong><small>Embedded electrodes and GEVI or VSD imaging</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Profile</strong><small>Export transcriptomic data from matched samples</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Learn</strong><small>Align, train, and validate on held-out interventions</small></div></div><details class="paper-detail"><summary>Details</summary><p>Automating this loop could grow the quality and range of future simulations. It has not been built for this demo. Experimental precedents include <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8930507/" target="_blank" rel="noopener">embedded organoid electronics</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11132041/" target="_blank" rel="noopener">GEVI imaging</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10468776/" target="_blank" rel="noopener">planarian VSDs</a>, and <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13121718/" target="_blank" rel="noopener">transcriptomic export</a>.</p></details></div></section>
-
-    <section class="development-gallery" id="development" aria-labelledby="development-title">
-      <div class="development-intro"><h2 id="development-title">Distinct signals made learning clearer.</h2><p>A key design choice was to give head, eye, tail, and biochemical fates more differentiated synthetic signatures.</p><details class="paper-detail"><summary>Details</summary><p>Even the research checkpoint's 50,741 weights make it a small model, so clear cues mattered. These snapshots show the move from mixed posterior responses to a clearer sustained-block and clean-recut contrast; they do not establish biological validity or success rates.</p></details></div>
+          </div>
+        </details>
+        <details class="paper-detail" id="development"><summary>Research notes</summary>
+          <div class="development-gallery">
+      <div class="development-intro"><h3 class="sub-title" id="development-title">Distinct signals made learning clearer.</h3><p>A key design choice was to give head, eye, tail, and biochemical fates more differentiated synthetic signatures.</p><details class="paper-detail"><summary>Details</summary><p>Even the research checkpoint's 50,741 weights make it a small model, so clear cues mattered. These snapshots show the move from mixed posterior responses to a clearer sustained-block and clean-recut contrast; they do not establish biological validity or success rates.</p></details></div>
       <div class="development-grid">
         <figure class="development-card"><a class="development-thumb" href="./media/early-branch-comparison.png" target="_blank" rel="noopener" aria-label="Open the full earlier branch comparison"><img src="./media/early-branch-comparison.png" width="635" height="712" loading="lazy" alt="Earlier sham, brief, sustained, and long-only middle-blockade rows with anatomy, electrical, and gene-axis maps"></a><figcaption><strong>Mixed posterior response</strong><span>Early sustained-block trials showed ambiguous anatomy and voltage patterns. <a class="inline-link" href="./media/early-branch-comparison.png" target="_blank" rel="noopener">View full image ↗</a></span></figcaption></figure>
         <figure class="development-card"><a class="development-thumb later-thumb" href="./media/later-protocol-comparison.png" target="_blank" rel="noopener" aria-label="Open the full later protocol comparison"><img src="./media/later-protocol-comparison.png" width="948" height="2048" loading="lazy" alt="Later synthetic diagnostic rows comparing normal, untreated, brief, sustained broad, half-dose, and clean-recut outcomes across distinct fate channels"></a><figcaption><strong>Clearer fate contrast</strong><span>The sustained broad and treated clean-recut rows show bilateral head and eye fate in this synthetic rollout. <a class="inline-link" href="./media/later-protocol-comparison.png" target="_blank" rel="noopener">View full image ↗</a></span></figcaption></figure>
       </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="where" id="where" aria-labelledby="where-title">
+      <div class="column">
+        <h2 id="where-title">Where this goes</h2>
+        <ul class="short-list">
+          <li><strong>Request and report.</strong> Partners request a simulation study and get a written report. <span class="planned-tag">Planned</span></li>
+          <li><strong>Pharma and biotech teams.</strong> Drug developers first, then AI companies moving into biology.</li>
+          <li><strong>A planned data pipeline.</strong> Measure voltage and gene activity in the lab to train better models. <span class="planned-tag">Planned</span></li>
+        </ul>
+        <details class="paper-detail"><summary>Details</summary>
+          <div class="venture-grid"><div class="venture-card"><span class="mono-label">CUSTOMERS</span><h3>Teams building biology</h3><p>Pharma and biotech developers, and AI companies extending their models into living systems.</p></div><div class="venture-card"><span class="mono-label">SIMULATION STUDIES</span><h3>Partner-run tests</h3><p>A planned service for candidate therapies in selected biological scenarios, with a future privacy-preserving option for proprietary inputs and model details.</p></div><div class="venture-card"><span class="mono-label">DATA PRODUCTS</span><h3>Measured context</h3><p>Potentially licensed datasets on morphogenesis and intervention responses, including cell-culture and organoid scenarios.</p></div><div class="venture-card"><span class="mono-label">GROWTH</span><h3>Improve, then scale</h3><p>Refine measurement and validation, retrain on new time series, then expand simulation quality, scope, and throughput.</p></div>
+          <h3 class="sub-title">How private studies might work</h3><p>We would explore confidential or encrypted computation so partners could limit disclosure of candidate details while protecting model internals. This is a proposed design, not a feature of the current demo. Zero-knowledge proofs alone do not run a hidden-input biological simulation; the privacy architecture would need separate design and security review.</p><a href="https://csrc.nist.gov/projects/pec" target="_blank" rel="noopener">Privacy-enhancing computation methods · NIST ↗</a>
+          <h3 class="sub-title" id="customer-path">Start with a testable question.</h3><p>The first prospective users are research teams in biotech and pharma.</p><p>The next step is a narrow study: agree on one biological question, compare predictions with measured results, and show where the model succeeds or fails before offering it for research decisions.</p>
+        <div class="customer-evidence-grid">
+          <div class="customer-evidence-card"><h3>AI is already in the lab.</h3><p><a class="inline-link" href="https://www.benchling.com/biotech-ai-report-2026" target="_blank" rel="noopener">Benchling's 2026 survey</a> of about 100 biotech and biopharma organizations already using AI describes demand for scientific tools alongside persistent data and validation gaps. Its sample represents AI adopters, not the entire industry.</p></div>
+          <div class="customer-evidence-card"><h3>Validation defines the use.</h3><p><a class="inline-link" href="https://ncats.nih.gov/research/research-activities/tissue-chip/collaborations" target="_blank" rel="noopener">NCATS tissue-chip collaborations</a> and <a class="inline-link" href="https://www.iqmps.org/_files/ugd/7a2c95_324240df948e4909a3708ee698576c37.pdf" target="_blank" rel="noopener">IQ MPS Affiliate reports</a> show pharma, researchers, and technology developers working on fit-for-purpose models and adoption. They are category precedents, not tests of this simulation.</p></div>
+          <div class="customer-evidence-card"><h3>Qualification takes evidence.</h3><p>The <a class="inline-link" href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-accepts-first-silico-drug-development-tool-under-istand-program-help-predict-drug-induced-liver" target="_blank" rel="noopener">FDA accepted a different AI digital liver model's letter of intent</a> into ISTAND. That is the first of three qualification steps, not approval of that tool or this one.</p></div>
+        </div>
+        <p class="customer-next">Proposed sequence: <strong>research collaboration</strong> → <strong>held-out experimental validation</strong> → <strong>scoped simulation studies and measured-data products</strong>.</p>
+          <span class="planned-badge">PLANNED AUTONOMOUS DATA PIPELINE</span><h3 class="sub-title" id="pipeline">Measure voltage.<br>Read gene programs.</h3><p>We plan to pair embedded bioelectronics with genetically encoded voltage indicators (GEVIs) or voltage-sensitive dyes (VSDs), then connect those electrical time series to transcriptomic measurements from matched samples and time points.</p><div class="process-figure pipeline-figure" role="img" aria-label="Planned pipeline: capture bioelectric signals, profile transcriptomes from matched samples, then align the records to train and test simulations"><div><span>01</span><strong>Capture</strong><small>Embedded electrodes and GEVI or VSD imaging</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Profile</strong><small>Export transcriptomic data from matched samples</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Learn</strong><small>Align, train, and validate on held-out interventions</small></div><p>Automating this loop could grow the quality and range of future simulations. It has not been built for this demo. Experimental precedents include <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8930507/" target="_blank" rel="noopener">embedded organoid electronics</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11132041/" target="_blank" rel="noopener">GEVI imaging</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10468776/" target="_blank" rel="noopener">planarian VSDs</a>, and <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13121718/" target="_blank" rel="noopener">transcriptomic export</a>.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="limits" id="limits" aria-labelledby="limits-title">
+      <div class="column">
+        <h2 id="limits-title">What it cannot claim</h2>
+        <p>These outputs do not validate a drug response or predict real planarian regeneration.</p>
+        <details class="paper-detail"><summary>Details</summary><div class="evidence-list"><div><span class="result-mark muted">○</span><div><h3>Biological interpretation</h3><p>The early local voltage shift and deterministic two-head outcome are synthetic modeling assumptions. Tick durations are uncalibrated. These outputs do not validate a drug response or predict real planarian regeneration.</p></div><span class="evidence-tag subdued">LIMITATION</span></div></div></details>
+      </div>
+    </section>
+
+    <section class="team" id="team" aria-labelledby="team-title">
+      <h2 id="team-title">Who's building it</h2>
+      <div class="team-grid">
+        <div class="team-card"><strong>John</strong><p>Biology and computation. Designed and trained the model.</p></div>
+        <div class="team-card"><strong>Max</strong><p>Engineering. Got the model running live in the browser.</p></div>
+        <div class="team-card"><strong>Eliy</strong><p>Product and business. Designed the site and the go-to-market plan.</p></div>
+      </div>
     </section>
 
     <section class="source-library" id="sources" aria-labelledby="sources-title">
-      <div class="source-library-intro"><h2 id="sources-title">Where the ideas come from.</h2><p>These sources document biological observations, modeling ideas, measurement methods, and possible customer pathways.</p><details class="paper-detail"><summary>Details</summary><p>They do not validate the browser simulation as a biological or drug-response predictor.</p></details></div>
+      <div class="column">
+        <h2 id="sources-title">Sources</h2>
+        <details class="paper-detail"><summary>Details</summary><p>These sources document biological observations, modeling ideas, measurement methods, and possible customer pathways.</p><p>They do not validate the browser simulation as a biological or drug-response predictor.</p>
       <div class="source-groups">
+        <div class="source-group"><h3>Read the foundations</h3><ul><li><a href="https://distill.pub/2020/growing-ca/" target="_blank" rel="noopener">Growing Neural Cellular Automata <span>Distill · 2020 ↗</span></a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2823934/" target="_blank" rel="noopener">Gap junction blockade in planarians <span>Primary research ↗</span></a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/30799071/" target="_blank" rel="noopener">Early voltage and gene timing <span>Primary research ↗</span></a></li></ul></div>
         <div class="source-group"><h3>Path to customers</h3><ul>
           <li><a href="https://www.benchling.com/biotech-ai-report-2026" target="_blank" rel="noopener">Benchling · 2026 Biotech AI Report <span>AI-adopter survey ↗</span></a></li>
           <li><a href="https://ncats.nih.gov/research/research-activities/tissue-chip/collaborations" target="_blank" rel="noopener">NCATS · Tissue-chip collaborations <span>Industry context ↗</span></a></li>
@@ -172,10 +222,9 @@
           <li><a href="https://csrc.nist.gov/projects/pec" target="_blank" rel="noopener">NIST · Privacy-enhancing computation <span>Future design ↗</span></a></li>
         </ul></div>
       </div>
+        </details>
+      </div>
     </section>
-
-    <section class="closing" aria-label="Explore signal timing"><p>A signal changes. A pattern follows.<br>Explore the synthetic transition.</p></section>
-
   </main>
   <footer><a class="brand" href="#">▦ KAIA <span class="brand-light">BIOSCIENCES</span></a><a href="#experiment">Back to the experiment ↑</a></footer>
 </body>
