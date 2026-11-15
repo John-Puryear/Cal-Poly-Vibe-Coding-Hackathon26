@@ -171,3 +171,62 @@ figcaption{font-size:14px;line-height:1.6;color:var(--muted)}
 .protocol-lab .protocol-action{font-size:13px}
 .protocol-lab .layer-card h3{font-size:14px}
 .protocol-lab .button-step{width:20px;height:20px}
+
+/* Spacing: 96px between sections on desktop, 56px on phones */
+main>section{padding:96px 0}
+main>.hero{padding:72px 0 96px}
+.why h2,.team h2{margin-bottom:32px}
+.section-heading h2{margin-bottom:12px}
+.how .stat-strip{margin:56px 0 8px}
+.how .process-figure{margin-top:32px}
+.short-list{margin-top:8px}
+
+/* One "Details +" expander style everywhere */
+details{margin-top:24px;border-top:1px solid var(--line)}
+details details{margin-top:16px}
+summary{display:inline-flex;align-items:center;gap:8px;padding:14px 0;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font:400 18px/1 var(--sans)}
+details[open]>summary::after{content:'\2212'}
+summary:hover{color:var(--accent-hover)}
+summary>span{font-weight:400;color:var(--muted)}
+.paper-detail p,.demo-guide>p{margin:0 0 16px;max-width:680px}
+.paper-detail>a{display:inline-block;margin-bottom:16px;color:var(--accent)}
+.demo-guide{margin:0 0 20px}
+.demo-guide>ol{margin:0 0 16px;padding-left:22px;display:grid;gap:8px;font-size:15px;color:var(--muted)}
+.demo-guide>p{font-size:15px;color:var(--muted)}
+.lab+details{margin-top:20px;border-top:0}
+
+/* Tablet */
+@media(max-width:1000px){
+  .masthead,footer{padding:18px 32px}
+  main{padding:0 32px}
+  .prototype{display:none}
+  .guide-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .protocol-lab .branch-buttons button small{white-space:normal}
+}
+@media(max-width:760px){.protocol-lab .protocol-steps{grid-template-columns:minmax(0,1fr) 130px}}
+
+/* Phone: 16px side gutter */
+@media(max-width:700px){
+  .masthead{flex-wrap:wrap;gap:10px 16px;padding:14px 16px}
+  nav{width:100%;gap:20px;font-size:14px}
+  footer{flex-wrap:wrap;gap:8px;padding:20px 16px}
+  main{padding:0 16px}
+  main>section{padding:56px 0}
+  main>.hero{padding:40px 0 56px}
+  .lead,.limits .column>p{font-size:18px}
+  .why-list,.stat-strip,.team-grid,.venture-grid,.customer-evidence-grid,.development-grid,.guide-steps{grid-template-columns:1fr;gap:20px}
+  .process-figure{flex-direction:column;gap:12px}
+  .process-figure>b{margin:0;transform:rotate(90deg)}
+  .why h2,.team h2{margin-bottom:24px}
+  .how .stat-strip{margin-top:40px}
+  .source-group a{flex-direction:column;gap:2px}
+  .evidence-list>div{flex-wrap:wrap}
+  .lab .lab-topbar{padding:12px 14px;gap:12px}
+}
+@media(max-width:600px){
+  .protocol-lab .protocol-steps{grid-template-columns:1fr}
+  .protocol-lab .protocol-action{white-space:normal;font-size:12px;padding:6px}
+}
+.process-figure{margin-bottom:16px}
