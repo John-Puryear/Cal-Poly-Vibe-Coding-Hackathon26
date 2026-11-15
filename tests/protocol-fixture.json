@@ -1,0 +1,43 @@
+{
+  "format": "bdh-protocol-parity-v1",
+  "source_seed": 7000,
+  "shape": [
+    4,
+    60416
+  ],
+  "state_order": [
+    "initial",
+    "one",
+    "cut",
+    "treated"
+  ],
+  "tensor_lengths": [
+    24576,
+    6144,
+    6144,
+    20480,
+    3072
+  ],
+  "fire1": {
+    "a": 17,
+    "b": 13,
+    "m": 29,
+    "limit": 15
+  },
+  "fire2": {
+    "a": 19,
+    "b": 7,
+    "m": 31,
+    "limit": 16
+  },
+  "control": {
+    "current": 0.4,
+    "broad": 0.8,
+    "long": 0.25,
+    "purine": 0.7,
+    "middle_columns": [
+      12,
+      23
+    ]
+  }
+}

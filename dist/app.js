@@ -1,120 +1,74 @@
-const $=id=>document.getElementById(id);
-const worker=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
-let ready=false,playing=false,busy=false,latest=null,hover=false,error=null,viewLayer='voltage',placedAt=null;
-const offscreen=document.createElement('canvas');
-const contexts={treated:$('treated').getContext('2d'),untreated:$('untreated').getContext('2d')};
-
-function setPlay(value){playing=value;$('play').innerHTML=value?'<span aria-hidden="true">Ⅱ</span> Pause':'<span aria-hidden="true">▶</span> Grow tissue';}
-function controls(){for(const id of ['play','advance','reset','export','center-input','specimen']){if($(id))$(id).disabled=!ready||busy;}}
-function number(value){return(value>=0?'+':'')+value.toFixed(3);}
-// Mean absolute difference of the four anatomy channels (body, head, eye, tail) over tissue present in either copy.
-function shapeDifference({cells,baseline,width,height}){
- const n=width*height;let occupied=0,diff=0;
- for(let p=0;p<n;p++)if(cells[p]>.1||baseline[p]>.1){occupied++;for(let c=0;c<4;c++)diff+=Math.abs(cells[c*n+p]-baseline[c*n+p])/4;}
- return occupied?diff/occupied:0;
-}
-function paint(){
- if(!latest)return;
- const {width:w,height:h}=latest,n=w*h;
- offscreen.width=w;offscreen.height=h;
- const off=offscreen.getContext('2d'),image=off.createImageData(w,h);
- // Both panels show the same layer: the tissue with your signal, and the untreated copy beside it.
- const layer=viewLayer;
- for(const panel of ['treated','untreated']){
-  const treated=panel==='treated',cells=treated?latest.cells:latest.baseline;
-  const ctx=contexts[panel],canvas=ctx.canvas;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+const $=id=>document.getElementById(id), worker=new Worker('./protocol-worker.js',{type:'module'});
+let latest=null,target=null,ready=false;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const mix=(a,b,t)=>a.map((v,i)=>Math.round(v*(1-t)+b[i]*t));
+function draw(canvas,cells,w,h,mode){
+  if(!cells)return;
+  const n=w*h,mini=document.createElement('canvas');mini.width=w;mini.height=h;
+  const ctx=mini.getContext('2d'),im=ctx.createImageData(w,h),choice=$('gene-channel').value;
   for(let p=0;p<n;p++){
-   const live=Math.max(0,Math.min(1,cells[p])),i=p*4;
-   let r,g,b;
-   if(layer==='anatomy'){
-    const head=cells[n+p],eye=Math.max(0,Math.min(1,cells[2*n+p])),tail=cells[3*n+p];
-    r=(.50+.25*head)*(1-eye*.95);g=(.65+.18*head-.25*tail)*(1-eye*.95);b=(.40+.20*tail)*(1-eye*.95);
-    r*=255;g*=255;b*=255;
-   }else{
-    // Zero voltage #2E3740, blending toward #6E9EF5 (more negative) or #F0A25A (more positive).
-    const v=Math.max(-1,Math.min(1,cells[4*n+p])),a=Math.abs(v),end=v<0?[110,158,245]:[240,162,90];
-    r=46+(end[0]-46)*a;g=55+(end[1]-55)*a;b=64+(end[2]-64)*a;
-   }
-   image.data[i]=r;image.data[i+1]=g;image.data[i+2]=b;image.data[i+3]=live>.05?live*255:0;
+    const body=clamp(cells[p]),i=4*p;
+    let c=[15,23,30];
+    if(body>.1){
+      if(mode==='anatomy'){
+        c=[116,160,111];c=mix(c,[213,203,107],clamp(cells[n+p])*.86);
+        c=mix(c,[126,95,177],clamp(cells[3*n+p])*.85);
+        c=mix(c,[18,27,24],clamp(cells[2*n+p])*.98);
+      }else if(mode==='voltage'){
+        const v=clamp(cells[4*n+p],-1,1);
+        c=mix([107,121,126],v>=0?[242,67,58]:[50,100,244],clamp(Math.abs(v)*3));
+      }else{
+        const r=clamp(cells[12*n+p],-1,1),a=clamp(cells[13*n+p],-1,1),s=clamp(cells[14*n+p]);
+        if(choice==='regulatory')c=mix([45,35,55],r>=0?[233,108,176]:[91,78,188],Math.abs(r));
+        else if(choice==='axis')c=mix([56,62,71],a>=0?[240,177,86]:[68,192,207],Math.abs(a));
+        else if(choice==='structure')c=mix([42,53,47],[148,211,110],s);
+        else c=[Math.round(76+148*clamp(r)),Math.round(67+142*s),Math.round(82+147*clamp(-a))];
+      }
+      c=mix([15,23,30],c,body);
+    }
+    im.data.set([...c,255],i);
   }
-  off.putImageData(image,0,0);ctx.imageSmoothingEnabled=false;ctx.drawImage(offscreen,0,0,canvas.width,canvas.height);
-  if($('grid-toggle').checked){
-   ctx.strokeStyle='rgba(11,16,21,.25)';ctx.lineWidth=.6;ctx.beginPath();
-   for(let x=1;x<w;x++){ctx.moveTo(x*canvas.width/w,0);ctx.lineTo(x*canvas.width/w,canvas.height);}
-   for(let y=1;y<h;y++){ctx.moveTo(0,y*canvas.height/h);ctx.lineTo(canvas.width,y*canvas.height/h);}ctx.stroke();
+  ctx.putImageData(im,0,0);
+  const out=canvas.getContext('2d');out.imageSmoothingEnabled=false;
+  out.clearRect(0,0,canvas.width,canvas.height);
+  const scale=Math.min(canvas.width/w,canvas.height/h),dw=w*scale,dh=h*scale;
+  out.drawImage(mini,(canvas.width-dw)/2,(canvas.height-dh)/2,dw,dh);
+}
+function paint(){if(!latest)return;const {cells,width,height}=latest;
+  draw($('anatomy-canvas'),cells,width,height,'anatomy');draw($('voltage-canvas'),cells,width,height,'voltage');
+  draw($('gene-canvas'),cells,width,height,'gene');if(target)draw($('target-preview'),target,width,height,'anatomy');}
+function controls(){if(!latest)return;const run=latest.running;
+  $('develop').disabled=!ready||run;$('cut').disabled=!ready||run||!latest.developedReady;
+  for(const b of document.querySelectorAll('[data-branch]')){
+    b.disabled=!ready||run||!latest.fragmentReady;b.classList.toggle('selected',latest.activeBranch===b.dataset.branch);
   }
-  if(treated){
-   for(const event of latest.active){ctx.strokeStyle='rgba(232,238,236,.75)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.beginPath();ctx.arc((event.x+.5)*canvas.width/w,(event.y+.5)*canvas.height/h,event.radius*canvas.width/w,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);}
-   if(hover){ctx.strokeStyle='rgba(110,158,245,.9)';ctx.lineWidth=1;ctx.beginPath();ctx.arc((hover.x+.5)*canvas.width/w,(hover.y+.5)*canvas.height/h,Number($('radius').value)*canvas.width/w,0,Math.PI*2);ctx.stroke();}
-  }
- }
+  $('recut').disabled=!ready||run||!latest.recutReady;$('pause').disabled=!run;
+  $('step-one').disabled=run||!latest.paused;
+  $('resume').disabled=run||!latest.paused;$('reset').disabled=!ready;$('export').disabled=!ready;
 }
-// Guided demo: grown once the tissue has developed, signalled once an input is placed, compared once it has run a few steps.
-function markSteps(step){
- const done=[step>0,placedAt!==null,placedAt!==null&&step>=placedAt+12];
- const current=done.indexOf(false);
- done.forEach((value,i)=>{const item=$('demo-step-'+(i+1));item.classList.toggle('done',value);
-  if(i===current)item.setAttribute('aria-current','step');else item.removeAttribute('aria-current');});
-}
-function updateFrame(data){latest=data;markSteps(data.step);$('step-value').textContent=String(data.step).padStart(3,'0');
- $('mean-voltage').textContent=number(data.metrics.meanVoltage);
- $('voltage-diff').textContent=data.metrics.voltageDifference.toFixed(4);
- $('shape-diff').textContent=shapeDifference(data).toFixed(4);
- const active=data.active.length;
- $('run-note').textContent=active?`${active} local input${active>1?'s':''} active · ${Math.max(...data.active.map(e=>e.remaining))} steps remaining`:
-  data.step===0?'Starting outline ready. Press Grow tissue.':playing?'Running':'Paused';
- $('stat-cells').textContent=(data.width*data.height).toLocaleString('en-US');
- paint();
-}
-worker.addEventListener('message',({data})=>{
- if(data.type==='ready'){
-  ready=true;controls();$('model-status').innerHTML='<span class="status-dot"></span> Live model, running in your browser';
-  // Model size facts come from the loaded model, so they stay correct after retraining.
-  $('stat-parameters').textContent=data.parameters.toLocaleString('en-US');
- }else if(data.type==='frame')updateFrame(data);
- else if(data.type==='paused'){busy=false;setPlay(false);controls();if(latest)updateFrame(latest);}
- else if(data.type==='error'){
-  error=data.message;ready=false;busy=false;setPlay(false);controls();$('model-status').textContent='Model unavailable';
-  $('run-note').textContent='Unable to run: '+data.message;$('run-note').setAttribute('role','alert');console.error(data.message);
- }else if(data.type==='export'){
-  const blob=new Blob([JSON.stringify(data.record,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download=`kaia-${data.record.specimen}-step-${data.record.step}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
- }
-});
-worker.addEventListener('error',event=>{ready=false;controls();$('model-status').textContent='Model unavailable';$('run-note').textContent=event.message??'Worker failed to start';});
-$('play').addEventListener('click',()=>{if(!ready||busy)return;setPlay(!playing);worker.postMessage({type:playing?'play':'pause'});if(!playing&&latest)updateFrame(latest);});
-$('advance').addEventListener('click',()=>{if(!ready||busy)return;busy=true;setPlay(false);controls();$('run-note').textContent='Skipping ahead 48 steps…';worker.postMessage({type:'step',count:48});});
-function reset(){setPlay(false);busy=false;placedAt=null;controls();worker.postMessage({type:'reset',specimen:$('specimen').value});}
-$('reset').addEventListener('click',reset);$('specimen').addEventListener('change',reset);
-$('grid-toggle').addEventListener('change',paint);
-for(const button of document.querySelectorAll('.view-option'))button.addEventListener('click',()=>{
- viewLayer=button.dataset.layer;
- for(const other of document.querySelectorAll('.view-option'))other.setAttribute('aria-pressed',String(other===button));
- $('voltage-legend').hidden=viewLayer!=='voltage';$('anatomy-legend').hidden=viewLayer!=='anatomy';
- paint();
-});
-for(const id of ['strength','radius','duration'])$(id).addEventListener('input',()=>{
- const value=Number($(id).value);$(id+'-value').textContent=id==='strength'?(value>=0?'+':'')+value.toFixed(2):`${value} ${id==='radius'?'cells':'steps'}`;paint();
-});
-function intervene(x,y){if(!ready||busy||!latest)return;
- if(placedAt===null)placedAt=latest.step;
- worker.postMessage({type:'intervene',x,y,radius:Number($('radius').value),strength:Number($('strength').value),duration:Number($('duration').value)});
-}
-// Only the treated panel takes clicks; the untreated copy never receives a signal.
-const treatedCanvas=$('treated');
-function point(event){const box=treatedCanvas.getBoundingClientRect();return{x:Math.max(0,Math.min(latest.width-1,(event.clientX-box.left)/box.width*latest.width-.5)),y:Math.max(0,Math.min(latest.height-1,(event.clientY-box.top)/box.height*latest.height-.5))};}
-treatedCanvas.addEventListener('pointermove',event=>{if(!latest)return;hover=point(event);paint();});
-treatedCanvas.addEventListener('pointerleave',()=>{hover=false;paint();});
-treatedCanvas.addEventListener('pointerdown',event=>{if(!latest)return;event.preventDefault();const p=point(event);intervene(p.x,p.y);});
-$('export').addEventListener('click',()=>worker.postMessage({type:'export'}));
-$('center-input').addEventListener('click',()=>{if(latest)intervene(Math.round(latest.width/2),Math.round(latest.height/2));});
-window.addEventListener('pagehide',()=>worker.terminate());
-// Interviews number: hidden when left empty in the HTML.
-if(!$('interviews-count').textContent.trim())$('interviews-stat').hidden=true;
-// Hero stat: show the verification result only when the report loads and passed.
-fetch('./model/browser-validation.json').then(r=>r.ok?r.json():null).then(report=>{
- if(report?.passed&&report.ticks){$('stat-verified').textContent=`${report.ticks} of ${report.ticks}`;$('stat-verified-wrap').hidden=false;}
-}).catch(()=>{});
-controls();
-worker.postMessage({type:'init'});
+function frame(f){latest=f;$('step-value').textContent=String(f.tick).padStart(4,'0');
+  $('phase-name').textContent=f.phaseName;$('phase-progress').textContent=`${f.phaseTick} / ${f.phaseTotal}`;
+  $('phase-fill').style.width=`${100*clamp(f.phaseTick/Math.max(1,f.phaseTotal))}%`;
+  $('phase-note').textContent=f.note;$('mean-voltage').textContent=f.metrics.meanVoltage.toFixed(3);
+  $('posterior-memory').textContent=f.metrics.posteriorMemory.toFixed(3);
+  $('posterior-head').textContent=f.metrics.posteriorHead.toFixed(3);paint();controls();}
+worker.onmessage=({data:d})=>{
+  if(d.type==='ready'){ready=true;target=new Float32Array(d.target);
+    $('stat-parameters').textContent=d.parameters.toLocaleString();
+    $('model-status').innerHTML='<span class="status-dot"></span> Browser protocol ready';
+    worker.postMessage({type:'speed',speed:$('playback-speed').value});}
+  else if(d.type==='frame')frame(d);
+  else if(d.type==='error'){$('model-status').innerHTML='<span class="status-dot amber"></span> Simulation error';
+    $('phase-note').textContent=d.message;console.error(d.message);}
+  else if(d.type==='export'){const blob=new Blob([JSON.stringify(d.record)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='bdh-protocol-session.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+};
+$('develop').onclick=()=>worker.postMessage({type:'develop'});
+$('cut').onclick=()=>worker.postMessage({type:'cut'});
+for(const b of document.querySelectorAll('[data-branch]'))b.onclick=()=>worker.postMessage({type:'branch',branch:b.dataset.branch});
+$('recut').onclick=()=>worker.postMessage({type:'recut'});
+for(const name of ['pause','resume','reset','export'])$(name).onclick=()=>worker.postMessage({type:name});
+$('step-one').onclick=()=>worker.postMessage({type:'step-one'});
+$('playback-speed').onchange=()=>worker.postMessage({type:'speed',speed:$('playback-speed').value});
+$('gene-channel').onchange=paint;
+window.addEventListener('pagehide',()=>worker.terminate());worker.postMessage({type:'init'});
