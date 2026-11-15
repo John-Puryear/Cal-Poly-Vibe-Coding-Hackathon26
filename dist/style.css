@@ -174,7 +174,7 @@ main>section,main>.hero{padding:64px 0 40px}
 /* One "Details +" expander style everywhere */
 details{margin-top:24px;border-top:1px solid var(--line)}
 details details{margin-top:16px}
-summary{display:inline-flex;align-items:center;gap:8px;padding:24px 0 0;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
+summary{display:inline-flex;align-items:center;gap:8px;padding:24px 0;line-height:1.4;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
 summary::-webkit-details-marker{display:none}
 summary::after{content:'+';font:400 18px/1 var(--sans)}
 details[open]>summary::after{content:'\2212'}
@@ -186,7 +186,7 @@ summary>span{font-weight:400;color:var(--muted)}
 .demo-guide>ol{margin:0 0 16px;padding-left:22px;display:grid;gap:8px;font-size:15px;color:var(--muted)}
 .demo-guide>p{font-size:15px;color:var(--muted)}
 .lab+details{margin-top:24px}
-details[open]>summary{padding-bottom:16px}
+details[open]{padding-bottom:24px}
 /* Nothing at the end of a section adds extra space before the divider */
 main>section>:last-child,main>section .split-body>:last-child,main>section .column>:last-child,details>:last-child,.card-row>*>:last-child{margin-bottom:0}
 
@@ -341,3 +341,19 @@ main>.band{padding-block:64px}
 .source-groups{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
 @media(max-width:700px){.callout{padding:24px}.limit-list,.top-sources ul,.source-groups{grid-template-columns:1fr}}
 .stat-strip>div{justify-content:flex-end}
+
+/* Details rows: content, 24px, line, 24px, "Details +", 24px, then the section divider */
+main>section:not(.hero):has(>details:last-child),
+main>section:not(.hero):has(>.split-body>details:last-child),
+main>section:not(.hero):has(>.column>details:last-child),
+main>section:not(.hero):has(>.how-grid .how-main>details:last-child){padding-bottom:0}
+
+/* Hero: quieter badge, more air under the headline, Details as a small text link */
+.hero .planned-badge{padding:3px 10px;border-color:var(--line-strong);font-weight:500;letter-spacing:.8px;color:var(--muted)}
+.hero h1{margin:24px 0 32px}
+.hero-note{font-family:var(--sans);font-size:15px;color:var(--muted)}
+.hero details{margin-top:16px;border-top:0}
+.hero summary{padding:0;font-size:14px}
+.hero details[open]{padding-bottom:0}
+.hero details[open]>summary{padding-bottom:12px}
+details+details{margin-top:0}
