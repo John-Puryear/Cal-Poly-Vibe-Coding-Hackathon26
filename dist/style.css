@@ -10,7 +10,7 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans)}
+body{margin:0;overflow-x:clip;background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans)}
 h1,h2,h3,p,figure,blockquote,dl,dd{margin:0}
 a{color:inherit;text-decoration:none;transition:color .15s}
 a:hover{color:var(--accent)}
@@ -261,3 +261,13 @@ main>section>:last-child,main>section .split-body>:last-child,main>section .colu
 .protocol-lab .protocol-condition-row{align-items:end}
 .protocol-lab .protocol-condition-row>.protocol-index{padding-bottom:12px}
 @media(max-width:760px){.protocol-lab .protocol-condition-row>.protocol-index{padding-bottom:0}}
+
+/* Full-width bands: the band edge is the divider, so the sections around them drop their own line */
+.band{margin-inline:calc(50% - 50vw);padding-inline:calc(50vw - 50%);border-top:0!important}
+main>.band{padding-block:64px}
+.band+section{border-top:0}
+.band-dark{background:#13191D;color:#FAF7F1;--line:#2A343B;--muted:#A9B4BC;--accent:#8DB2F5;--accent-hover:#B3CBF8}
+.band-dark .why-list b{color:#FAF7F1}
+.why h2{margin-bottom:32px}
+.why-list b{white-space:nowrap}
+@media(max-width:700px){main>.band{padding-block:48px}}
