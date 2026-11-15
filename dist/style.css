@@ -271,3 +271,16 @@ main>.band{padding-block:64px}
 .why h2{margin-bottom:32px}
 .why-list b{white-space:nowrap}
 @media(max-width:700px){main>.band{padding-block:48px}}
+
+/* Drug framing: centered column, then the four steps as cards */
+.centered{max-width:760px;margin-inline:auto;text-align:center}
+.centered>p{margin-inline:auto}
+.experiment-section>.centered:first-child p{font-size:19px;line-height:1.6;color:var(--ink)}
+.experiment-section .section-heading.centered{margin-top:40px}
+.experiment-section .section-heading.centered>p{margin-top:4px}
+.guide-steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:40px 0 0}
+.guide-steps li{display:block;padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px;line-height:1.65}
+.guide-steps .guide-num{display:grid;margin-bottom:14px}
+.guide-steps strong{margin-bottom:4px}
+@media(max-width:1000px){.guide-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.guide-steps{grid-template-columns:1fr}}
