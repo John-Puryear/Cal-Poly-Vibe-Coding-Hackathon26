@@ -400,3 +400,28 @@ footer .brand{font-size:14px}
 nav a{position:relative;padding:6px 0}
 nav a[aria-current]{color:var(--ink)}
 nav a[aria-current]::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--accent)}
+
+/* Full-bleed card rows: span the window with a 24px gap at the edges (never narrower than the content) */
+.panels .venture-grid,.results .card-row,.pipeline .flow{margin-inline:min(0px,calc(50% - 50vw + 24px))}
+
+/* Section dividers run edge to edge; lines around Details rows stay content-width */
+main>section{border-top:0;position:relative}
+main>section:not(:first-child):not(.band)::before{content:'';position:absolute;top:0;left:calc(50% - 50vw);width:100vw;height:1px;background:var(--line)}
+.band+section::before{display:none}
+.masthead,footer{position:relative;border:0}
+.masthead::after,footer::before{content:'';position:absolute;left:calc(50% - 50vw);width:100vw;height:1px;background:var(--line)}
+.masthead::after{bottom:0}
+footer::before{top:0}
+
+/* Team: names only on the dark band */
+.team.band-dark .team-card{padding:28px 22px;background:#1C252B;border-color:#2A343B}
+.team.band-dark .team-card strong{color:#FAF7F1;font-size:24px}
+.team.band-dark h2{color:#FAF7F1}
+
+/* How it works: one line per step label and number label */
+.how-grid{grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:48px}
+.how .process-figure strong{font-size:20px;white-space:nowrap}
+.how .process-figure small,.how .stat-strip dt{white-space:nowrap}
+.how .stat-strip dt{font-size:16px}
+@media(max-width:1000px){.how-grid{grid-template-columns:1fr}}
+figcaption .inline-link{white-space:nowrap}
