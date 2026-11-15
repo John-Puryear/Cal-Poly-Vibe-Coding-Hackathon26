@@ -254,3 +254,6 @@ main{counter-reset:research-section 1}
 .source-group a:hover,.source-group a:hover span{color:var(--accent)}
 @media(max-width:900px){.customer-evidence-grid{grid-template-columns:1fr 1fr}.customer-evidence-card:last-child{grid-column:1/-1}}
 @media(max-width:700px){.customer-path,.source-library{padding:56px 0}.customer-evidence-grid,.source-groups,.demo-guide>ol{grid-template-columns:1fr}.customer-evidence-card:last-child{grid-column:auto}.customer-evidence-grid{margin-top:22px}.customer-evidence-card h3{font-size:23px}.demo-guide>summary{padding:12px}.demo-guide>ol{padding:15px 18px 0 34px;gap:10px}.demo-guide>p{margin:12px 12px 15px}.source-groups{gap:28px;margin-top:28px}.source-group a{flex-direction:column;gap:2px}.source-group a span{font-size:10px}}
+
+/* Hero: one-line honesty note under the pitch. */
+.product-lead .article-content>p.hero-note{margin:-12px 0 20px;font:13px/1.5 var(--mono);color:var(--muted)}
