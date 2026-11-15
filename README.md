@@ -2,6 +2,8 @@
 
 This static site presents a live, synthetic BDH–NCA regeneration protocol. The browser runs a 254-parameter checkpoint in a JavaScript worker; no server, Python process, or GPU is needed to view it.
 
+The separate computer research checkpoint has **50,741 learned weights**. The website uses **254 learned values plus explicit synthetic rules** across **1,024 cells** on a 32 × 32 grid. The browser does not load or compress the research checkpoint.
+
 ## Run locally
 
 With Node.js 18 or newer:
