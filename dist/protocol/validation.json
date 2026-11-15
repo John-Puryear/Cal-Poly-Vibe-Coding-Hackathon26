@@ -1,0 +1,34 @@
+{
+  "format": "bdh-protocol-browser-validation-v1",
+  "checkpoint_parameters": 254,
+  "synthetic_model": true,
+  "clock_calibrated_to_biology": false,
+  "target_used_at_inference": false,
+  "conformance": {
+    "states_compared": ["cells", "edgeFast", "edgeSlow", "delayed", "induction"],
+    "operations": ["initial", "step", "damage", "controlled step"],
+    "max_absolute_error": 3.651e-7,
+    "passed": true
+  },
+  "held_out_seed_7000": {
+    "develop_ticks": 128,
+    "fragment_columns": [10, 23],
+    "middle_block_columns": [12, 23],
+    "post_cut_ticks": 608,
+    "clean_recut_ticks": 512,
+    "normal_controls": ["sham", "brief broad block", "half-dose broad block", "long-only block"],
+    "normal_control_outcomes_at_washout_and_recut": "1 head, 2 eyes, 1 tail",
+    "sustained_broad_outcome_at_washout_and_recut": "2 heads, 4 eyes, 0 tails",
+    "body_intersection_over_union": 0.9724,
+    "passed": true
+  },
+  "face_prepattern_test": {
+    "voltage_crossing_tick": 4,
+    "visible_head_and_eyes_crossing_tick": 16,
+    "regulatory_crossing_tick": 32,
+    "axis_crossing_tick": 64,
+    "structure_crossing_tick": 128,
+    "passed": true
+  },
+  "interpretation": "These checks establish numerical parity and behavior of one synthetic protocol, not predictive biological validity. Organizer thresholds, axis chart, and coupling rules include explicit modeling assumptions."
+}

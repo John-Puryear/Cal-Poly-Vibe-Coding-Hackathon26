@@ -3,6 +3,7 @@ node_modules/
 .env.*
 !.env.example
 tests/*fixture.json
+!tests/protocol-fixture.json
 *.tar.gz
 .DS_Store
 ._*

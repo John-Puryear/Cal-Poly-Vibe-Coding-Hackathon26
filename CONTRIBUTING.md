@@ -6,21 +6,21 @@ Clone this private repository, install Node.js 18 or newer, and run `npm start` 
 
 ## Divide the work
 
-- Website and presentation: `dist/index.html`, `dist/style.css`, and `dist/app.js`.
-- Browser model integration: `dist/runtime.js` and `dist/worker.js`.
-- Training and Python architecture: `model-source/bdh_nca/`. See its README and VALIDATION documents before making claims about results.
+- Website and presentation: `dist/index.html`, `dist/style.css`, `dist/protocol.css`, and `dist/app.js`.
+- Active browser protocol: `dist/protocol-runtime.js`, `dist/protocol-worker.js`, and `dist/protocol/`.
+- Current Python protocol: `protocol-source/`. The older model remains in `model-source/` for comparison.
 
 Use a short branch for each change, push it, and open a pull request into `main`. Pull the latest `main` before starting. Avoid editing the same file concurrently; agree who owns each change. Do not commit credentials, virtual environments, or unrelated personal files.
 
 ## Bring a new model to the website
 
-1. Train/evaluate/export in `model-source/` using that package's instructions. Keep model configuration and the checkpoint together.
-2. From the repository root, run `python -m pip install numpy`, then `python scripts/prepare-model.py model-source`.
-3. Run `npm test` and `npm run test:worker`. For longer rollout parity, run `python scripts/prepare-long-check.py model-source`, then `npm run test:long`.
-4. Check anatomy and voltage views, run/pause/step/reset, manual input expiry, specimen changes, export, and narrow-screen layout in a browser.
-5. Commit the updated model files and verification reports together. If state channels, update equations, or communication configuration change, the browser runtime must be changed and reverified too.
+1. Train, evaluate, and export the compact branch from `protocol-source/`, keeping the checkpoint and transition source together.
+2. Update `dist/protocol/weights.json` and the JavaScript runtime for any architectural change.
+3. Run `npm run test:protocol` for numerical parity, long protocol outcomes, face timing, and browser worker integration.
+4. Check all three layers, live/pause/single-step controls, actual cut, four branch buttons, clean recut, export, and narrow-screen layout in a browser.
+5. Commit the checkpoint, exported weights, runtime, and validation record together.
 
-The two panels show the same experimental tissue state. Manual interventions apply electrical current; they must not paint head/eye/body outputs. Voltage is a dimensionless proxy. Parity with the supplied implementation does not establish biological validity, regeneration, two-headed planaria, or ectopic eyes.
+The three panels show one experimental tissue state. The cut removes actual cells and their incident connections; the block changes communication, not anatomy directly. Voltage is a dimensionless proxy. Numerical parity and synthetic phenotype tests do not establish biological predictive validity.
 
 ## Publish
 

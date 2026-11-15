@@ -1,54 +1,45 @@
 # Morphogenesis Lab
 
-Shared website and Python model source for the Cal Poly Vibe Coding Hackathon 2026. See [CONTRIBUTING.md](CONTRIBUTING.md) for the team workflow.
+This static site presents a live, synthetic BDH–NCA regeneration protocol. The browser runs a 254-parameter checkpoint in a JavaScript worker; no server, Python process, or GPU is needed to view it.
 
-A dark, article-style site with live inference from the supplied BDH-NCA weights. Anatomy and bioelectricity are synchronized views of the same tissue state. Each layer can be hidden independently.
+## Run locally
 
-## Start locally
-
-Requires Node.js 18+; no frontend package installation or build step:
+With Node.js 18 or newer:
 
 ```sh
-npm start
+node scripts/serve.mjs
 ```
 
-Open http://127.0.0.1:4173. Open the site through a server, not a file URL, so module workers and model files can load.
+On Windows, double-click `run-demo.cmd` to start the server and open the experiment. Otherwise, open `http://127.0.0.1:4173/` after starting the command above. Run through the local server so the module worker and JSON assets can load.
 
-## Scientific scope
+## Use the demo
 
-The provided checkpoint learns normal synthetic fields on a supplied scaffold. The site does not insert target anatomy into inference. Manual input modifies only electrical current. The visible body, head, eye, and tail fields are read directly from the model. Blue/amber maps negative/positive normalized voltage proxies; these are not measured millivolts.
+1. **Normal target + developed:** the target is a visual reference only. Select **Develop normal planarian** to evolve the intact synthetic precursor for 128 ticks.
+2. **Trunk fragment:** select **Make trunk fragment** to cut the actual developed model state, keeping columns 10–23 and preserving only surviving cell and connection memory.
+3. **Protocol branches:** run untreated control, brief broad block (24 ticks), sustained broad block (96 ticks), or half-dose broad block (96 ticks). Each begins from the same saved fragment and continues until tick 608 after the cut. The block acts on columns 12–23. Select **Treated after clean recut** after the sustained run to cut its washed-out tissue again and observe 512 more untreated ticks.
 
-Persistent two-headed planaria, ectopic eyes, and anatomical regeneration were not established by the delivered checkpoint. They remain explicitly identified as open experiments.
-
-## Model and changes
-
-- `dist/runtime.js`: independently implemented recurrent transition, using original float32 weights.
-- `dist/worker.js`: model loading, paired random-update schedules, interventions and session state.
-- `dist/app.js`: presentation, rendering and UI.
-- `dist/model/`: original portable manifest/weights, synthetic test precursors, provenance and verification report.
-
-The supplied Python package is included under `model-source/`, with its delivered checkpoint, portable export, and synthetic datasets. The original Downloads folder is unchanged. Generated evaluation galleries and the separate curriculum run are omitted.
-
-To load an updated export, install NumPy and run `python scripts/prepare-model.py model-source`, then `npm test`. This updates the browser model, precursor states, and local test fixture. If the architecture changes, update the JavaScript runtime before claiming parity.
-
-`npm test` requires the generated local `tests/fixture.json`. That fixture is not committed because it is derived from the original package's conformance file. Recreate it with the preparation script. Check `dist/model/browser-validation.json` for the last checked model.
-
-Any change to the transition rule or exported configuration needs a corresponding runtime update and conformance check. The current port supports the delivered 24-channel, 8-message, rank-4 configuration. Training remains in Python.
-
-## Hosting
-
-`dist/` is a static website. No Python server, API key, or GPU service is required for this browser port. The Sites manifest is `.openai/hosting.json`. Use the Sites workflow for this deployment or host `dist/` on a static host. The browser worker uses a single shared model with separate experimental and untreated state buffers.
+The three synchronized views show visible body/head/eyes/tail, red/blue synthetic voltage, and a regulatory/axis/structure composite. The third view also allows individual channel inspection. Playback offers 8 ticks/s observation, 40 ticks/s live mode, fast finish, pause, and single-tick stepping. These rates control display only; they do not change the model's tick-based dynamics.
 
 ## Verification
 
-The browser-runtime conformance test checks all four recurrent state tensors across eight exported steps against the supplied PyTorch fixture, with required maximum absolute error ≤ 1e-5. Longer specimen rollouts and manual input integration should also be checked when updating the model. Passing parity validates the port, not biological fidelity or abnormal phenotypes.
+```sh
+npm run test:protocol
+```
 
-For this version, the eight-step maximum error is 1.7881393432617188e-7. Face and planarian 144-step reference runs (96 development / 24 pulse / 24 washout) each have a maximum error of 2.980232238769531e-7. Worker integration checks also pass: model loading, paired controls, input placement without direct anatomy writes, input expiry, weight-identified export, deterministic reset, and specimen selection.
+The protocol conformance test compares initialization, one update, a cut, and a controlled update against PyTorch for all five state tensors, with maximum absolute error 3.651×10⁻⁷. A held-out, deterministic 128 + 608 + 512 tick test gives one head/two eyes/one tail after untreated, brief, half-dose, and long-only conditions. Sustained broad block gives two heads/four eyes/no tail after washout and clean recut. The site worker integration test verifies the same saved trunk is used across branches and tests pause, single-step, and export. The separate face test verifies voltage prepattern before visible, regulatory, axis, and structural similarity crossings. See [validation details](dist/protocol/validation.json).
 
-These checks verify runtime parity and worker behavior in Node. The project owner has confirmed the hosted site works. A full signed-in browser review of controls and responsive layout remains part of the team handoff.
+These are synthetic results. The spatial chart, organizer threshold, voltage response, and memory rules include explicit modeling choices. Ticks are qualitative and are not calibrated to biological hours. Neither runtime parity nor the observed phenotypes establish biological predictive accuracy. The reference target is never read by the browser transition.
 
-Private preview: https://morphogenesis-lab-bdh-nca.pleasantgerbil1.chatgpt.site
+## Source layout
 
-## Publishing changes
+- `dist/app.js`, `dist/protocol.css`, `dist/index.html`: presentation and three-layer rendering.
+- `dist/protocol-worker.js`: live protocol scheduling, snapshots, cut, treatment, washout, recut, and export.
+- `dist/protocol-runtime.js`: independent JavaScript port of the PyTorch recurrent rule.
+- `dist/protocol/`: exported checkpoint weights, synthetic seeds, and validation record.
+- `protocol-source/`: compact PyTorch source and checkpoint for this protocol.
+- `tests/protocol-*.mjs`: numerical parity, long outcomes, timing, and worker integration.
+- `dist/runtime.js`, `dist/worker.js`, `dist/model/`, `model-source/`: retained earlier 16,116-parameter branch and its tests. The current page uses the new protocol runtime.
 
-GitHub stores the shared source. Pushing here does not automatically update the existing private Sites deployment. After reviewing a change, publish the `dist/` directory through the existing Sites project. Preserve its private audience. The `.openai/hosting.json` file identifies that project and contains no credentials.
+## Publishing
+
+The tracked `.openai/hosting.json` retains the existing Sites project ID and static `dist` deployment. A GitHub push updates source control but does not by itself update the published Sites URL. Publish the tested `dist/` through the same Sites project while preserving its current audience.
