@@ -276,9 +276,9 @@ main>.band{padding-block:64px}
 .centered{max-width:760px;margin-inline:auto;text-align:center}
 .centered>p{margin-inline:auto}
 .experiment-section>.centered:first-child p{font-size:19px;line-height:1.6;color:var(--ink)}
-.experiment-section .section-heading.centered{margin-top:40px}
+.experiment-section .section-heading.centered{margin-top:24px}
 .experiment-section .section-heading.centered>p{margin-top:4px}
-.guide-steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:40px 0 0}
+.guide-steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:24px 0 0}
 .guide-steps li{display:block;padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px;line-height:1.65}
 .guide-steps .guide-num{display:grid;margin-bottom:14px}
 .guide-steps strong{margin-bottom:4px}
@@ -357,3 +357,15 @@ main>section:not(.hero):has(>.how-grid .how-main>details:last-child){padding-bot
 .hero details[open]{padding-bottom:0}
 .hero details[open]>summary{padding-bottom:12px}
 details+details{margin-top:0}
+
+/* Four panels: full-bleed tinted band with larger cards */
+.panels .venture-card{padding:32px}
+.panels .venture-card h3{font-size:24px;margin-bottom:12px}
+.panels .venture-card p{font-size:16px}
+
+/* What the demo shows: See limits and Details as one group between two lines */
+.detail-group{margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
+.detail-group>.inline-link{display:inline-block;border-bottom:0;font:500 15px/1.4 var(--sans)}
+.detail-group>details{margin:0;border-top:0}
+.detail-group>details>summary{padding:12px 0 24px}
+main>section:has(>.detail-group:last-child){padding-bottom:0}
