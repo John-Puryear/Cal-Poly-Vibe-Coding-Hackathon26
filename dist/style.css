@@ -158,3 +158,16 @@ figcaption{font-size:14px;line-height:1.6;color:var(--muted)}
 .source-group a span{flex-shrink:0;font-size:13px;color:var(--muted)}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* Type: Inter Tight 300 headlines (set above), Inter body, JetBrains Mono only for numbers, controls and readouts */
+.why-list b,.stat-strip dd{font:400 clamp(32px,3.4vw,44px)/1.1 var(--mono);letter-spacing:-1px;color:var(--ink)}
+.process-figure span,.guide-num{font:500 13px var(--mono)}
+.lab .inference-status{font:13px var(--mono)}
+.lab .step-counter>span{font:13px var(--mono);letter-spacing:1px}
+.lab .step-counter strong{font-family:var(--mono);font-size:26px}
+.protocol-lab :is(button,select,.protocol-playback label,.gene-select,.phase-bar,.signal-status){font-family:var(--mono)}
+/* Nothing below 12px, including the demo's 9 to 11px text from protocol.css */
+.protocol-lab :is(.protocol-action,.branch-buttons button,.protocol-playback button,.protocol-playback select,.protocol-playback label,.button-step,.target-reference strong,.target-reference small,.branch-buttons button small,.protocol-index,.signal-status,.layer-card>p,.gene-select,.gene-select select,.layer-legend,.measurement-row span,.measurement-row small,.phase-note){font-size:12px}
+.protocol-lab .protocol-action{font-size:13px}
+.protocol-lab .layer-card h3{font-size:14px}
+.protocol-lab .button-step{width:20px;height:20px}
