@@ -186,10 +186,10 @@ a.why-source:hover{color:var(--accent-hover);text-decoration:underline}
 .masthead{background:var(--bg)}
 .primary-button,.primary-button:hover,.hero-button:hover{color:#102326}
 .primary-button:focus-visible,.quiet-button:focus-visible{outline-color:var(--accent-hover)}
-.why-title::before{content:'00 / ';color:var(--accent)}
+
 main{counter-reset:research-section 1}
 .article-section{counter-increment:research-section}
-.article-section .article-content>h2::before{content:counter(research-section,decimal-leading-zero) ' / RESEARCH NOTE';display:block;margin-bottom:16px;font:11px var(--mono);letter-spacing:1.7px;color:var(--accent)}
+
 .article-section,.why,.closing{border-color:var(--line)}
 
 /* Product vision leads the page; the live research invitation follows. */
@@ -223,7 +223,7 @@ main{counter-reset:research-section 1}
 /* Compact guidance, prospective customer path, and the research bibliography. */
 .customer-path{counter-increment:none;padding:78px 0}
 .customer-path .article-content{max-width:1020px}
-.customer-path .article-content>h2::before{content:'CUSTOMER PATH / PROSPECTIVE'}
+
 .customer-path .article-content>p:first-of-type{max-width:760px}
 .customer-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:28px 0 20px}
 .customer-evidence-card{min-width:0;padding:19px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
