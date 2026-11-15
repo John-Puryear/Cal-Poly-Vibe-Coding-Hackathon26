@@ -425,3 +425,4 @@ footer::before{top:0}
 .how .stat-strip dt{font-size:16px}
 @media(max-width:1000px){.how-grid{grid-template-columns:1fr}}
 figcaption .inline-link{white-space:nowrap}
+.customers>details+.sequence-band{margin-top:0}
