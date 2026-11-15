@@ -140,12 +140,12 @@ nav a{white-space:nowrap}
 .adjust>summary{padding:13px 12px}
 .adjust .input-controls{padding:4px 12px 18px}}
 
-/* Short sections: big labs number, readable technical details */
-.labs-stat{margin:32px 0 0;font-size:14px;color:var(--muted)}
-.labs-stat b{display:block;margin-bottom:6px;font:400 44px/1.1 var(--mono);color:var(--text)}
+/* Short sections: big interviews number, readable technical details */
+.interviews-stat{margin:32px 0 0;font-size:14px;color:var(--muted)}
+.interviews-stat b{display:block;margin-bottom:6px;font:400 44px/1.1 var(--mono);color:var(--text)}
 .advanced-body>p{font-size:15px;line-height:1.6;color:var(--muted);max-width:640px}
 .paper-detail>p strong{color:var(--text);font-weight:600}
-@media(max-width:700px){.labs-stat b{font-size:34px}}
+@media(max-width:700px){.interviews-stat b{font-size:34px}}
 
 /* No section labels or canvas corner marks; Evidence's label is hidden here, its HTML is unchanged */
 .section-marker,.canvas-wrap:before,.canvas-wrap:after{display:none}

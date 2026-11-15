@@ -111,7 +111,7 @@ $('export').addEventListener('click',()=>worker.postMessage({type:'export'}));
 $('center-input').addEventListener('click',()=>{if(latest)intervene(Math.round(latest.width/2),Math.round(latest.height/2));});
 window.addEventListener('pagehide',()=>worker.terminate());
 // "Labs interviewed" number: hidden when left empty in the HTML.
-if(!$('labs-count').textContent.trim())$('labs-stat').hidden=true;
+if(!$('interviews-count').textContent.trim())$('interviews-stat').hidden=true;
 // Hero stat: show the verification result only when the report loads and passed.
 fetch('./model/browser-validation.json').then(r=>r.ok?r.json():null).then(report=>{
  if(report?.passed&&report.ticks){$('stat-verified').textContent=`${report.ticks} of ${report.ticks}`;$('stat-verified-wrap').hidden=false;}
