@@ -119,7 +119,7 @@
 
     <section class="how" id="how" aria-labelledby="architecture-title">
       <div class="how-grid">
-      <div class="how-main">
+        <div class="how-main">
         <h2 id="architecture-title">How the model works</h2>
         <div class="process-figure"><div><span>01</span><strong>Develop</strong><small>One head and one tail</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Cut & block</strong><small>Timed middle-band coupling loss</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Wash out & recut</strong><small>Test persistent organizer memory</small></div></div>
       <dl class="stat-strip">
@@ -127,9 +127,16 @@
         <div><dt>browser demo learned values</dt><dd id="stat-parameters">254</dd></div>
         <div><dt>cells running the same browser rule</dt><dd id="stat-cells">1,024</dd></div>
       </dl>
-        <details class="paper-detail"><summary>Details</summary><p>The tissue state tracks physical matter, synthetic voltage, biochemical activity, regulatory and axis fields, structure, fast and slow edge memory, delayed communication, and induction memory.</p><p>A cut removes cells and their incident connections while preserving the state of surviving tissue.</p><p>The computer research checkpoint has 50,741 learned weights and is preserved separately. The live browser experiment runs a different 254-parameter recurrent rule across 1,024 cells. Those learned values work alongside explicit synthetic dynamics; they are not a conversion of the research checkpoint's weights.</p><p>The v3 transition starts from the original 254-parameter protocol checkpoint. Its separate candidate checkpoint changes two scalar weights by manual calibration; explicit synthetic rules govern wound growth, an axial chart retained in cells, a wound-conditioned voltage response to coupling loss, organizer thresholds, eye placement, and fast-to-slow connection consolidation. The voltage response begins during treatment, and prior voltage participates in the later induction-memory update. Organizer activity inhibits posterior tail commitment as a new head emerges. The browser runs a JavaScript port of the recurrent transition; no Python service or synthetic teacher is called during inference.</p><p>The three panels show one current state, including regulatory, polarity, and structural channels separately selectable in the third panel. The body and inherited axis exist at the cut; the timing test concerns the new posterior response after treatment. The target reference is displayed for comparison only.</p><p>The computer research checkpoint and this live browser demo are separate models. The demo combines 254 learned values with explicit synthetic rules, applied across a 32 × 32 grid. It does not load or compress the research checkpoint's 50,741 weights.</p>
-        </details>
-        <details class="paper-detail" id="development"><summary>Research notes</summary>
+        </div>
+        <div class="how-figure" id="fate-signatures">
+      <figure class="diagnostic-figure">
+        <a class="diagnostic-image" href="./media/fate-diagnostic.png" target="_blank" rel="noopener" aria-label="Open the full fate diagnostic image"><img src="./media/fate-diagnostic.png" width="1160" height="509" loading="lazy" alt="Two rows comparing normal target and learned planarian at update 128 across distinct anatomy, head fate, eye fate, tail fate, and biochemical channels"></a>
+        <figcaption>Synthetic diagnostic maps; colors are for display. <a class="inline-link" href="./media/fate-diagnostic.png" target="_blank" rel="noopener">Open full image ↗</a></figcaption>
+      </figure>
+        </div>
+      </div>
+      <details class="paper-detail"><summary>Details</summary><p>The tissue state tracks physical matter, synthetic voltage, biochemical activity, regulatory and axis fields, structure, fast and slow edge memory, delayed communication, and induction memory.</p><p>A cut removes cells and their incident connections while preserving the state of surviving tissue.</p><p>The computer research checkpoint has 50,741 learned weights and is preserved separately. The live browser experiment runs a different 254-parameter recurrent rule across 1,024 cells. Those learned values work alongside explicit synthetic dynamics; they are not a conversion of the research checkpoint's weights.</p><p>The v3 transition starts from the original 254-parameter protocol checkpoint. Its separate candidate checkpoint changes two scalar weights by manual calibration; explicit synthetic rules govern wound growth, an axial chart retained in cells, a wound-conditioned voltage response to coupling loss, organizer thresholds, eye placement, and fast-to-slow connection consolidation. The voltage response begins during treatment, and prior voltage participates in the later induction-memory update. Organizer activity inhibits posterior tail commitment as a new head emerges. The browser runs a JavaScript port of the recurrent transition; no Python service or synthetic teacher is called during inference.</p><p>The three panels show one current state, including regulatory, polarity, and structural channels separately selectable in the third panel. The body and inherited axis exist at the cut; the timing test concerns the new posterior response after treatment. The target reference is displayed for comparison only.</p><p>The computer research checkpoint and this live browser demo are separate models. The demo combines 254 learned values with explicit synthetic rules, applied across a 32 × 32 grid. It does not load or compress the research checkpoint's 50,741 weights.</p><p>This 50,741-weight research-model diagnostic compares a normal target with a learned state at update 128.</p><p>Distinct anatomy, head, eye, tail, and biochemical views gave the model clearer synthetic targets. It is separate from the live 254-value browser protocol.</p></details>
+      <details class="paper-detail" id="development"><summary>Research notes</summary>
           <div class="development-gallery">
       <div class="development-intro"><h3 class="sub-title" id="development-title">Distinct signals made learning clearer.</h3><p>A key design choice was to give head, eye, tail, and biochemical fates more differentiated synthetic signatures.</p><details class="paper-detail"><summary>Details</summary><p>Even the research checkpoint's 50,741 weights make it a small model, so clear cues mattered. These snapshots show the move from mixed posterior responses to a clearer sustained-block and clean-recut contrast; they do not establish biological validity or success rates.</p></details></div>
       <div class="development-grid">
@@ -138,17 +145,6 @@
       </div>
           </div>
         </details>
-      </div>
-          <div class="fate-block how-figure" id="fate-signatures">
-      <h3 class="sub-title" id="fate-title">Separate cues for separate fates.</h3>
-      <p>This 50,741-weight research-model diagnostic compares a normal target with a learned state at update 128.</p>
-      <figure class="diagnostic-figure">
-        <a class="diagnostic-image" href="./media/fate-diagnostic.png" target="_blank" rel="noopener" aria-label="Open the full fate diagnostic image"><img src="./media/fate-diagnostic.png" width="1160" height="509" loading="lazy" alt="Two rows comparing normal target and learned planarian at update 128 across distinct anatomy, head fate, eye fate, tail fate, and biochemical channels"></a>
-        <figcaption>Synthetic diagnostic maps; colors are for display. <a class="inline-link" href="./media/fate-diagnostic.png" target="_blank" rel="noopener">Open full image ↗</a></figcaption>
-      </figure>
-      <details class="paper-detail"><summary>Details</summary><p>Distinct anatomy, head, eye, tail, and biochemical views gave the model clearer synthetic targets. It is separate from the live 254-value browser protocol.</p></details>
-          </div>
-      </div>
     </section>
 
     <section class="customers" id="customer-path" aria-labelledby="customer-title">

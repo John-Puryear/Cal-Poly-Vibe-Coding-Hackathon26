@@ -290,7 +290,8 @@ main>.band{padding-block:64px}
 .how-main>h2{margin-bottom:32px}
 .how-figure .sub-title{margin-top:0}
 .how-figure>p{color:var(--muted)}
-.how-figure .diagnostic-figure{margin-top:20px}
+.how-figure .diagnostic-figure{margin-top:0}
+.how-grid{align-items:center}
 @media(max-width:1000px){.how-grid{grid-template-columns:1fr;gap:40px}}
 
 /* Customer path: proposed sequence as a full-width timeline */
