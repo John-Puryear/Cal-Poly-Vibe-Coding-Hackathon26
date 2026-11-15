@@ -21,7 +21,7 @@
     <section class="hero" id="business" aria-labelledby="business-title">
       <span class="planned-badge">PRODUCT VISION · NOT A DRUG ASSAY</span>
       <h1 id="business-title">Test ideas earlier.<br>Learn from biology.</h1>
-      <p class="lead">We're building simulations that let drug teams test ideas on a computer before running them in the lab.</p>
+      <p class="lead">We're building simulations that let drug teams test ideas on a computer before running them in the lab. Today's demo shows one: what happens to regenerating tissue when a drug blocks how cells communicate.</p>
       <p class="hero-note">Synthetic demo. It does not predict drug effects or replace clinical trials.</p>
       <a class="primary-button hero-button" href="#experiment">See it live</a>
       <details class="paper-detail"><summary>Details</summary><p>Drug development can take more than a decade and billions of dollars. We aim to test candidate drugs and therapies earlier in progressively validated biological simulations, helping teams prioritize laboratory work. This demo tests one piece of that vision: whether timed changes in cell-to-cell communication can redirect a regenerating body plan. Future models would need experimental voltage, anatomy, and molecular measurements, plus held-out validation, before they could support drug decisions.</p></details>
@@ -45,7 +45,11 @@
     </section>
 
     <section class="experiment-section" id="experiment" aria-labelledby="experiment-title">
-      <div class="section-heading"><div><h2 id="experiment-title">Grow. Cut. Change communication.</h2></div><p>Every view reads the same evolving tissue state.</p></div>
+      <div class="split">
+        <h2 id="experiment-title">We give the tissue a drug and watch what it builds.</h2>
+        <div class="split-body"><p>In real flatworms, a chemical that blocks cell-to-cell signals (octanol) made cut fragments grow a head at both ends, with no genes changed. Here we apply a simulated version of that treatment and see whether the model reproduces the same outcome.</p></div>
+      </div>
+      <div class="section-heading"><h3 class="demo-title">Grow. Cut. Change communication.</h3><p>Every view reads the same evolving tissue state.</p></div>
       <ol class="guide-steps">
         <li><span class="guide-num">1</span><div><strong>Grow.</strong> Click Develop normal, then Cut trunk.</div></li>
         <li><span class="guide-num">2</span><div><strong>Pick a condition.</strong> Each one restarts from the same trunk fragment.</div></li>
@@ -73,6 +77,7 @@
             <div class="protocol-condition-row">
               <span class="protocol-index">3 / CONDITION</span>
               <div class="condition-options">
+              <p class="drug-label">Simulated drug treatment: blocks cell-to-cell signals</p>
               <div class="branch-buttons" role="group" aria-label="Regeneration condition">
                 <button type="button" data-branch="sham" aria-pressed="false" disabled>Untreated <small>Control · 608 ticks</small></button>
                 <button type="button" data-branch="brief" aria-pressed="false" disabled>Brief block <small>24 + washout</small></button>
@@ -104,9 +109,9 @@
     <section class="results" id="results" aria-labelledby="results-title">
       <h2 id="results-title">What the demo shows</h2>
       <div class="card-row">
-        <div class="card"><h3>Normal control.</h3><p>A trunk fragment can regenerate untreated or after a brief block.</p></div>
-        <div class="card"><h3>Sustained broad block.</h3><p>In the tested protocol, it creates a posterior organizer that survives washout and a clean recut.</p></div>
-        <div class="card"><h3>Timing.</h3><p>The posterior voltage shift began during the block, before the visible posterior head.</p></div>
+        <div class="card"><span class="card-tag">Shown in demo</span><h3>Normal control.</h3><p>A trunk fragment can regenerate untreated or after a brief block.</p></div>
+        <div class="card"><span class="card-tag">Shown in demo · tested in Python</span><h3>Sustained broad block.</h3><p>In the tested protocol, it creates a posterior organizer that survives washout and a clean recut.</p></div>
+        <div class="card"><span class="card-tag">Shown in demo</span><h3>Timing.</h3><p>The posterior voltage shift began during the block, before the visible posterior head.</p></div>
       </div>
       <p class="row-link"><a class="inline-link" href="#limits">See limits</a></p>
       <details class="paper-detail"><summary>Details</summary><div class="evidence-list"><div><span class="result-mark">↗</span><div><h3>Normal control</h3><p>The intact precursor develops a normal synthetic one-head, one-tail planarian. A trunk fragment can regenerate under untreated and brief-block conditions.</p></div><span class="evidence-tag">SYNTHETIC DEMO</span></div><div><span class="result-mark">↗</span><div><h3>Sustained broad block</h3><p>In the tested Python protocol, sustained middle-band broad coupling block creates a posterior organizer that survives washout and a clean recut. The brief and half-dose protocols are negative controls.</p></div><span class="evidence-tag">TESTED PROTOCOL</span></div></div><p class="evidence-note">In the protocol timing test, the treatment-associated posterior voltage shift began during the coupling block, before the measured regulatory difference and visible posterior head. <a class="inline-link" href="./protocol/validation.json" target="_blank" rel="noopener">View validation details ↗</a></p></details>
@@ -151,12 +156,13 @@
       </div>
       <div class="card-row customer-evidence-grid">
         <div class="customer-evidence-grid">
-          <div class="customer-evidence-card"><h3>AI is already in the lab.</h3><p><a class="inline-link" href="https://www.benchling.com/biotech-ai-report-2026" target="_blank" rel="noopener">Benchling's 2026 survey</a> of about 100 biotech and biopharma organizations already using AI describes demand for scientific tools alongside persistent data and validation gaps. Its sample represents AI adopters, not the entire industry.</p></div>
-          <div class="customer-evidence-card"><h3>Validation defines the use.</h3><p><a class="inline-link" href="https://ncats.nih.gov/research/research-activities/tissue-chip/collaborations" target="_blank" rel="noopener">NCATS tissue-chip collaborations</a> and <a class="inline-link" href="https://www.iqmps.org/_files/ugd/7a2c95_324240df948e4909a3708ee698576c37.pdf" target="_blank" rel="noopener">IQ MPS Affiliate reports</a> show pharma, researchers, and technology developers working on fit-for-purpose models and adoption. They are category precedents, not tests of this simulation.</p></div>
-          <div class="customer-evidence-card"><h3>Qualification takes evidence.</h3><p>The <a class="inline-link" href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-accepts-first-silico-drug-development-tool-under-istand-program-help-predict-drug-induced-liver" target="_blank" rel="noopener">FDA accepted a different AI digital liver model's letter of intent</a> into ISTAND. That is the first of three qualification steps, not approval of that tool or this one.</p></div>
+          <div class="customer-evidence-card card"><h3>AI is already in the lab.</h3><p>Benchling's 2026 survey of about 100 biotech and biopharma organizations already using AI describes demand for scientific tools alongside persistent data and validation gaps. Its sample represents AI adopters, not the entire industry.</p><a class="card-source" href="https://www.benchling.com/biotech-ai-report-2026" target="_blank" rel="noopener">Source ↗</a></div>
+          <div class="customer-evidence-card card"><h3>Validation defines the use.</h3><p>NCATS tissue-chip collaborations and IQ MPS Affiliate reports show pharma, researchers, and technology developers working on fit-for-purpose models and adoption. They are category precedents, not tests of this simulation.</p><a class="card-source" href="https://ncats.nih.gov/research/research-activities/tissue-chip/collaborations" target="_blank" rel="noopener">Source ↗</a></div>
+          <div class="customer-evidence-card card"><h3>Qualification takes evidence.</h3><p>The FDA accepted a different AI digital liver model's letter of intent into ISTAND. That is the first of three qualification steps, not approval of that tool or this one.</p><a class="card-source" href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-accepts-first-silico-drug-development-tool-under-istand-program-help-predict-drug-induced-liver" target="_blank" rel="noopener">Source ↗</a></div>
         </div>
       </div>
-      <p class="customer-next">Proposed sequence: <strong>research collaboration</strong> → <strong>held-out experimental validation</strong> → <strong>scoped simulation studies and measured-data products</strong>.</p>
+      <h3 class="figure-label">Proposed sequence</h3>
+      <div class="process-figure sequence-figure"><div><span>01</span><strong>Research collaboration</strong></div><b aria-hidden="true">→</b><div><span>02</span><strong>Held-out validation</strong></div><b aria-hidden="true">→</b><div><span>03</span><strong>Simulation studies and data products</strong></div></div>
     </section>
 
     <section class="pipeline split" id="pipeline" aria-labelledby="pipeline-title">
@@ -171,7 +177,12 @@
     <section class="limits split" id="limits" aria-labelledby="limits-title">
       <h2 id="limits-title">What it cannot claim</h2>
       <div class="split-body">
-        <p>These outputs do not validate a drug response or predict real planarian regeneration.</p>
+        <ul class="limit-list">
+          <li>Synthetic data only.</li>
+          <li>Not a prediction of any real drug's effect.</li>
+          <li>Time is in simulation steps, not hours.</li>
+          <li>Next: check predictions against measured lab results.</li>
+        </ul>
         <details class="paper-detail"><summary>Details</summary><div class="evidence-list"><div><span class="result-mark muted">○</span><div><h3>Biological interpretation</h3><p>The early local voltage shift and deterministic two-head outcome are synthetic modeling assumptions. Tick durations are uncalibrated. These outputs do not validate a drug response or predict real planarian regeneration.</p></div><span class="evidence-tag subdued">LIMITATION</span></div></div></details>
       </div>
     </section>
