@@ -91,3 +91,9 @@ $('step-one').onclick=()=>worker.postMessage({type:'step-one'});
 $('playback-speed').onchange=()=>worker.postMessage({type:'speed',speed:$('playback-speed').value});
 $('gene-channel').onchange=paint;
 window.addEventListener('pagehide',()=>worker.terminate());worker.postMessage({type:'init'});
+
+// Header: underline the nav link for the section currently in view (page chrome only, not demo logic)
+const navLinks=[...document.querySelectorAll('nav a[href^="#"]')];
+const navObserver=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting)
+  for(const a of navLinks){if(a.getAttribute('href')==='#'+e.target.id)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');}},{rootMargin:'-45% 0px -50% 0px'});
+for(const section of document.querySelectorAll('main>section'))navObserver.observe(section);
