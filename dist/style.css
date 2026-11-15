@@ -174,7 +174,7 @@ main>section,main>.hero{padding:64px 0 40px}
 /* One "Details +" expander style everywhere */
 details{margin-top:24px;border-top:1px solid var(--line)}
 details details{margin-top:16px}
-summary{display:inline-flex;align-items:center;gap:8px;padding:24px 0 0;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
+summary{display:inline-flex;align-items:center;gap:8px;padding:24px 0;line-height:1.4;list-style:none;cursor:pointer;font:500 15px var(--sans);color:var(--accent)}
 summary::-webkit-details-marker{display:none}
 summary::after{content:'+';font:400 18px/1 var(--sans)}
 details[open]>summary::after{content:'\2212'}
@@ -186,7 +186,7 @@ summary>span{font-weight:400;color:var(--muted)}
 .demo-guide>ol{margin:0 0 16px;padding-left:22px;display:grid;gap:8px;font-size:15px;color:var(--muted)}
 .demo-guide>p{font-size:15px;color:var(--muted)}
 .lab+details{margin-top:24px}
-details[open]>summary{padding-bottom:16px}
+details[open]{padding-bottom:24px}
 /* Nothing at the end of a section adds extra space before the divider */
 main>section>:last-child,main>section .split-body>:last-child,main>section .column>:last-child,details>:last-child,.card-row>*>:last-child{margin-bottom:0}
 
@@ -276,9 +276,9 @@ main>.band{padding-block:64px}
 .centered{max-width:760px;margin-inline:auto;text-align:center}
 .centered>p{margin-inline:auto}
 .experiment-section>.centered:first-child p{font-size:19px;line-height:1.6;color:var(--ink)}
-.experiment-section .section-heading.centered{margin-top:40px}
+.experiment-section .section-heading.centered{margin-top:24px}
 .experiment-section .section-heading.centered>p{margin-top:4px}
-.guide-steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:40px 0 0}
+.guide-steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:24px 0 0}
 .guide-steps li{display:block;padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px;line-height:1.65}
 .guide-steps .guide-num{display:grid;margin-bottom:14px}
 .guide-steps strong{margin-bottom:4px}
@@ -290,7 +290,8 @@ main>.band{padding-block:64px}
 .how-main>h2{margin-bottom:32px}
 .how-figure .sub-title{margin-top:0}
 .how-figure>p{color:var(--muted)}
-.how-figure .diagnostic-figure{margin-top:20px}
+.how-figure .diagnostic-figure{margin-top:0}
+.how-grid{align-items:center}
 @media(max-width:1000px){.how-grid{grid-template-columns:1fr;gap:40px}}
 
 /* Customer path: proposed sequence as a full-width timeline */
@@ -311,7 +312,6 @@ main>.band{padding-block:64px}
 .flow span{font:500 13px var(--sans);color:var(--accent)}
 .flow strong{font:500 26px/1.2 var(--display)}
 .flow small{font-size:15px;line-height:1.5;color:var(--muted)}
-.pipeline>details{max-width:760px;margin-inline:auto}
 @media(max-width:1000px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.flow li:nth-child(3)::before{display:none}}
 @media(max-width:700px){
   .timeline{grid-template-columns:1fr;gap:20px}
@@ -341,3 +341,50 @@ main>.band{padding-block:64px}
 .source-groups{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
 @media(max-width:700px){.callout{padding:24px}.limit-list,.top-sources ul,.source-groups{grid-template-columns:1fr}}
 .stat-strip>div{justify-content:flex-end}
+
+/* Details rows: content, 24px, line, 24px, "Details +", 24px, then the section divider */
+main>section:not(.hero):has(>details:last-child),
+main>section:not(.hero):has(>.split-body>details:last-child),
+main>section:not(.hero):has(>.column>details:last-child),
+main>section:not(.hero):has(>.how-grid .how-main>details:last-child){padding-bottom:0}
+
+/* Hero: quieter badge, more air under the headline, Details as a small text link */
+.hero .planned-badge{padding:3px 10px;border-color:var(--line-strong);font-weight:500;letter-spacing:.8px;color:var(--muted)}
+.hero h1{margin:24px 0 32px}
+.hero-note{font-family:var(--sans);font-size:15px;color:var(--muted)}
+.hero details{margin-top:16px;border-top:0}
+.hero summary{padding:0;font-size:14px}
+.hero details[open]{padding-bottom:0}
+.hero details[open]>summary{padding-bottom:12px}
+details+details{margin-top:0}
+
+/* Four panels: full-bleed tinted band with larger cards */
+.panels .venture-card{padding:32px}
+.panels .venture-card h3{font-size:24px;margin-bottom:12px}
+.panels .venture-card p{font-size:16px}
+
+/* What the demo shows: See limits and Details as one group between two lines */
+.detail-group{margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
+.detail-group>.inline-link{display:inline-block;border-bottom:0;font:500 15px/1.4 var(--sans)}
+.detail-group>details{margin:0;border-top:0}
+.detail-group>details>summary{padding:12px 0 24px}
+main>section:has(>.detail-group:last-child){padding-bottom:0}
+
+/* Customer path: centered intro column above the cards */
+.customers .centered p+p{margin-top:12px}
+.customers .card-row{margin-top:32px}
+
+/* Proposed sequence: full-bleed cream strip with hairlines across the full width, no fill */
+.sequence-band{margin:40px calc(50% - 50vw) 0;padding:40px calc(50vw - 50%);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+main>section:has(>.sequence-band:last-child){padding-bottom:0;border-bottom:0}
+.sequence-band .figure-label{margin:0 0 24px;text-align:center}
+.sequence-band .timeline{margin:0}
+.timeline li{align-items:center;text-align:center;padding:0 12px}
+.timeline::before{left:calc(100% / 6);right:calc(100% / 6)}
+@media(min-width:701px){.timeline::before{right:calc(100% / 6)}}
+@media(max-width:700px){.timeline li{align-items:center;text-align:left;padding:0}.timeline::before{left:16px;right:auto}.sequence-band{margin-top:32px;padding-block:32px}}
+
+/* Limits: Details centered inside the box, and no line under the box */
+.callout:has(>details:last-child){padding-bottom:0}
+.limits+section{border-top:0}
+.team-card p{margin-top:6px}
