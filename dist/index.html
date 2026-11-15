@@ -160,16 +160,26 @@
           <div class="customer-evidence-card card"><h3>Qualification takes evidence.</h3><p>The FDA accepted a different AI digital liver model's letter of intent into ISTAND. That is the first of three qualification steps, not approval of that tool or this one.</p><a class="card-source" href="https://www.fda.gov/drugs/drug-alerts-and-statements/fda-accepts-first-silico-drug-development-tool-under-istand-program-help-predict-drug-induced-liver" target="_blank" rel="noopener">Source ↗</a></div>
       </div>
       <h3 class="figure-label">Proposed sequence</h3>
-      <div class="process-figure sequence-figure"><div><span>01</span><strong>Research collaboration</strong></div><b aria-hidden="true">→</b><div><span>02</span><strong>Held-out validation</strong></div><b aria-hidden="true">→</b><div><span>03</span><strong>Simulation studies and data products</strong></div></div>
+      <ol class="timeline">
+        <li><span class="timeline-dot">1</span><strong>Research collaboration</strong></li>
+        <li><span class="timeline-dot">2</span><strong>Held-out validation</strong></li>
+        <li><span class="timeline-dot">3</span><strong>Simulation studies and data products</strong></li>
+      </ol>
     </section>
 
-    <section class="pipeline split" id="pipeline" aria-labelledby="pipeline-title">
-      <div><span class="planned-badge">PLANNED AUTONOMOUS DATA PIPELINE</span><h2 id="pipeline-title">Measure voltage.<br>Read gene programs.</h2></div>
-      <div class="split-body">
+    <section class="pipeline band band-tint" id="pipeline" aria-labelledby="pipeline-title">
+      <div class="centered">
+        <span class="planned-badge">PLANNED AUTONOMOUS DATA PIPELINE</span>
+        <h2 id="pipeline-title">Measure voltage.<br>Read gene programs.</h2>
         <p>We plan to pair embedded bioelectronics with genetically encoded voltage indicators (GEVIs) or voltage-sensitive dyes (VSDs), then connect those electrical time series to transcriptomic measurements from matched samples and time points.</p>
-        <div class="process-figure pipeline-figure" role="img" aria-label="Planned pipeline: capture bioelectric signals, profile transcriptomes from matched samples, then align the records to train and test simulations"><div><span>01</span><strong>Capture</strong><small>Embedded electrodes and GEVI or VSD imaging</small></div><b aria-hidden="true">→</b><div><span>02</span><strong>Profile</strong><small>Export transcriptomic data from matched samples</small></div><b aria-hidden="true">→</b><div><span>03</span><strong>Learn</strong><small>Align, train, and validate on held-out interventions</small></div></div>
-        <details class="paper-detail"><summary>Details</summary><p>Automating this loop could grow the quality and range of future simulations. It has not been built for this demo. Experimental precedents include <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8930507/" target="_blank" rel="noopener">embedded organoid electronics</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11132041/" target="_blank" rel="noopener">GEVI imaging</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10468776/" target="_blank" rel="noopener">planarian VSDs</a>, and <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13121718/" target="_blank" rel="noopener">transcriptomic export</a>.</p></details>
       </div>
+      <ol class="flow" aria-label="Planned pipeline: capture bioelectric signals, profile transcriptomes from matched samples, align and train simulations, then validate them on held-out interventions">
+        <li><span>01</span><strong>Capture</strong><small>Embedded electrodes and GEVI or VSD imaging</small></li>
+        <li><span>02</span><strong>Profile</strong><small>Export transcriptomic data from matched samples</small></li>
+        <li><span>03</span><strong>Learn</strong><small>Align and train</small></li>
+        <li><span>04</span><strong>Validate</strong><small>Test on held-out interventions</small></li>
+      </ol>
+      <details class="paper-detail"><summary>Details</summary><p>Automating this loop could grow the quality and range of future simulations. It has not been built for this demo. Experimental precedents include <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8930507/" target="_blank" rel="noopener">embedded organoid electronics</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11132041/" target="_blank" rel="noopener">GEVI imaging</a>, <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10468776/" target="_blank" rel="noopener">planarian VSDs</a>, and <a class="inline-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13121718/" target="_blank" rel="noopener">transcriptomic export</a>.</p></details>
     </section>
 
     <section class="limits split" id="limits" aria-labelledby="limits-title">
