@@ -80,7 +80,7 @@ worker.onmessage=({data:d})=>{
   else if(d.type==='error'){$('model-status').innerHTML='<span class="status-dot amber"></span> Simulation error';
     $('phase-note').textContent=d.message;console.error(d.message);}
   else if(d.type==='export'){const blob=new Blob([JSON.stringify(d.record)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download='bdh-protocol-session.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+    a.href=url;a.download='kaia-protocol-session.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
 };
 $('develop').onclick=()=>worker.postMessage({type:'develop'});
 $('cut').onclick=()=>worker.postMessage({type:'cut'});
