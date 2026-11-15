@@ -32,6 +32,12 @@ The v3 protocol conformance test compares initialization, one update, a cut, and
 
 These are synthetic results. The v3 browser and Python transitions start from the 254-parameter v1 checkpoint and use a separate candidate checkpoint with two scalar weights calibrated manually. This calibration did not use gradient optimizer steps. The explicit spatial chart, organizer threshold, coupling-loss voltage response, and memory rules are modeling choices. The body, polarity axis, and structural scaffold are already present at the cut. The timing result concerns **new treatment-induced posterior signals and anatomy**, not a claim that all biological genes or structures begin after voltage. Ticks are qualitative and are not calibrated to biological hours. Neither runtime parity nor the observed phenotypes establish biological predictive accuracy. The reference target is never read by the browser transition. The original architecture and weights are preserved on the [`bdh-protocol-v1-preserved` branch](https://github.com/John-Puryear/Cal-Poly-Vibe-Coding-Hackathon26/tree/bdh-protocol-v1-preserved) and in a separate local archive.
 
+## Product vision and planned data pipeline
+
+The current planarian experiment is a synthetic morphogenesis demo, not a validated drug assay. The long-term product aims to help pharma, biotech, and AI biology teams screen candidate therapies earlier in simulations grounded and validated against measurements. Planned revenue paths are partner simulation studies, a future privacy-preserving option for proprietary candidates, and licensed data products on morphogenesis and measured intervention responses. No encrypted testing service is implemented in this demo.
+
+The proposed autonomous measurement loop combines embedded bioelectronics with genetically encoded voltage indicators (GEVIs) or voltage-sensitive dyes (VSDs), transcriptomic export from matched samples and time points, and automated alignment for training and held-out validation. This combined pipeline has not been built. See the product and pipeline sections in `dist/index.html` for primary-study links and limitations.
+
 ## Source layout
 
 - `dist/app.js`, `dist/protocol.css`, `dist/index.html`: presentation and three-layer rendering.
