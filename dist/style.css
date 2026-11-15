@@ -388,3 +388,8 @@ main>section:has(>.sequence-band:last-child){padding-bottom:0;border-bottom:0}
 .callout:has(>details:last-child){padding-bottom:0}
 .limits+section{border-top:0}
 .team-card p{margin-top:6px}
+
+/* Small headings inside merged Details */
+.detail-title{margin:8px 0 8px;font:600 16px/1.4 var(--sans);color:var(--ink)}
+details>.detail-title:not(:first-of-type){margin-top:24px}
+.experiment-section>.centered strong{font-weight:600}
