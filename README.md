@@ -1,4 +1,4 @@
-# Morphogenesis Lab
+# KAIA BIOSCIENCES
 
 This static site presents a live, synthetic BDH–NCA regeneration protocol. The browser runs a 254-parameter checkpoint in a JavaScript worker; no server, Python process, or GPU is needed to view it.
 
@@ -50,4 +50,4 @@ The proposed autonomous measurement loop combines embedded bioelectronics with g
 
 ## The Site
 
-https://bdh-nca-bioelectric-timing-lab.elvenbee20.chatgpt.site/#experiment
+https://kaia-biosciences.vercel.app/
